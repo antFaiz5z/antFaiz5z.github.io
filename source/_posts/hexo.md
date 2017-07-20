@@ -7,6 +7,9 @@ tags: hexo
 toc: true
 ---
 
+
+![](http://i.v2ex.co/5bb7J7NT.png)
+
 Windows与Linux环境下方法大同小异，这里以Windows为例。
 
 推荐使用Jetbrains的WebStorm。
