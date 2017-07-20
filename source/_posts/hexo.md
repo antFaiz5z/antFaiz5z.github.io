@@ -114,7 +114,7 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
     $ npm install hexo -g
     $ hexo init
     $ npm install
-    $ npm install hexo-deployer-git -g（此时当前分支应显示为hexo？）
+    $ npm install hexo-deployer-git -g
     ```
 
     修改_config.yml中的deploy参数，分支应为master，依次执行
@@ -139,7 +139,27 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
     ```
     将网站部署到GitHub。
 
-    > 至于主题修改、域名绑定、图床、各种插件的添加，这里就不再赘述。
+3. 在另一台新电脑上pull已有项目
+
+    ``` bash
+    git pull <url>
+    ```
+
+    不用执行命令“hexo init”
+
+    ``` bash
+    $ npm install
+    $ npm install hexo -g
+    $ npm install hexo-deployer-git -g
+    ```
+    若是原有项目安装了新主题，建议将主题目录移出.gitignore,保存原有主题配置属性，否则需要重新clone，不然会出现deploy时“no layout”的提示，导致页面空白。
+
+    ```bash
+    $ git clone https://github.com/xxx/yyy.git themes/yyy
+    ```
+    有些主题需要安装另外的插件，所以建议之前install时添加--save保存至packagee.json。
+
+    > 至于主题修改、域名绑定、图床、各种plugin的添加，这里就不再赘述。
 
 ## 常用命令
 
@@ -166,7 +186,7 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
     ``` bash
     $ hexo server #Hexo 会监视文件变动并自动更新，您无须重启服务器。
     $ hexo server -s #静态模式
-    $ hexo server -p 5000 #更改端口
+    $ hexo server -p 5移出更改端口
     $ hexo server -i 192.168.1.1 #自定义 IP
     $ hexo clean #清除缓存 网页正常情况下可以忽略此条命令
     $ hexo g #生成静态网页
