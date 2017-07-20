@@ -4,8 +4,6 @@ date: 2017-07-11 19:21:19
 comments: true
 categories: test
 tags: test
-mathjax2: true
-toc: true
 ---
 
 Welcome to my personal [blog](https://antfaiz5z.github.io/) powered by hexo!
