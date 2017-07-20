@@ -157,7 +157,7 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
     ```bash
     $ git clone https://github.com/xxx/yyy.git themes/yyy
     ```
-    有些主题需要安装另外的插件，所以建议之前install时添加--save保存至packagee.json。
+    有些主题需要安装另外的插件，所以建议之前install时添加--save保存至package.json。
 
     > 至于主题修改、域名绑定、图床、各种plugin的添加，这里就不再赘述。
 
