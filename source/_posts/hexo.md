@@ -3,7 +3,10 @@ title: 利用Hexo搭建个人博客
 date: 2017-07-12 10:21:19
 comments: true
 categories: Node
-tags: hexo
+tags: 
+    - Hexo
+    - Node
+    - Git
 toc: true
 ---
 
@@ -15,6 +18,26 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
 推荐使用Jetbrains的WebStorm。
 
 <!--more-->
+
+
+更新
+-----
+
+ 目前项目存在依赖问题有
+
+```bash
+npm WARN deprecated swig@1.4.2: This package is no longer maintained
+npm WARN deprecated jade@1.11.0: Jade has been renamed to pug, please install the latest version of pug instead of jade
+npm WARN deprecated transformers@2.1.0: Deprecated, use jstransformer
+npm WARN prefer global marked@0.3.6 should be installed with -g
+npm WARN prefer global node-gyp@3.6.2 should be installed with -g
+
+//固有
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.0.0 (node_modules/chokidar/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.1.2: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
+```
+
 
 ## 环境准备
 
