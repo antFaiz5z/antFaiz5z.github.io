@@ -1,5 +1,5 @@
 ---
-title: Scrapy安装使用
+title: Scrapy安装及使用
 comments: true
 date: 2017-08-03 10:02:27
 categories: Scrapy
@@ -9,7 +9,10 @@ tags:
     - pip
     - Anacoda
     - virtualenv
+    - PyCharm
 ---
+
+## 安装
 
 ~~[Curl的安装和使用](http://blog.csdn.net/lifan5/article/details/7350154)~~
 
@@ -26,4 +29,35 @@ tags:
 
 [Scrapy 1.4 documentation](https://doc.scrapy.org/en/latest/index.html)
 
+[XPath 语法](http://www.w3school.com.cn/xpath/xpath_syntax.asp)
+## 使用命令行
 
+在项目目录下运行:
+
+```bash
+scrapy crawl xxxxx
+```
+
+## 使用PyCharm
+
+如果要用Pycharm作为开发调试工具的话可以在运行配置里进行如下配置：
+
+1. Run->Configuration页面：
+
+    Script填你的scrapy的cmdline.py路径
+
+    若是使用Anacoda安装，一般为：
+
+        /home/faiz/anaconda2/lib/python2.7/site-packages/scrapy/cmdline.py
+
+    若是使用pip安装，一般为：
+
+        /usr/local/lib/python2.7/dist-packages/scrapy/cmdline.py
+
+2. 然后在Scrpit parameters中填爬虫的名字，
+            
+        crawl xxxxx
+
+3. 最后是Working diretory，找到你的settings.py文件，填这个文件所在的目录。
+
+4. 按小绿箭头就可以愉快地调试了。
