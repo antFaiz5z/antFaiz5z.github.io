@@ -12,6 +12,8 @@ tags:
     - PyCharm
 ---
 
+<!--more-->
+
 ## 安装
 
 ~~[Curl的安装和使用](http://blog.csdn.net/lifan5/article/details/7350154)~~
