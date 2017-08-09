@@ -1,5 +1,5 @@
 ---
-title: Python 2与 python 3的一些坑
+title: Python 2与 Python 3的一些坑
 comments: true
 toc: true
 date: 2017-08-09 11:44:24
