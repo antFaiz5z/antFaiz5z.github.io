@@ -82,7 +82,7 @@ python 3.5: TypeError: a bytes-like object is required, not 'str'
 
 第一种，在open()函数中使用如`'w'`、`'w+'`、`'r+'`属性，即文本方式写入，可以直接解决问题。
 
-第二种,在`open()`函数中使用‘rb’,可以在使用之前进行转换，如[实例](http://stackoverflow.com/questions/33054527/python-3-5-typeerror-a-bytes-like-object-is-required-not-str)
+第二种,依然在`open()`函数中使用`'wb'`、`'rb'`,可以在使用之前进行转换，如[实例](http://stackoverflow.com/questions/33054527/python-3-5-typeerror-a-bytes-like-object-is-required-not-str)
 
 
 ## import module urllib.xxx
