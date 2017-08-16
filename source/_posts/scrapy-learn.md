@@ -27,6 +27,8 @@ tags:
 
 所以，直接按照Scrapy的官方文档安装Anacoda和Scrapy就好了，并且官方建议使用virtualenv
 
+[使用conda管理python环境](https://zhuanlan.zhihu.com/p/22678445)
+
 [virtualenv简明教程](http://www.jianshu.com/p/08c657bd34f1)
 
 [Scrapy 1.4 documentation](https://doc.scrapy.org/en/latest/index.html)
