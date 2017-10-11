@@ -1,74 +1,76 @@
 ---
 title: News not know
-date: 2017-09-26 20:46:42
+date: 2017-10-11 19:57:10
 ---
-[36W 白帽大佬的挖洞秘笈分享： HTTP 盲攻击的几种思路](http://www.freebuf.com/fevents/148995.html)
+[Wireshark 系列（从入门到精通的 10 个干货）](http://www.freebuf.com/column/150293.html)
 -----------------
 
-HTTP 盲攻击，是一种利用 OOB 方法为基础突破口来检测和利用漏洞的攻击方式 ... 本次课程将会介绍可以利用 OOB 进行盲攻击的攻击参数以及为什么可以利用 OOB 进行盲攻击，其中会涉及一些盲攻击的具体攻击场景的分析，希望能够给大家带来新的攻击思路 ... 1.      报名成功之后，公开课小助手会添加你的微信并且拉群。
+Wireshark（前称 Ethereal）是一个网络封包分析软件 ... 网络封包分析软件的功能是撷取网络封包，并尽可能显示出最为详细的网络封包资料 ... 网络封包 [分析软件的功能可想像成 电工技师使用电表来量测电流、电压、电阻 的工作 – 只是将场景移植到网络上，并将电线替换成网络线。
 
-FreeBuf / FB客服41 分钟前
+FreeBuf / i春秋学院1 小时前
 
-[Big Data Architecture Workshop](http://blog.cloudera.com/blog/2017/09/big-data-architecture-workshop/)
+[Pretty print cURL -i - Rob Allen](https://akrabat.com/pretty-print-curl-i/)
 -----------------
 
-Since the birth of big data, Cloudera University has been teaching developers, administrators, analysts, and data scientists how to use Big Data technologies. We have taught over 50,000 folks all of t...
+My favourite tool for working with APIs is cURL and in particular, I like using the -I switch to view the status LINE and headers too:
+This generates an output that looks like this:
+$ cURL -i https://...
 
-Cloudera Engineering Blog / Cy Jervis1 小时前
+Planet PHP2 小时前
 
-[网站代码中暗藏 JS 挖矿机脚本](https://juejin.im/entry/59ca37616fb9a00a54750647)
+[掘金秋招征文大赛评选结果](https://juejin.im/entry/59ddea15f265da431c6f48ee)
 -----------------
 
 
 
-掘金 / yikejiucai1 小时前
+掘金 / Plum2 小时前
 
-[Kali Linux 安全渗透 - 从入门到精通](http://www.freebuf.com/column/149154.html)
+[Android Lint 实践 —— 简介及常见问题分析](https://juejin.im/entry/59dde88e51882554fb3f17c9)
 -----------------
 
-作为一名渗透测试人员，如果你不懂 Kali-Linux 那么你就真的 OUT 了 ... 我们主要介绍一下 Metasploit 的 Metasploit Framework 支持 Kali Linux，Metasploit 一套针对远程主机进行开发和执行 Exploit 代码的工具 ... 内容：将利用 Redis 写入 SHH 公钥放在最后，是因为它属于一个技术拔高，希望大家在系统的学习了 Kali-Linux 内容之后，可以更...
+Android Lint 的工作过程比较简单，一个基础的 Lint 过程由 Lint Tool（检测工具），Source Files（项目源文件） 和 lint.xml（配置文件） 三个部分组成，Lint Tool 读取 Source Files，根据 lint.xml 配置的规则（issue）输出结果（如下图） ... 上图的例子是在 ScrollView 的第一层子元素中设置了高度为 matc...
 
-FreeBuf / i春秋学院3 小时前
+掘金 / Kayo2 小时前
 
-[keep-loader for webpack](https://juejin.im/entry/59ca222651882525ed2b5168)
+[从零开始构建 React 应用（四）客户端渲染](https://segmentfault.com/a/1190000011512325)
 -----------------
 
-注意：打包的时候，keep-loader 的 keep 参数的值代表当前打包环境 ... keep-loader 会根据这个环境参数决定打包过程保留哪些代码 ... keep-loader 实在构建过程中处理 js 源码，而不是在执行过程中。
+上文讲到服务端输出 hello world，这次我们加入 react，服务端输出 html，让 js 去进行客户端渲染页面 ... 首先说一下为什么使用 hydrate 而不是 render，这个是 React 16 版本中的一个变更，hydrate 主要是用于给服务端渲染出的 HTML 结构进行 「注水」，由于新版本中 ssr 出的 dom 节点不再带有 data-react，为了能尽可能复用 ssr 的 HTML 内容，所以需要使用新的 h...
 
-掘金 / lazydu3 小时前
+Segmentfault / devlee2 小时前
 
-[PHP 的命名空间底层实现](https://juejin.im/entry/59ca20826fb9a00a42477f81)
+[极乐技术周报 (第三十期)](https://juejin.im/entry/59dde48cf265da432b49cccb)
 -----------------
 
-下面具体看下编译过程，namespace 语法被编译为 ZEND_AST_NAMESPACE 类型的语法树节点，它有两个子节点：child[0] 为命名空间的名称、child[1] 为通过 {} 方式定义时包裹的语句 ... 编译完 namespace 声明语句后接着编译下面的语句，此后定义的类、函数、常量均属于此命名空间，直到遇到下一个 namespace 的定义，接下来继续分析下这三种类型编译过程中有何不同之处 .
 
-掘金 / wujunze3 小时前
 
-[数据竞争背后的思考：我们如何对待未来新石油？](http://dataunion.org/31291.html)
+掘金 / 极乐君2 小时前
+
+[探索推荐引擎内部的秘密 第 1 部分： 推荐引擎初探](https://juejin.im/entry/59dde352f265da43294d087a)
 -----------------
 
-基于商业竞争的考虑，具有数据优势的平台 (包括社交平台、电商平台、内容平台等) 倾向于将 「数据」 资源作为竞争优势在自有体系与合作伙伴之间传导，数据孤岛 (data island) 由此形成，特别是在移动互联网时代，APP 具有天生的隔离优势，数据抓取方在全网抓取更为困难 ... 新浪在微博用户数据的整个生命周期中持续投入，才使得无数条单个用户数据组合具有了数据平台价值，如新浪法律专家王磊博士曾指出，「数据的...
 
-数盟 / Hunter3 小时前
 
-[插件化中 Classloader 的加载 dex 分析](https://juejin.im/entry/59ca1d2d6fb9a00a616f496c)
+掘金 / 膜法小编2 小时前
+
+[个人数据泄露的问题又双叒叕上头条了](http://www.freebuf.com/column/150284.html)
 -----------------
 
-类加载器在尝试自己去查找某个类的字节代码并定义它时，会先代理给其父类加载器，由父类加载器先去尝试加载这个类，依次类推 ... 在前面介绍类加载器的代理模式的时候，提到过类加载器会首先代理给其它类加载器来尝试加载某个类 ... 这就意味着真正完成类的加载工作的类加载器和启动这个加载过程的类加载器，有可能不是同一个。
+南方舆情选取 2016—2017 年国内舆论关注度最高的五大典型事件，分析网友在社交平台上的议论数据发现，网民对教育、家庭类信息的泄露较为敏感 ... 综合公安部的权威发布与网友看法，个人信息泄露多发生于对旧手机的不当处置上 ... 实名制的智能手机成为人们社交、娱乐、支付甚至工作的 「解决终端」，但一旦手机遗失或需要维修、换新，就可能为不法分子利用，成为个人信息泄露的源头。
 
-掘金 / RXlee3 小时前
+FreeBuf / 爱加密1232 小时前
 
-[Kubernetes Dashboard 1.7.0 部署二三事](http://tonybai.com/2017/09/26/some-notes-about-deploying-kubernetes-dashboard-1-7-0/?utm_source=rss&utm_medium=rss&utm_campaign=some-notes-about-deploying-kubernetes-dashboard-1-7-0)
+[用 Python 对鹿晗、关晓彤微博进行情感分析](https://juejin.im/entry/59dddbfff265da4304059a24)
 -----------------
 
-截至本文撰写时，K8s 发布最新稳定版是 v1.7.6，而与之配套的 Dashboard 则是 v1.7.0 ... 最初在部署规划时，我选择了 Kubernetes v1.7.6+ dashboard v1.6.3 的组合 ... 1.7.0 版本 dashboard 主要强化了安全性，增加了登录页面和相关菜单项，并增加了一个 kubernetes-dashboard-init-amd64 init 容器。
+新浪作为一个大厂，怎么会不推出新浪微博 API 呢，面向开发者新浪有自己的开放平台，这里是 Python 调用微博 API 的方法，下面是通过登录 App_key 和 App_secret 方式访问微博 API 的代码，代码是基于 py2 的 ... 登录微博后，进入到鹿晗公布恋情的微博中去，_(:зゝ∠)_ 已经有 200w + 评论了，可以看到安静的微博下粉丝们不安的心 ... 在鹿晗的微博下面出现了大量的祝福、支持、一起等...
 
-Tony Bai / bigwhite3 小时前
+掘金 / 刺客爱学习3 小时前
 
-[Substr 函数助你免杀 PHP 脚本](http://www.freebuf.com/column/149149.html)
+[替换掉 Visual Studio Code（丑陋的）的新版图标](https://juejin.im/entry/59dddb0d51882578b9568bfe)
 -----------------
 
-Oh，No，没有检测出来，不过这很正常，完美与性能不能同时具备 ... 上一张图：360 网站卫士、安全狗、D 盾同时安装在服务器上，都扫描一下网站目录，均没有报警。
 
-FreeBuf / i春秋学院4 小时前
+
+掘金 / mdluo3 小时前
 
