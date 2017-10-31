@@ -15,7 +15,6 @@ sudo apt-get install libdbus-1-dev
 
 - [`error while loading shared libraries: xxx.so.x`](http://www.cnblogs.com/lidabo/p/3935250.html)
 
-
 ```bash
 # cat /etc/ld.so.conf
 include ld.so.conf.d/*.conf
