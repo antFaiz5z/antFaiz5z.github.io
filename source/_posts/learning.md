@@ -1,5 +1,5 @@
 ---
-title: 最近学习
+title: 学习日记2
 comments: true
 toc: true
 date: 2017-12-18 16:51:23
@@ -7,7 +7,7 @@ categories: Linux
 tags: others
 ---
 
-## [struct cred](http://blog.csdn.net/lhj0711010212/article/details/8521377)
+## [cred](http://blog.csdn.net/lhj0711010212/article/details/8521377)
 
 ## [systemd](https://www.ibm.com/developerworks/cn/linux/1407_liuming_init3/)
 

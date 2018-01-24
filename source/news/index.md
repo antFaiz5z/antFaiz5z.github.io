@@ -1,77 +1,74 @@
 ---
 title: News not know
-date: 2017-12-18 16:05:15
+date: 2018-01-24 09:25:17
 ---
-[SSRF 学习之路](http://www.freebuf.com/column/157466.html)
+[人面马（APT34）组织对中东地区进行攻击的最新动向通报](http://www.freebuf.com/articles/paper/160880.html)
 -----------------
 
-上周梳理 XXE 相关知识的时候，发现可以利用 XXE 进行 SSRF 探测内网和入侵内网站点，所以本周便补充梳理下 SSRF 的知识 ... 这个任务需要有 SmartTV 的靶场才能进行学习，但是该任务仅是用来说明可以使用 XXE 中的 SSRF 进行站点或应用漏洞的利用，这里我没有按照该任务中要求对 SmartTV 的拒绝服务漏洞进行利用，而是用之前的例子对内网站点的 SQL 注入漏洞进行利用 ... 以上讲述的是 SSRF 的一...
+人面马（APT34）组织主要使用鱼叉钓鱼进行攻击，诱饵文件主要为 Office 文档、chm 等 ... 该组织近几年攻击活动频繁，攻击目标主要在中东地区，善于使用杀毒软件极难检出的脚本或 Word 文档当前锋，接着用杀软极难检出的 c# 语言或 java 语言编写的远控木马进行攻击，攻击手法高明 ... 该组织既擅长使用定向攻击，也喜欢利用钓鱼邮件的方式进行广撒网式攻击，非攻击目标内的普通人群也极易中招，因此...
 
-FreeBuf / 漏斗社区6 分钟前
+FreeBuf / 腾讯电脑管家14 小时前
 
-[SubLime Text 3 之配置 Python 快捷键](http://www.freebuf.com/column/157461.html)
+[技术讨论 | 一次尚未完成的薅羊毛行动](http://www.freebuf.com/articles/web/156737.html)
 -----------------
 
-首先需要安装 Python，访问地址 https://www.python.org，下载 Python，无脑点击下一步安装即可 ... 接下来安装 SublimeREPL，这个插件的作用是控制 Python 的输入，要绑定快捷键输入输出就要安装这个插件 ... 首先配置 Python 编译模块，让编辑器能能解析 Python 代码。
+为什么要让你扫呢，因为每个门店二维码是绑定他们店的 id 的，这也是在第二节中我说的要修改 storeId，不然会预约错门店 ... 我估计也是因为这个活动这个漏洞，导致很多人来伪冒领取，店员所以要多确认一下一脸懵逼，我赶紧按下 home 键，然后一脸懵逼的说我已经关掉页面了，没看是否跳转 ... 到上面为止，突然就结束了，没有后续实现的过程，因为还没成功，所以发出来也让大家一起讨论指点下。
 
-FreeBuf / ellenZ34 分钟前
+FreeBuf / 西毒若相惜14 小时前
 
-[挖洞经验 | Facebook 的手机扫码登录漏洞](http://www.freebuf.com/articles/terminal/157057.html)
+[前端每周清单第 48 期：Slack Webpack 构建优化，CSS 命名规范与用户追踪，Vue.js 单元测试](http://www.infoq.com/cn/news/2018/01/arch-weekly-48?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-Facebook 最近推出了忘记密码的手机登录功能，我发现该功能中的二维码扫描存在漏洞，可以利用其进行 CSRF 攻击，劫持其它 Facebook 账户 ... 当我的手机中跳出这个二维码扫描登录界面时，我就想尝试对它进行一些安全测试 ... NND，向 Facebook 上报该漏洞后，经过 3 天多时间的等候，他们竟然说我的漏洞已经有人上报了，而且还不会给我任何奖励，唉，也没关系了，就当是练练手。
 
-FreeBuf / clouds1 小时前
 
-[Node 应用内存泄漏分析方法论与实战](https://segmentfault.com/a/1190000012472401)
+InfoQ / 王下邀月熊14 小时前
+
+[PCF 2.0 平台扩展：包含容器和 Serverless](http://www.infoq.com/cn/news/2018/01/PCF2BringsContainersServerless?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-内存泄漏： 是指程序中己动态分配的堆内存由于某种原因未释放或无法释放，通常是应用层不合理的逻辑代码引起的 ... 定位到是内存泄漏之后，还需要进一步排查具体是什么代码导致了内存泄漏 ... 从刚才的案例中可以看出来，内存泄漏最典型的现象就是内存占用率会随着时间的推移而逐步上升，就算没有流量了，内存占用率也不会下降。
+Pivotal Cloud Foundry（PCF）2.0 版本是平台的一次意义重大的扩展。
 
-Segmentfault / 醉春风2 小时前
+InfoQ / Tim Hodkinson14 小时前
 
-[XCTF 联赛创始人诸葛建伟荣膺 WitAwards2017「年度安全人物」](http://www.freebuf.com/column/157438.html)
+[最近 Npm 的意外事件暴露了安全漏洞](http://www.infoq.com/cn/news/2018/01/npm-incident-spam-vulnerability?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-对于自己荣获年度安全人物，诸葛建伟坦言，这对自己不仅仅是一份惊喜，还是一份沉甸甸的责任，也会激励他继续前行，投身于网络安全人才的培养事业 ... 2010 年 12 月，诸葛建伟与清华大学网络与信息安全实验室段海新教授共同创建了蓝莲花（Blue-Lotus）战队，取名蓝莲花的寓意是寄托着追求自由、永不凋零的传统黑客与竞技精神，由诸葛建伟担任领队老师 ... 作为亚洲第一攻防赛事——XCTF 国际网络攻防联...
+最近，npm 注册库经历了一次运维的意外事件，导致一些被高度依赖的包变得不可用，如 require-from-string ... 这个意外事件非常易于修复，但是它暴露了一个较为严重的安全漏洞，借助该漏洞能够尝试将恶意代码注入到使用 npm 的项目中。
 
-FreeBuf / XCTF20172 小时前
+InfoQ / Sergio De Simone14 小时前
 
-[超详细的 Java 面试题总结（二）之 Java 基础知识](https://juejin.im/entry/5a33ba5f5188256f6122a849)
+[英特尔推出 49 量子比特芯片以加入量子统治权大战](http://www.infoq.com/cn/news/2018/01/intel-49-qubit-quantum-chip?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-与进程不同的是同类的多个线程共享同一块内存空间和一组系统资源，所以系统在产生一个线程，或是在各个线程之间作切换工作时，负担要比进程小得多，也正因为如此，线程也被称为轻量级进程 ... 线程和进程最大的不同在于基本上各进程是独立的，而各线程则不一定，因为同一进程中的线程极有可能会相互影响 ... 同时是因为实际上多线程程序中的多个线程实际上是一个线程执行一会然后其他的线程再执行，并不是很多书籍所谓的...
 
-掘金 / Snailclimb3 小时前
 
-[学生个人信息保护不容忽视，教育部发文全面清理和规范](http://www.freebuf.com/column/157422.html)
+InfoQ / Sergio De Simone14 小时前
+
+[微服务架构时代，运维体系建设为什么要以「应用」为核心？](http://www.infoq.com/cn/news/2018/01/micro-service-operation?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-各省（区、市）教育部门要组织所辖市县教育部门及所属各级各类学校在 12 月 10 日前，全面排查学生资助公示信息，原则上要将超过公示期限的学生资助信息，从教育部门和学校官网上全部撤下 ... 各地各校公示学生资助信息时，要严格遵循国家有关个人信息保护的相关法规制度，坚持信息简洁、够用原则，公示受助学生姓名、学校、院系、年级、专业、班级等基本信息，不得将学生身份证件号码、家庭住址、电话号码、出生日期等个人敏...
+本文从这几个方面来讲：应用的起源、应用模型和应用关系模型建模以及为什么要这样做 ... 最终希望，在微服务的架构模式下，我们的运维视角一定转到应用这个核心概念上来，一切要从应用的角度来分析和看待问题。
 
-FreeBuf / 世平信息SPINFO3 小时前
+InfoQ / 赵成14 小时前
 
-[Scriptlets 攻击：一种利用 Excel 的新攻击方式](http://www.freebuf.com/articles/system/156900.html)
+[改善敏捷实施](http://www.infoq.com/cn/news/2018/01/improving-adoption-agile?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-当我们将该文件提交给 Virustotal 上扫描时，反病毒软件对该文件的检测率比较低，这表明我们发现了一种新的、未知的攻击技术 ... 从这个角度来看，这种攻击看起来与 DDE 攻击方法非常类似，DDE 攻击是最近比较流行的 Office 文件利用技术，通过微软的动态数据交换（Dynamic Data Exchange）功能来执行外部代码 ... 为了演示这一过程，我们调试了 Excel 程序，当用户选择 “更新...
 
-FreeBuf / 淼淼兮与怀3 小时前
 
-[互联网创业致富的秘诀](https://wanqu.co/p/6029)
+InfoQ / Ben Linders14 小时前
+
+[微软正式发布 PowerShell Core 6.0](http://www.infoq.com/cn/news/2018/01/powershell-core-ga?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-原链 www.wired.com · 6 分钟读完这是根据 Twitter 与 Medium 创始人 Ev Williams 在 2013 年的一个演讲总结的：抓住某个人类已存在了许久的欲望，然后用科技的手段除掉几个中间步骤，更快地满足这个欲望。
-比如 Uber，古往今来人类都希望能从 A 点到达 B 点，现在一个按键就能实现。把七宗罪都列出来，每个人类的恶性都能做成一家（或多家）独角兽：）
+该版本是开源的，支持多种平台（Windows、macOS、Linux），是为异构环境和混合云而构建的。
 
-推荐...
+InfoQ / Steef-Jan Wiggers14 小时前
 
-湾区日报 / 湾区日报第1085期 2017/12/183 小时前
-
-[快讯 | Windows 10 系统预装密码管理器，可能被黑客利用获取用户密码](http://www.freebuf.com/news/157388.html)
+[文章： 深入浅出谈人脸识别技术](http://www.infoq.com/cn/articles/deep-learning-face-recognition?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
-日前，Google 白帽黑客 Tavis Ormandy 表示，某些 Windows 10 系统中预装了第三方密码管理器应用程序，可能被黑客利用，远程窃取用户凭据 ... 后来，Google Project Zero 白帽黑客 Tavis Ormandy 证实，他在自己的 Windows 10 系统上发现了这款预装的 Keeper Password Manager 密码管理应用程序 ... 如果用...
 
-FreeBuf / AngelaY4 小时前
+
+InfoQ / 陶辉15 小时前
 
