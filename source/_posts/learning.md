@@ -1,5 +1,5 @@
 ---
-title: 学习日记2
+title: 嵌入式Linux学习
 comments: true
 toc: true
 date: 2017-12-18 16:51:23
