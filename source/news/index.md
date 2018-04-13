@@ -1,74 +1,74 @@
 ---
 title: News not know
-date: 2018-02-02 11:55:59
+date: 2018-04-13 23:00:11
 ---
-[快讯 | 韩国发布新在野 Flash 0day 漏洞警告：朝鲜黑客正在利用](http://www.freebuf.com/vuls/161995.html)
+[20 Laravel Eloquent Tips and Tricks](https://laravel-news.com/eloquent-tips-tricks)
 -----------------
 
-韩国计算机应急响应小组（KR-CERT）目前发出了关于新在野 Flash 0day 漏洞的警告 ... 韩国安全企业 Hauri Inc. 的安全研究员 Simon Choi 表示，朝鲜的黑客行动者已经成功利用了这个 0day 漏洞，他们其实自 2017 年 11 月中旬就开始使用这个方法进行攻击 ... Adobe 目前已经得到了报告，CVE-2018-4878 漏洞利用已经出现，朝鲜黑恶看正在应用这...
+Eloquent ORM seems like a simple mechanism, but under the hood, there’s a lot of semi-hidden functions and less-known ways to achieve more with it.
 
-FreeBuf / Elaine_z14 小时前
+Laravel News / PovilasKorop2 小时前
 
-[Python 无损音乐搜索引擎](http://www.freebuf.com/geek/161418.html)
------------------
-
-研究了一段时间酷狗音乐的接口，完美破解了其 vip 音乐下载方式，想着能更好的追求开源，故写下此篇文章，本文仅供学习参考 ... 这个接口通过传递关键字，其返回的是一段 json 数据，数据包含音乐名称、歌手、专辑、总数据量等信息，当然最重要的是数据包含音乐各个品质的 hash ... 只要将音乐的 hash+key 添加到 api_url ,get 提交过去，就能返回一段 json 数据，数据中就包括了音乐的下载链接...
-
-FreeBuf / chinapython15 小时前
-
-[那些工作之外的技术挣钱方式](https://juejin.im/entry/5a73baf3f265da4e853d280f)
------------------
-
-本文首发于 SkySeraph 博客（ skyseraph.com ），版权归作者所有，欢迎转载，但未经作者同意必须保留此段声明，且在文章页面明显位置给出原文连接，否则保留追究法律责任的权利。
-
-掘金 / SkySeraph16 小时前
-
-[Android 自己开发的消息事件小项目 DBus](https://juejin.im/entry/5a73baec6fb9a0633b20dd9c)
------------------
-
-b、方法的返回值任意，可以是 void、int、String 等 ... 4、使用注解方式，有以下规则：a、关闭方法名限定开关：DBus.isUseMethodNameFind(false) ... 如果此方法的注解 port 值与发送处 DData 对象的 port 值一致，才能收到发送的消息。
-
-掘金 / code小生16 小时前
-
-[在美国政府之前，英特尔提前告知中国巨头企业关于 CPU 漏洞的信息](http://www.freebuf.com/news/161598.html)
------------------
-
-在告知美国政府之前，英特尔曾警告中国企业有关臭名昭著的 Meltdown 和 Spectre 处理器漏洞问题 ... 这一披露时间表提出了一种可能性，即在美国政府和公众知晓英特尔 CPU 漏洞之前，中国政府的某些部门可能已经了解了这些信息 ... 英特尔和谷歌安全安全人员以及其他发现处理器缺陷的团队致力于解决这个漏洞，当然还有 PC 制造商尤其是大型的 OEM 厂商以及云计算公司，包括联想、微软、亚马逊和 ARM。
-
-FreeBuf / Andy16 小时前
-
-[SpringBoot 中发送 QQ 邮件](https://segmentfault.com/a/1190000013092374)
------------------
-
-SMTP 协议全称为 Simple Mail Transfer Protocol，译作简单邮件传输协议，它定义了邮件客户端软件于 SMTP 服务器之间，以及 SMTP 服务器与 SMTP 服务器之间的通信规则 ... 就是说 aaa@qq.com 用户先将邮件投递到腾讯的 SMTP 服务器这个过程就使用了 SMTP 协议，然后腾讯的 SMTP 服务器将邮件投递到网易的 SMTP 服务器这个过程也依然使用了 SMTP 协议，SMTP 服务器...
-
-Segmentfault / 江南一点雨16 小时前
-
-[Nodejs：UDP 极简入门例子](https://juejin.im/post/5a73b4c26fb9a063421470f1)
+[Composer v1.6.4 is Released With a Security Fix](https://laravel-news.com/composer-v1-6-4-is-released-with-a-security-fix)
 -----------------
 
 
 
-掘金 / 程序猿小卡_casper16 小时前
+Laravel News / Eric L. Barnes2 小时前
 
-[springcloud(十二)：使用 Spring Cloud Sleuth 和 Zipkin 进行分布式链路跟踪](https://juejin.im/post/5a73b3746fb9a0635d0bec32)
+[Drupal 远程代码执行漏洞 (CVE-2018-7600) 分析](http://blog.nsfocus.net/cve-2018-7600-analysis/)
 -----------------
 
-现今业界分布式服务跟踪的理论基础主要来自于 Google 的一篇论文《Dapper, a Large-Scale Distributed Systems Tracing Infrastructure》，使用最为广泛的开源实现是 Twitter 的 Zipkin，为了实现平台无关、厂商无关的分布式服务跟踪，CNCF 发布了布式服务跟踪标准 Open Tracing ... Zipkin 是一个开放源...
+近日，流行的开源内容管理框架 Drupal 曝出一个远程代码执行漏洞，漏洞威胁等级为高危，攻击者可以利用该漏洞执行恶意代码，导致网站完全被控制 ... 可见，在 drupal 中，我们不需要直接写 html 表单，而是先创建一个数组，表单呈现引擎通过位于 \ drupal\core\lib\Drupal\Core\Form\FormBuilder.php 文件中的 buildForm 方法构造出一个名为 $form 表单，...
 
-掘金 / ityouknow16 小时前
+绿盟科技博客 / 高瑞强3 小时前
 
-[疑似蔓灵花 APT 团伙钓鱼邮件攻击分析](http://www.freebuf.com/articles/paper/161429.html)
+[腾讯 AI Lab 西雅图实验室负责人俞栋：语音识别领域的现状与进展](https://zhuanlan.zhihu.com/p/35648321)
 -----------------
 
-近期，360 安全监测与响应中心协助用户处理了多起非常有针对性的邮件钓鱼攻击事件，发现了客户邮件系统中大量被投递的钓鱼邮件，被攻击的企业局限于某个重要敏感的行业 ... 360 威胁情报中心与 360 安全监测与响应中心在本文中对本次的钓鱼邮件攻击活动的过程与细节进行揭露，希望企业组织能够引起重视采取必要的应对措施 ... 从此次攻击者实施的钓鱼邮件攻击来看，攻击者显然尝试利用受害企业员工对信息安全的重视...
+加入腾讯不久后，俞栋在机器之心主办的第一届全球机器智能峰会（GMIS 2017）上，发表了主题为《语音识别领域的前沿研究》的演讲，分享了语音领域的四个前沿方向，包括：更有效的序列到序列直接转换模型，鸡尾酒会问题，持续预测与适应的模型，以及前端与后端联合优化等 ... 在 90 年代初期，伯克利大学的研究人员就开始用多层感知机加上隐马尔可夫模型进行语音识别，由于模型由一个传统的生成模型 HMM 和一...
 
-FreeBuf / 360天眼实验室16 小时前
+机器之心4 小时前
 
-[WEB 访问日志自动化分析浅谈](http://www.freebuf.com/articles/security-management/161546.html)
+[ES6 实现之适配器模式 Adapter](https://juejin.im/post/5ad07d2b5188255570066f16)
 -----------------
 
-正则匹配可能是 WAF 经常使用的规则，分析 WEB 访问日志时，也经常会用到，例如可执行脚本在上传目录下 (例如 / images/cmd.aspx)，那么这个文件就很有可能是 webshell, 常规的还有 attachments|images|css|uploadfiles 等，还有一些解析漏洞的格式都可以用来匹配 ... 针对威胁情报，在日志分析中，主要用来分析 IP，如果某个 IP 在一段时间内发生过情报，比如出现...
+使用适配器模式之后，原本由于接口不兼容而不能工作的两个对象可以一起工作 ... 举个生活中的例子：港式插头转换器，港式的电器插头比大陆的电器插头体积要大一些 ... Adapter 类继承了 Target，重写 samll 函数，最后通过适配器，把港式 big 转成了大陆的 samll 了。
 
-FreeBuf / 0xExploit17 小时前
+掘金 / 小小小5 小时前
+
+[Spring Cloud OAuth2 优雅的集成短信验证码登录以及第三方登录](https://segmentfault.com/a/1190000014371789)
+-----------------
+
+基于 SpringCloud 做微服务架构分布式系统时，OAuth2.0 作为认证的业内标准，Spring Security OAuth2 也提供了全套的解决方案来支持在 Spring Cloud/Spring Boot 环境下使用 OAuth2.0，提供了开箱即用的组件 ... 基于上述的场景要求，如何优雅的集成短信验证码登录及第三方登录，怎么样才算是优雅集成呢 ... 在进入流程之前先进行拦截，设置集成认证...
+
+Segmentfault / 李球5 小时前
+
+[重谈 Url 签名](http://blog.kazaff.me/2018/04/13/%E9%87%8D%E8%B0%88url%E7%AD%BE%E5%90%8D/)
+-----------------
+
+没错，很简单不是么，一般大家都选择一种不可逆算法来签名，例如 MD5 ... 问题来了，如果签名的时候没有一个「私钥」的存在，中间人也可以自己重新签名来达到篡改的目的啊 ... 不考虑运营成本的话，短信不错，当客户端提交请求时，会收到一条短信验证码，客户端利用验证码做秘钥进行签名即可，但短信是要钱的。
+
+kazaff's blog5 小时前
+
+[如何绘制一个类甘特图 (附源码)](https://juejin.im/post/5ad076186fb9a028c813465b)
+-----------------
+
+我的业务场景绘制的点不算多，而且 canvas 对于事件挺难处理的 ... 图形绘制都改了，那离重画一张图也没啥区别，毕竟技术难度也算很高 ... 为了增加这一点灵活性，要给组件加太多的复杂度了，而且拍脑袋决定哪里开放绘制肯定做不好。
+
+掘金 / 蚂蚁金服数据体验技术6 小时前
+
+[原生 JavaScript 实现观察者模式](https://juejin.im/entry/5ad06eb0518825482e394dd8)
+-----------------
+
+在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知 ... 维基的定义中涉及到了主动发出通知，按照这种方式，在 angularJS 中的事件广播更是中规中矩，但是其缺点是代码的可维护性较差 ... 如果不进行主动通知，而是在进行对象属性值设置时，调用相关的处理函数，也可达到同等效果。
+
+掘金 / baron男爵6 小时前
+
+[CNCERT 网络安全信息与动态周报 2018 年第 14 期](http://www.freebuf.com/articles/paper/168583.html)
+-----------------
+
+本周境内感染网络病毒的主机数量约为 28.1 万个，其中包括境内被木马或被僵尸程序控制的主机约 19.4 万以及境内感染飞客（conficker）蠕虫的主机约 8.7 万 ... 针对 CNCERT 自主监测发现以及各单位报送数据，CNCERT 积极协调域名注册机构等进行处理，同时通过 ANVA 在其官方网站上发布恶意地址黑名单 ... 本周，CNCERT 协调基础电信运营企业、域名注册服务机构、手机应用商店、各省分中心...
+
+FreeBuf / CNCERT6 小时前
 

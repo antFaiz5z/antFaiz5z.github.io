@@ -1,5 +1,5 @@
 ---
-title: 嵌入式Linux学习
+title: cred,systemd,qemu,yocto,agl
 comments: true
 toc: true
 date: 2017-12-18 16:51:23
