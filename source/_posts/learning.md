@@ -1,10 +1,15 @@
 ---
-title: cred,systemd,qemu,yocto,agl
+title: cred, systemd, qemu, yocto, agl
 comments: true
 toc: true
 date: 2017-12-18 16:51:23
 categories: Linux
-tags: others
+tags: 
+    - cred
+    - systemd
+    - qemu
+    - yocto
+    - agl
 ---
 
 ## [cred](http://blog.csdn.net/lhj0711010212/article/details/8521377)
