@@ -1,74 +1,74 @@
 ---
 title: News not know
-date: 2018-04-13 23:00:11
+date: 2018-07-09 15:26:12
 ---
-[20 Laravel Eloquent Tips and Tricks](https://laravel-news.com/eloquent-tips-tricks)
+[Amass：一款深度子域名枚举工具](http://www.freebuf.com/sectool/176471.html)
 -----------------
 
-Eloquent ORM seems like a simple mechanism, but under the hood, there’s a lot of semi-hidden functions and less-known ways to achieve more with it.
+如果你想自己构建最新版本源码，请确保你的设备配置好了 Go >= 1.10 的开发环境，更多信息请参考 Golang 官网 ... 注意：如果你使用下列选项，amass 将会尝试访问目标基础设施中所有的 IP 地址，并从 TLS 证书中获取更多信息 ... Config :=amass.CustomConfig(&amass.AmassConfig。
 
-Laravel News / PovilasKorop2 小时前
+FreeBuf / Alpha_h4ck26 分钟前
 
-[Composer v1.6.4 is Released With a Security Fix](https://laravel-news.com/composer-v1-6-4-is-released-with-a-security-fix)
+[Italian C++ Conference 2018—Marco Arena](http://isocpp.org/feeder/?FeederAction=clicked&feed=All+Posts&seed=http%3A%2F%2Fisocpp.org%2Fblog%2F2018%2F07%2Fitcppcon18-report&seed_title=Italian+C%2B%2B+Conference+2018%26%238212%3BMarco+Arena)
 -----------------
 
 
 
-Laravel News / Eric L. Barnes2 小时前
+Standard C++ / marcoarena@email.it1 小时前
 
-[Drupal 远程代码执行漏洞 (CVE-2018-7600) 分析](http://blog.nsfocus.net/cve-2018-7600-analysis/)
+[NLP 领域的 ImageNet 时代：词嵌入已死，语言模型当立](https://zhuanlan.zhihu.com/p/39326211)
 -----------------
 
-近日，流行的开源内容管理框架 Drupal 曝出一个远程代码执行漏洞，漏洞威胁等级为高危，攻击者可以利用该漏洞执行恶意代码，导致网站完全被控制 ... 可见，在 drupal 中，我们不需要直接写 html 表单，而是先创建一个数组，表单呈现引擎通过位于 \ drupal\core\lib\Drupal\Core\Form\FormBuilder.php 文件中的 buildForm 方法构造出一个名为 $form 表单，...
+Ruder 同样展示了用语言模型做预训练模型的效果，并表示 NLP 领域中的「ImageNet」终要到来 ... 在最近几个月，我们也获得了一些实验性证明：语言模型的词嵌入（ELMo）、普遍语言模型精调（ULMiT）和 OpenAI Transformer 已经实验性地证明了语言模型能用于预训练任务，正如上图所示的 ULMFiT ... 这一步取得的变化，NLP 实践者很可能在一年后下载预处理的语...
 
-绿盟科技博客 / 高瑞强3 小时前
+机器之心1 小时前
 
-[腾讯 AI Lab 西雅图实验室负责人俞栋：语音识别领域的现状与进展](https://zhuanlan.zhihu.com/p/35648321)
+[浏览器攻击框架 BeEF Part 2：初始化控制](http://www.freebuf.com/articles/web/176139.html)
 -----------------
 
-加入腾讯不久后，俞栋在机器之心主办的第一届全球机器智能峰会（GMIS 2017）上，发表了主题为《语音识别领域的前沿研究》的演讲，分享了语音领域的四个前沿方向，包括：更有效的序列到序列直接转换模型，鸡尾酒会问题，持续预测与适应的模型，以及前端与后端联合优化等 ... 在 90 年代初期，伯克利大学的研究人员就开始用多层感知机加上隐马尔可夫模型进行语音识别，由于模型由一个传统的生成模型 HMM 和一...
+整个过程分为三个步骤，第一步是初始化控制，第二步是持续控制，第三步是攻击 ... 初始化控制也就是想办法让 BeEF 服务器勾子（还记得上一章的 hook.js 吗）在用户浏览器中运行，勾子初次运行会收集一些有用的信息返回给服务器，并做好后续准备 ... 在使用 BeEF 框架攻击时，我们首要的目的是让目标浏览器执行初始化的代码（勾子）。
 
-机器之心4 小时前
+FreeBuf / NT002 小时前
 
-[ES6 实现之适配器模式 Adapter](https://juejin.im/post/5ad07d2b5188255570066f16)
+[Android 开发技术周报 Issue#187](https://androidweekly.io/android-dev-weekly-issue-187/)
 -----------------
 
-使用适配器模式之后，原本由于接口不兼容而不能工作的两个对象可以一起工作 ... 举个生活中的例子：港式插头转换器，港式的电器插头比大陆的电器插头体积要大一些 ... Adapter 类继承了 Target，重写 samll 函数，最后通过适配器，把港式 big 转成了大陆的 samll 了。
+冯老师发起了一个旨在减少 Android 生态碎片化的公益项目，用于收集国内 Android 设备 / ROM 与 Android SDK 之间存在的兼容性问题 ... 一个 Android 上的页面切换动画库，它可以让一些复杂的、自定义的页面切换动画更加简单地实现出来，节省开发成本 ... Kotlin 抱上 Google 的大腿也快一年了，而且 Kotlin 的版本最近也发了 1.2.30 的新版...
 
-掘金 / 小小小5 小时前
+Android开发技术周报 / 脉脉不得语3 小时前
 
-[Spring Cloud OAuth2 优雅的集成短信验证码登录以及第三方登录](https://segmentfault.com/a/1190000014371789)
+[没有大冷门也不用上天台，这是一场专属于黑客的世界杯](http://www.freebuf.com/news/176933.html)
 -----------------
 
-基于 SpringCloud 做微服务架构分布式系统时，OAuth2.0 作为认证的业内标准，Spring Security OAuth2 也提供了全套的解决方案来支持在 Spring Cloud/Spring Boot 环境下使用 OAuth2.0，提供了开箱即用的组件 ... 基于上述的场景要求，如何优雅的集成短信验证码登录及第三方登录，怎么样才算是优雅集成呢 ... 在进入流程之前先进行拦截，设置集成认证...
+WCTF 2018（世界黑客大师赛），一场号称黑客世界杯的赛场上，没有观众、没有进球的欢呼、也没有大冷门，但却总能让这么一群人热血沸腾 ... 第三天的分享过程评分出来后并没有对前三名次序造成影响，1276 分的最高分让这只日本战队拿到「黑客世界杯」的冠军，50000 美金抱回家 ... 俄罗斯世界杯堪称冷门最多的一届，但 CTF 赛事却没有足球那么多的外界因素，主要还是比拼整体实力，所以基本也没有什么大...
 
-Segmentfault / 李球5 小时前
+FreeBuf / Andy.i3 小时前
 
-[重谈 Url 签名](http://blog.kazaff.me/2018/04/13/%E9%87%8D%E8%B0%88url%E7%AD%BE%E5%90%8D/)
+[数据科学面试终极指南（二）](https://juejin.im/post/5b3f80a7e51d4519873f13b7)
 -----------------
 
-没错，很简单不是么，一般大家都选择一种不可逆算法来签名，例如 MD5 ... 问题来了，如果签名的时候没有一个「私钥」的存在，中间人也可以自己重新签名来达到篡改的目的啊 ... 不考虑运营成本的话，短信不错，当客户端提交请求时，会收到一条短信验证码，客户端利用验证码做秘钥进行签名即可，但短信是要钱的。
+数据科学类招聘会很少，虽然哈佛大学与斯坦福大学举办的计算机科学招聘会为在校生提供了不少数据科学职位，但是就算参加当地数据科学社区主办的聚会也比参加招聘会强得多 ... KDD 大会 KDD，全称数据科学知识探索大会，也是大型数据科学会议，还是引领数据科学理论研讨与教学的组织 ... 和数据科学家约谈时，可以听取他们的建议，了解最新的业内动态，还可以扩大数据科学人脉圈，了解业内人士怎样运作数据科学项目...
 
-kazaff's blog5 小时前
+掘金 / 呆鸟4 小时前
 
-[如何绘制一个类甘特图 (附源码)](https://juejin.im/post/5ad076186fb9a028c813465b)
+[五分钟看懂 UML 类图与类的关系详解](https://juejin.im/post/5b42d4396fb9a04fbc21d7dd)
 -----------------
 
-我的业务场景绘制的点不算多，而且 canvas 对于事件挺难处理的 ... 图形绘制都改了，那离重画一张图也没啥区别，毕竟技术难度也算很高 ... 为了增加这一点灵活性，要给组件加太多的复杂度了，而且拍脑袋决定哪里开放绘制肯定做不好。
+其中关联又分为一般关联关系和聚合关系 (Aggregation)，合成关系 (Composition) ... 关联 (Association) : 对象之间一种引用关系，比如客户类与订单类之间的关系 ... 聚合和组合的区别在于：聚合关系是「has-a」关系，组合关系是「contains-a」关系。
 
-掘金 / 蚂蚁金服数据体验技术6 小时前
+掘金 / AskHarries4 小时前
 
-[原生 JavaScript 实现观察者模式](https://juejin.im/entry/5ad06eb0518825482e394dd8)
+[基于 Koa.js 的微信工具类小记](https://juejin.im/post/5b417ed1f265da0f8c029a4b)
 -----------------
 
-在此种模式中，一个目标对象管理所有相依于它的观察者对象，并且在它本身的状态改变时主动发出通知 ... 维基的定义中涉及到了主动发出通知，按照这种方式，在 angularJS 中的事件广播更是中规中矩，但是其缺点是代码的可维护性较差 ... 如果不进行主动通知，而是在进行对象属性值设置时，调用相关的处理函数，也可达到同等效果。
+关于微信公众号开发和小程序开发的教程其实网上已经有很多了，但是基于 koa.js 开发的教程其实不多，于是接下来对踩坑的经历做一些小结 ... 2. 获取 api_ticket 生成签名之前必须先了解一下 jsapi_ticket，jsapi_ticket 是公众号用于调用微信 JS 接口的临时票据 ... 获取 jsapi_ticket 的 api 调用次数非常有限，频繁刷新 jsapi_ticket 会导致 api 调用...
 
-掘金 / baron男爵6 小时前
+掘金 / evont4 小时前
 
-[CNCERT 网络安全信息与动态周报 2018 年第 14 期](http://www.freebuf.com/articles/paper/168583.html)
+[函数式编程之 Promise 的奇幻漂流](https://juejin.im/post/5b41c159e51d4519277b6a39)
 -----------------
 
-本周境内感染网络病毒的主机数量约为 28.1 万个，其中包括境内被木马或被僵尸程序控制的主机约 19.4 万以及境内感染飞客（conficker）蠕虫的主机约 8.7 万 ... 针对 CNCERT 自主监测发现以及各单位报送数据，CNCERT 积极协调域名注册机构等进行处理，同时通过 ANVA 在其官方网站上发布恶意地址黑名单 ... 本周，CNCERT 协调基础电信运营企业、域名注册服务机构、手机应用商店、各省分中心...
+如果你看了那篇 《在你身边你左右 -- 函数式编程别烦恼》 会更容易理解 ... （2）然后执行 executor(resolve, reject) ... 最后总结一下，Promise 的功能很强大，就是少年派的奇幻漂流一样。
 
-FreeBuf / CNCERT6 小时前
+掘金 / 17点4 小时前
 
