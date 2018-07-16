@@ -1,5 +1,5 @@
 ---
-title: cred, systemd, qemu, yocto, agl
+title: cred, systemd, QEMU, Yocto, AGL
 comments: true
 toc: true
 date: 2017-12-18 16:51:23
@@ -7,9 +7,9 @@ categories: Linux
 tags: 
     - cred
     - systemd
-    - qemu
-    - yocto
-    - agl
+    - QEMU
+    - Yocto
+    - AGL
 ---
 
 ## [cred](http://blog.csdn.net/lhj0711010212/article/details/8521377)
@@ -23,7 +23,7 @@ Systemd 是 Linux 系统中最新的初始化系统（init），它主要的设�
 QEMU是一套由法布里斯·贝拉(Fabrice Bellard)所编写的以GPL许可证分发源码的模拟处理器，在GNU/Linux平台上使用广泛。Bochs，PearPC等与其类似，但不具备其许多特性，比如高速度及跨平台的特性，通过KQEMU这个闭源的加速器，QEMU能模拟至接近真实电脑的速度。
 目前，0.9.1及之前版本的qemu可以使用kqemu加速器。在qemu1.0之后的版本，都无法使用kqemu，主要利用qemu-kvm加速模块，并且加速效果以及稳定性明显好于kqemu。
 
-## [yocto](http://blog.csdn.net/qq_28992301/article/details/52872209)
+## [Yocto](http://blog.csdn.net/qq_28992301/article/details/52872209)
 [如何在 Ubuntu 上用 Yocto 创建你自己的嵌入式 Linux 发行版](https://linux.cn/article-8268-1.html?amputm_medium=rss)
 
 ## [AGL](http://docs.automotivelinux.org/docs/devguides/en/dev/)
