@@ -35,7 +35,7 @@ MQTT客户端分为同步客户端和异步客户端.　一般流程如下：
 
 >A value representing an MQTT message. A delivery token is returned to the client application when a message is published. The token can then be used to check that the message was successfully delivered to its destination.
 
-一般用于异步客户端中，token用于记录当前客户端已发送message计数，deliveryToken用于记录确认已发送至服务器的message计数，二者相等即可安全断开客户端与服务器的连接。
+一般用于异步客户端中，token用于记录当前客户端成功发送message所返回的token，若确认message成功发送则使deliveryToken等于当前token，此时即可安全断开客户端与服务器的连接。
 
 # 重要结构体
 
@@ -210,6 +210,8 @@ int MQTTClient_connect(MQTTClient handle, MQTTClient_connectOptions* options)
 
 （Error codes greater than 0 are returned by the MQTT protocol）
 >This function attempts to connect a previously-created client (see MQTTClient_create()) to an MQTT server using the specified options. If you want to enable asynchronous message and status notifications, you must call MQTTClient_setCallbacks() prior to MQTTClient_connect().
+
+建立客户端与服务器的连接。
 
 ## MQTTClient_subscribe
 
@@ -422,10 +424,6 @@ int asyn_sub_with_ssl(Connect_param *param, const char *topic, int qos) {
     printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
            "Press Q<Enter> to quit\n\n", topic, param->client_id, qos);
     MQTTClient_subscribe(client, topic, qos);
-
-    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
-           "Press Q<Enter> to quit\n\n", "/test", param->client_id, qos);
-    MQTTClient_subscribe(client, "/test", qos);
 
     do {
         ch = getchar();
