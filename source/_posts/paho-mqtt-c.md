@@ -54,7 +54,7 @@ MQTT客户端分为同步客户端和异步客户端.　一般流程如下：
 |int |cleansession|布尔值，是否清除session|
 |int |reliable|布尔值。<br>1:上一条message发送完毕才发送下一条；<br> 0:最多允许10条message同时发送|
 |MQTTClient_willOptions * |will|遗嘱选项|
-|onst char * |username|用户名（MQTTv3.1.1提供）|
+|const char * |username|用户名（MQTTv3.1.1提供）|
 |const char * |password|密码（MQTTv3.1.1提供）|
 |int |connectTimeout|连接超时|
 |int |retryInterval|重试间隔|
@@ -132,7 +132,7 @@ MQTT客户端分为同步客户端和异步客户端.　一般流程如下：
 |int   | retained      | 1:MQTT服务器将会保留消息副本，并传送值此主题的新订阅者，新订阅者将会知晓这是MQTT保留的旧消息;<br>0:MQTT服务器不会保留此消息，订阅者认为此为普通消息  |
 |int   | dup           | 布尔值。是否是重复消息  |
 |int   | msgid         | message id  |
-|MQTTProperties|properties|MQTT内容 |
+|MQTTProperties|properties|MQTT属性 |
 
 ```c
 #define MQTTClient_message_initializer { {'M', 'Q', 'T', 'M'}, 1, 0, NULL, 0, 0, 0, 0, MQTTProperties_initializer }
@@ -146,15 +146,42 @@ MQTT客户端分为同步客户端和异步客户端.　一般流程如下：
 int MQTTClient_create(MQTTClient* handle, const char* serverURI, const char* clientId, int persistence_type, void* persistence_context)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient * |    handle | 预先定义好的空client |
+|const char * | serverURI | 服务器地址， 形如： protocol://host:port |
+|const char * | clientId  | client id|
+|int    | persistence_type| 1）MQTTCLIENT_PERSISTENCE_NONE： 在内存中持久化;<br> 2）MQTTCLIENT_PERSISTENCE_DEFAULT: 使用默认持久机制（基于文件系统）;<br>3）MQTTCLIENT_PERSISTENCE_USER： 使用特定应用持久实现，应用应实现MQTTClient_persistence 接口|
+|void * | persistence_context| 对应于persistence_type:<br> 1)应为NULL;<br> 2)应为持久目录路径，若为NULL则使用工作目录;<br> 3)有效的指向MQTTClient_persistence的指针 |
+
+|返回值 |描述|
+|---      |---|
+|MQTTCLIETN_SUCCESS | client创建成功 |
+|[error code]   |  错误码 |
+
+
 >This function creates an MQTT client ready for connection to the specified server and using the specified persistent storage (see MQTTClient_persistence). See also MQTTClient_destroy().
 
-建立新连接。使用参数创建一个client，并将其赋值给之前声明的client
+创建一个有效的client。使用参数创建一个client，并将其赋值给之前声明的client
 
 ## MQTTClient_setCallbacks
 
 ```c
 int MQTTClient_setCallbacks(MQTTClient handle, void* context, MQTTClient_connectionLost* cl, MQTTClient_messageArrived* ma, MQTTClient_deliveryComplete* dc)
 ```
+
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle| 创建成功后有效的client |
+|void* | context| 任意特定应用上下文，传递给回调函数用于访问应用上下文|
+|MQTTClient_connectionLost* | cl | MQTTClient_connectionLost() 回调函数|
+|MQTTClient_messageArrived* | ma | MQTTClient_messageArrived() 回调函数|
+|MQTTClient_deliveryComplete* | dc | MQTTClient_deliveryComplete() 回调函数|
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 成功设置回调函数 |
+|MQTTCLIENT_FAILURE | 发生错误       |
 
 >This function sets the callback functions for a specific client.If your client application doesn't use a particular callback, set the　relevant parameter to NULL. Calling MQTTClient_setCallbacks() puts the　client into multi-threaded mode. Any necessary message acknowledgements and　status communications are handled in the background without any intervention　from the client application. See @ref async for more information.
 
@@ -166,6 +193,22 @@ int MQTTClient_setCallbacks(MQTTClient handle, void* context, MQTTClient_connect
 int MQTTClient_connect(MQTTClient handle, MQTTClient_connectOptions* options)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle| 创建成功后有效的client |
+|MQTTClient_connectOptions* | options | struct，连接选项|
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 成功连接服务器 |
+|<b>1</b>|Connection refused: Unacceptable protocol version|
+|<b>2</b>|Connection refused: Identifier rejected|
+|<b>3</b>|Connection refused: Server unavailable|
+|<b>4</b>|Connection refused: Bad user name or password|
+|<b>5</b>|Connection refused: Not authorized|
+|<b>6-255</b>|Reserved for future use|
+
+（Error codes greater than 0 are returned by the MQTT protocol）
 >This function attempts to connect a previously-created client (see MQTTClient_create()) to an MQTT server using the specified options. If you want to enable asynchronous message and status notifications, you must call MQTTClient_setCallbacks() prior to MQTTClient_connect().
 
 ## MQTTClient_subscribe
@@ -174,12 +217,23 @@ int MQTTClient_connect(MQTTClient handle, MQTTClient_connectOptions* options)
 int MQTTClient_subscribe(MQTTClient handle, const char* topic, int qos)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle | 创建成功后有效的client |
+|const char* | topic | 订阅的主题，可含通配符 |
+|int | qos | quality of service |
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 订阅请求成功 |
+|[error code] | 订阅出现问题 |
+
 >Subscribe is synchronous.  QoS list parameter is changed on return to granted QoSs.Returns return code, MQTTCLIENT_SUCCESS == success, non-zero some sort of error (TBD)
 >This function attempts to subscribe a client to a single topic, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for the subscription (see also MQTTClient_subscribeMany()).
 
 订阅某个主题。
 
-取消订阅函数如下：
+类似地，取消订阅函数如下：
 
 ```c
 int MQTTClient_unsubscribe(MQTTClient handle, const char* topic)
@@ -191,11 +245,23 @@ int MQTTClient_unsubscribe(MQTTClient handle, const char* topic)
 int MQTTClient_subscribeMany(MQTTClient handle, int count, char* const* topic, int* qos)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle | 创建成功后有效的client |
+|int        | count  | 订阅的主题数量 |
+|char* const* | topic | 一组指针，订阅的主题，可含通配符 |
+|int* | qos | 一组指针，quality of service |
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 订阅请求成功 |
+|[error code] | 订阅出现问题 |
+
 >This function attempts to subscribe a client to a list of topics, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for each topic (see also MQTTClient_subscribe()).
 
 同时订阅多个主题。
 
-取消订阅函数如下:
+类似地，取消订阅函数如下:
 
 ```c
 int MQTTClient_unsubscribeMany(MQTTClient handle, int count, char* const* topic)
@@ -207,7 +273,24 @@ int MQTTClient_unsubscribeMany(MQTTClient handle, int count, char* const* topic)
 int MQTTClient_publish(MQTTClient handle, const char* topicName, int payloadlen, void* payload, int qos, int retained, MQTTClient_deliveryToken* dt)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle | 创建成功后有效的client |
+|const char* | topicName | 主题 |
+|int | payloadlen | payload字节数 |
+|void* | payload | payload |
+|int | qos | quality of service |
+|int | retained | 服务器是否保留 |
+|MQTTClient_deliveryToken* | dt | 函数成功返回则赋值一个代表此message的token，若应用未使用delivery tokens，则应置为NULL |
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 成功发布 |
+|[error code] | 发布出现问题 |
+
 >This function attempts to publish a message to a given topic (see also MQTTClient_publishMessage()). An ::MQTTClient_deliveryToken is issued when this function returns successfully. If the client application needs to test for succesful delivery of QoS1 and QoS2 messages, this can be done either asynchronously or synchronously (see @ref async, ::MQTTClient_waitForCompletion and MQTTClient_deliveryComplete()).
+
+对给定主题发布一条message。
 
 ## MQTTClient_publishMessage
 
@@ -215,7 +298,21 @@ int MQTTClient_publish(MQTTClient handle, const char* topicName, int payloadlen,
 int MQTTClient_publishMessage(MQTTClient handle, const char* topicName, MQTTClient_message* msg, MQTTClient_deliveryToken* dt)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle | 创建成功后有效的client |
+|const char* | topicName | 主题 |
+|MQTTClient_message* | msg | 消息 |
+|MQTTClient_deliveryToken* | dt | 函数成功返回则赋值一个代表此message的token，若应用未使用delivery tokens，则应置为NULL |
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 成功发布 |
+|[error code] | 发布出现问题 |
+
 >This function attempts to publish a message to a given topic (see also MQTTClient_publish()). An ::MQTTClient_deliveryToken is issued when his function returns successfully. If the client application needs to test for succesful delivery of QoS1 and QoS2 messages, this can be done either asynchronously or synchronously (see @ref async, ::MQTTClient_waitForCompletion and MQTTClient_deliveryComplete()).
+
+对给定主题发布一条message。
 
 ## MQTTClient_waitForCompletion
 
@@ -223,4 +320,120 @@ int MQTTClient_publishMessage(MQTTClient handle, const char* topicName, MQTTClie
 int MQTTClient_waitForCompletion(MQTTClient handle, MQTTClient_deliveryToken dt, unsigned long timeout)
 ```
 
+|参数类型|参数名|描述|
+|---    |---- |-- |
+|MQTTClient | handle | 创建成功后有效的client |
+|MQTTClient_deliveryToken | dt | Delivery tokens are issued by the publishing functions MQTTClient_publish() and MQTTClient_publishMessage()|
+|unsigned long | timeout | 最大等待时间（毫秒）|
+
+|返回值    |描述|
+|---      |---|
+|MQTTCLIENT_SUCCESS | 成功发布 |
+|[error code] | 发布出现问题 |
+
+
 >This function is called by the client application to synchronize execution of the main thread with completed publication of a message. When called, MQTTClient_waitForCompletion() blocks execution until the message has been successful delivered or the specified timeout has expired. See @ref async.
+
+异步客户端中用于等待message的成功发布。
+
+# 代码示例
+
+```c
+typedef struct param{
+    const char *server_address;
+    const char *trust_store;
+    const char *client_id;
+    int timeout;
+    const char *username;
+    const char *password;
+
+} Connect_param;
+```
+
+## 异步发布
+
+```c
+int asyn_pub_with_ssl(Connect_param *param, const char *topic, const char *payload, int qos) {
+
+    MQTTClient client;
+    MQTTClient_deliveryToken token;
+    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+    MQTTClient_message pubmsg = MQTTClient_message_initializer;
+    MQTTClient_SSLOptions ssl_opts = MQTTClient_SSLOptions_initializer;
+    ssl_opts.trustStore = param->trust_store;
+
+    int rc;
+
+    MQTTClient_create(&client, param->server_address, param->client_id,
+                      MQTTCLIENT_PERSISTENCE_NONE, NULL);
+
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+    conn_opts.ssl = &ssl_opts;
+
+    MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, delivered);
+
+    if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS) {
+        printf("Failed to connect, return code %d\n", rc);
+        exit(EXIT_FAILURE);
+    }
+    pubmsg.payload = (void *) payload;
+    pubmsg.payloadlen = (int) strlen(payload);
+    pubmsg.qos = qos;
+    pubmsg.retained = 0;
+    deliveredtoken = 0;
+    MQTTClient_publishMessage(client, topic, &pubmsg, &token);
+    printf("Waiting for publication of %s\n"
+           "on topic %s for client with ClientID: %s\n",
+           payload, topic, param->client_id);
+    rc = MQTTClient_waitForCompletion(client, token, (unsigned long) param->timeout);
+    //while(deliveredtoken != token);
+    MQTTClient_disconnect(client, 10000);
+    MQTTClient_destroy(&client);
+    return rc;
+}
+```
+
+## 异步订阅
+
+```c
+int asyn_sub_with_ssl(Connect_param *param, const char *topic, int qos) {
+
+    MQTTClient client;
+    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;
+    MQTTClient_SSLOptions ssl_opts = MQTTClient_SSLOptions_initializer;
+    ssl_opts.trustStore = param->trust_store;
+
+    int rc;
+    int ch;
+
+    MQTTClient_create(&client, param->server_address, param->client_id,
+                      MQTTCLIENT_PERSISTENCE_NONE, NULL);
+    conn_opts.keepAliveInterval = 20;
+    conn_opts.cleansession = 1;
+    conn_opts.ssl = &ssl_opts;
+
+    MQTTClient_setCallbacks(client, NULL, connlost, msgarrvd, delivered);
+
+    if ((rc = MQTTClient_connect(client, &conn_opts)) != MQTTCLIENT_SUCCESS) {
+        printf("Failed to connect, return code %d\n", rc);
+        exit(EXIT_FAILURE);
+    }
+    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+           "Press Q<Enter> to quit\n\n", topic, param->client_id, qos);
+    MQTTClient_subscribe(client, topic, qos);
+
+    printf("Subscribing to topic %s\nfor client %s using QoS%d\n\n"
+           "Press Q<Enter> to quit\n\n", "/test", param->client_id, qos);
+    MQTTClient_subscribe(client, "/test", qos);
+
+    do {
+        ch = getchar();
+    } while (ch != 'Q' && ch != 'q');
+
+    MQTTClient_unsubscribe(client, topic);
+    MQTTClient_disconnect(client, 10000);
+    MQTTClient_destroy(&client);
+    return rc;
+}
+```
