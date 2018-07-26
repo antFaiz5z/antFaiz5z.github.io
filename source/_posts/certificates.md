@@ -67,6 +67,10 @@ https就是http加SSL，SSL（security sockets layer，安全套接层）是为�
 
 2. 第三方的数字签名，这个就比较好了，大家都把公钥放在第三方CA那里，通信发起方问CA要双方的公钥，并传给对方。
 
+HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证安全性，之后使用对称密钥加密进行通信来保证效率。（下图中的 Session Key 就是对称密钥）
+
+![How HTTPs works](http://osxg0gzju.bkt.clouddn.com/How-HTTPS-Works.png)
+
 # 数字签名与签名认证 digital signature
 
 发方将原文用哈希算法求得数字摘要，用签名私钥对数字摘要加密得数字签名，发方将原文与数字签名一起发送给接受方。
