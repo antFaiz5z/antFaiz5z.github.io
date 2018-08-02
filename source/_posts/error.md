@@ -7,6 +7,15 @@ categories: Linux
 tags: Linux
 ---
 
+## makefile：变量替换
+
+```makefile
+SRCS := $(wildcard src/*.c)
+OBJS := $(SRCS:%.c=%.o)
+```
+
+`$(SRCS:%.c=%.o)`中不可有空格，否则失效
+
 ## `No package 'dbus-1' found`
 
 ```bash

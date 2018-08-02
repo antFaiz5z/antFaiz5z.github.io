@@ -7,6 +7,14 @@ categories: Others
 tags: Others
 ---
 
+### [消息队列函数(msgget、msgctl、msgsnd、msgrcv)及其范例](https://blog.csdn.net/guoping16/article/details/6584024)
+
+### [gcc编译器 CFLAGS 标志参数说明](http://blog.chinaunix.net/uid-20672257-id-3408132.html)
+
+### [Makefile 使用总结](https://www.cnblogs.com/wang_yb/p/3990952.html)
+
+### [Makefile 中subst、foreach、wildcard、notdir函数](https://blog.csdn.net/bhj1119/article/details/54970794)
+
 ### [C中的volatile用法](https://www.cnblogs.com/reality-soul/p/6140192.html)
 
 ### [Linux: malloc底层实现原理](https://blog.csdn.net/mmshixing/article/details/51679571)
