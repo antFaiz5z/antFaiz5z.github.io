@@ -1,74 +1,74 @@
 ---
 title: News not know
-date: 2018-07-09 15:26:12
+date: 2018-09-05 20:37:38
 ---
-[Amass：一款深度子域名枚举工具](http://www.freebuf.com/sectool/176471.html)
+[用深度学习 DIY 自动化监控系统](https://zhuanlan.zhihu.com/p/43809875)
 -----------------
 
-如果你想自己构建最新版本源码，请确保你的设备配置好了 Go >= 1.10 的开发环境，更多信息请参考 Golang 官网 ... 注意：如果你使用下列选项，amass 将会尝试访问目标基础设施中所有的 IP 地址，并从 TLS 证书中获取更多信息 ... Config :=amass.CustomConfig(&amass.AmassConfig。
+还比较了使用 GPU 多处理进行推断的不同目标检测模型在行人检测方面的性能 ... 在本博文中，我们将学习如何使用目标检测搭建一个简单但有效的监控系统 ... 依据相同的原理，研究人员能够通过使用「对抗眼镜」（adversarial glasses）来避免基于深度学习的监控系统出现错误。
 
-FreeBuf / Alpha_h4ck26 分钟前
+机器之心2 小时前
 
-[Italian C++ Conference 2018—Marco Arena](http://isocpp.org/feeder/?FeederAction=clicked&feed=All+Posts&seed=http%3A%2F%2Fisocpp.org%2Fblog%2F2018%2F07%2Fitcppcon18-report&seed_title=Italian+C%2B%2B+Conference+2018%26%238212%3BMarco+Arena)
+[浪潮成立 Inspur DevOps Lab：以应用开发和平台服务打造开发者生态](http://www.infoq.com/cn/news/2018/09/inspur-devops-lab?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
+-----------------
+
+浪潮将通过 Inspur DevOps Lab，基于云、数优势，聚焦应用开发和平台服务，提供从应用开发、测试、部署到运维的一站式闭环服务，吸引更多开发者加入，逐步形成「融合，开放，共享」的云生态圈。
+
+InfoQ / 张蝉2 小时前
+
+[掘金面试交流群 | 抱团助力秋招](https://juejin.im/post/5b8fa346e51d450e580afd10)
+-----------------
+
+秋招提前批已经基本结束，还没拿到 offer 的同学不要慌，稳住，我们能赢。
+
+掘金 / yuzu柚子茶3 小时前
+
+[如何成为一名数据科学家？听听来自 Netfix 的老司机怎么说](http://dataunion.org/33813.html)
+-----------------
+
+业界对数据科学这一概念难以达成一致有很多原因，其中一点就是，现在大范围内的岗位都可能涉及数据科学，并且这些岗位的职责都不尽相同 ... 只有直接与某个公司的数据科学家交流才能了解该公司是如何看待数据科学的 ... 如果没有数据科学家的工作经验，想要胜任这部分工作是不容易的，因为包括 Kaggle 项目在内的大多数实践项目都是从已经定义明确的数据科学问题开始的。
+
+数盟 / Hunter3 小时前
+
+[[算法总结] 13 道题搞定 BAT 面试——字符串](https://juejin.im/post/5b8f9aed6fb9a05d2e1b75d9)
+-----------------
+
+谈到字符串问题，不得不提的就是 KMP 算法，它是用来解决字符串查找的问题，可以在一个字符串（S）中查找一个子串（W）出现的位置 ... BM 算法也是一种精确字符串匹配算法，它采用从右向左比较的方法，同时应用到了两种启发式规则，即坏字符规则 和好后缀规则 ，来决定向右跳跃的距离 ... 最长回文子序列和上一题最长回文子串的区别是，子串是字符串中连续的一个序列，而子序列是字符串中保持相对位置的字符序...
+
+掘金 / wwwxmu3 小时前
+
+[金链盟中国区块链应用大赛](http://www.infoq.com/cn/news/2018/09/Fisco-bcos-compitition?utm_campaign=infoq_content&utm_source=infoq&utm_medium=feed&utm_term=global)
 -----------------
 
 
 
-Standard C++ / marcoarena@email.it1 小时前
+InfoQ / 李坷4 小时前
 
-[NLP 领域的 ImageNet 时代：词嵌入已死，语言模型当立](https://zhuanlan.zhihu.com/p/39326211)
+[[译] 函数式 JavaScript 快速入门](https://juejin.im/post/5b8f97135188255c4a70f999)
 -----------------
 
-Ruder 同样展示了用语言模型做预训练模型的效果，并表示 NLP 领域中的「ImageNet」终要到来 ... 在最近几个月，我们也获得了一些实验性证明：语言模型的词嵌入（ELMo）、普遍语言模型精调（ULMiT）和 OpenAI Transformer 已经实验性地证明了语言模型能用于预训练任务，正如上图所示的 ULMFiT ... 这一步取得的变化，NLP 实践者很可能在一年后下载预处理的语...
+我并不打算在这里详细介绍所有函数式编程的概念和想法，而是会尽力给你演示在日常情况下和 JavaScript 打交道的时候如何用上这种编程 ... Array.prototype 应该是你学习 JavaScript 函数式编程的第一步，它涵盖了很多数组转化的实用方法，这些方法在现代网页应用里相当的常见 ... JavaScript 的 [Array.prototype](https://develo...
 
-机器之心1 小时前
+掘金 / LeviDing4 小时前
 
-[浏览器攻击框架 BeEF Part 2：初始化控制](http://www.freebuf.com/articles/web/176139.html)
+[TreeMap 之元素插入](https://juejin.im/post/5b8f4946e51d45589b26c152)
 -----------------
 
-整个过程分为三个步骤，第一步是初始化控制，第二步是持续控制，第三步是攻击 ... 初始化控制也就是想办法让 BeEF 服务器勾子（还记得上一章的 hook.js 吗）在用户浏览器中运行，勾子初次运行会收集一些有用的信息返回给服务器，并做好后续准备 ... 在使用 BeEF 框架攻击时，我们首要的目的是让目标浏览器执行初始化的代码（勾子）。
+首先我们来看下 TreeMap 中存储键值对的类 - TreeMap.Entry，该类定义了红黑树的数据结构 ... 依次插入 2、3、4、5、7、8、16、15、14、10、12，画出红黑树插入过程 ... 相信通过学习优化后的流程图，对于红黑树的元素插入问题，大家的思路是足够清晰的。
 
-FreeBuf / NT002 小时前
+掘金 / I_am_CR74 小时前
 
-[Android 开发技术周报 Issue#187](https://androidweekly.io/android-dev-weekly-issue-187/)
+[原来你是这样的 http2......](https://juejin.im/entry/5b8f8f66e51d450e790329f5)
 -----------------
 
-冯老师发起了一个旨在减少 Android 生态碎片化的公益项目，用于收集国内 Android 设备 / ROM 与 Android SDK 之间存在的兼容性问题 ... 一个 Android 上的页面切换动画库，它可以让一些复杂的、自定义的页面切换动画更加简单地实现出来，节省开发成本 ... Kotlin 抱上 Google 的大腿也快一年了，而且 Kotlin 的版本最近也发了 1.2.30 的新版...
+此时的 HTTP 协议 1.1 版本已经重新设计了长连接、options 请求方法、cache 头、upgrade 头、range 头、transfer-encoding 头, 以及 pieline(in order) 等概念 ... HTTP1.1 的 80 端口设计了 upgrade 请求头升级到更高级的协议，而 443 端口为了避免多消耗个网络 RTT，在 tls 握手过程中使用了 NPN/ALPN 技术直接在通信之前保持 CS 两端的协议...
 
-Android开发技术周报 / 脉脉不得语3 小时前
+掘金 / 探究心底深渊4 小时前
 
-[没有大冷门也不用上天台，这是一场专属于黑客的世界杯](http://www.freebuf.com/news/176933.html)
+[开发了一个 deno 多版本管理工具：dvm](https://juejin.im/post/5b8f8704f265da0aaa04eda1)
 -----------------
 
-WCTF 2018（世界黑客大师赛），一场号称黑客世界杯的赛场上，没有观众、没有进球的欢呼、也没有大冷门，但却总能让这么一群人热血沸腾 ... 第三天的分享过程评分出来后并没有对前三名次序造成影响，1276 分的最高分让这只日本战队拿到「黑客世界杯」的冠军，50000 美金抱回家 ... 俄罗斯世界杯堪称冷门最多的一届，但 CTF 赛事却没有足球那么多的外界因素，主要还是比拼整体实力，所以基本也没有什么大...
+GitHub 地址： GitHub.com/justjavac/d ... 目前功能比较简陋，bug 也不少，欢迎 issue GitHub.com/justjavac/d。
 
-FreeBuf / Andy.i3 小时前
-
-[数据科学面试终极指南（二）](https://juejin.im/post/5b3f80a7e51d4519873f13b7)
------------------
-
-数据科学类招聘会很少，虽然哈佛大学与斯坦福大学举办的计算机科学招聘会为在校生提供了不少数据科学职位，但是就算参加当地数据科学社区主办的聚会也比参加招聘会强得多 ... KDD 大会 KDD，全称数据科学知识探索大会，也是大型数据科学会议，还是引领数据科学理论研讨与教学的组织 ... 和数据科学家约谈时，可以听取他们的建议，了解最新的业内动态，还可以扩大数据科学人脉圈，了解业内人士怎样运作数据科学项目...
-
-掘金 / 呆鸟4 小时前
-
-[五分钟看懂 UML 类图与类的关系详解](https://juejin.im/post/5b42d4396fb9a04fbc21d7dd)
------------------
-
-其中关联又分为一般关联关系和聚合关系 (Aggregation)，合成关系 (Composition) ... 关联 (Association) : 对象之间一种引用关系，比如客户类与订单类之间的关系 ... 聚合和组合的区别在于：聚合关系是「has-a」关系，组合关系是「contains-a」关系。
-
-掘金 / AskHarries4 小时前
-
-[基于 Koa.js 的微信工具类小记](https://juejin.im/post/5b417ed1f265da0f8c029a4b)
------------------
-
-关于微信公众号开发和小程序开发的教程其实网上已经有很多了，但是基于 koa.js 开发的教程其实不多，于是接下来对踩坑的经历做一些小结 ... 2. 获取 api_ticket 生成签名之前必须先了解一下 jsapi_ticket，jsapi_ticket 是公众号用于调用微信 JS 接口的临时票据 ... 获取 jsapi_ticket 的 api 调用次数非常有限，频繁刷新 jsapi_ticket 会导致 api 调用...
-
-掘金 / evont4 小时前
-
-[函数式编程之 Promise 的奇幻漂流](https://juejin.im/post/5b41c159e51d4519277b6a39)
------------------
-
-如果你看了那篇 《在你身边你左右 -- 函数式编程别烦恼》 会更容易理解 ... （2）然后执行 executor(resolve, reject) ... 最后总结一下，Promise 的功能很强大，就是少年派的奇幻漂流一样。
-
-掘金 / 17点4 小时前
+掘金 / justjavac5 小时前
 
