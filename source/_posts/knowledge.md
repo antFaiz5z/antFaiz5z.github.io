@@ -1,5 +1,5 @@
 ---
-title: 琐碎
+title: (Always-Update) 琐碎
 comments: true
 toc: true
 date: 2018-02-02 11:47:20
@@ -7,7 +7,15 @@ categories: C/C++
 tags:  C/C++
 ---
 
-## shared_ptr
+## enum 与 enum class
+
+## std::function 与 std::bind
+
+## delete 与 default
+
+## noexcept
+
+## std::shared_ptr
 
 ### 析构
 

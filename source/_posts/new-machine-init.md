@@ -48,7 +48,7 @@ ZSH_THEME="agnoster"
 
 使用 Git Clone下来字体库仓库，进入仓库根目录，执行 install.sh 安装。
 
-字体库链接：https://github.com/powerline/fonts或直接
+字体库链接：https://github.com/powerline/fonts 或直接
 
 ```sh
 $ sudo apt-get install fonts-powerline
@@ -56,13 +56,13 @@ $ sudo apt-get install fonts-powerline
 
 ### nvm
 
-访问https://github.com/creationix/nvm查看nvm最新release版本
+访问 https://github.com/creationix/nvm 查看nvm最新release版本
 
 ```sh
 $ wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash
 ```
 
-访问https://nodejs.org/zh-cn/查看node最新LTS版本
+访问 https://nodejs.org/zh-cn/ 查看node最新LTS版本
 
 ```sh
 $ nvm install [version]

@@ -1,11 +1,27 @@
 ---
-title: 常见问题
+title: (Always-Update) 常见问题
 comments: true
 toc: false
-date: 2017-09-12 17:06:20
+date: 2017-12-18 16:51:23
 categories: Linux
 tags: Linux
 ---
+
+## Deepin 下 NTFS 磁盘为只读属性
+
+此种情况是由于 Windows 开启了快速启动, 这时在 Linux 里面使用 ntfs-3g 挂载这个NTFS 分区时就只能以只读方式挂载了, 不然可能会影响 Windows 的快速启动.
+
+不需要重装系统或者在Windows系统中关闭快速启动, 执行以下命令即可
+
+```sh
+$ df -h
+$ sudo ntfsfix /dev/sdaxxx
+```
+
+如果已经手动删除了 Windows 系统的话, 可以手动挂载 NTFS 分区.
+
+ntfs-3g 有 remove_hiberfile 选项, 用来处理这个问题的, 具体可以参考 man ntfs-3g 手册.
+
 
 ## makefile：变量替换
 

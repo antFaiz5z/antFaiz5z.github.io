@@ -2,7 +2,7 @@
 title: cred, systemd, QEMU, Yocto, AGL
 comments: true
 toc: true
-date: 2017-12-18 16:51:23
+date: 2017-09-12 17:06:20
 categories: Linux
 tags: 
     - cred
