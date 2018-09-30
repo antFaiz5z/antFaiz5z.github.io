@@ -7,6 +7,8 @@ categories: C/C++
 tags:  C/C++
 ---
 
+## constexpr
+
 ## enum 与 enum class
 
 ## std::function 与 std::bind
