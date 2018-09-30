@@ -12,6 +12,7 @@ tags:
 Python的编码真的是好烦啊。
 
 <!--more-->
+
 ## ascii 与 unicode
 
 对于Python代码中避免遇到编码问题，有一些小建议：

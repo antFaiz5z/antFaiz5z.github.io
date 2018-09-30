@@ -29,4 +29,13 @@ C++11 新标准中引入了五个头文件来支持多线程编程，它们分�
 
         - 其他类型：`std::future_error`, `std::future_errc`, `std::future_status`, `std::launch`
 
+```c++
+// 初始化时该 std::future 对象处于为 invalid 状态.
+std::future<int> foo, bar;
+// move 赋值, foo 变为 valid.
+foo = std::async(do_get_value);
+// move 赋值, bar 变为 valid, 而 move 赋值以后 foo 变为 invalid.
+bar = std::move(foo);
+```
+
 - `<atomic>`：该头文主要声明了两个类, `std::atomic` 和 `std::atomic_flag`，另外还声明了一套 C 风格的原子类型和与 C 兼容的原子操作的函数。

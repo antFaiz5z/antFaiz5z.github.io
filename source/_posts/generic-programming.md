@@ -7,6 +7,10 @@ categories: C/C++
 tags: C/C++
 ---
 
+Template!!!
+
+<!--more-->
+
 # 声明与定义函数模板的两种方式
 
 ## 声明与实现都放在.h中

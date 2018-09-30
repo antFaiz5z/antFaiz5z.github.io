@@ -15,6 +15,8 @@ $ git commit -m "<commit_msg>"
 $ git push origin master
 ```
 
+<!--more-->
+
 ## 查看日志
 
 ```sh

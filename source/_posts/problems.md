@@ -7,6 +7,8 @@ categories: Linux
 tags: Linux
 ---
 
+<!--more-->
+
 ## Deepin 下 NTFS 磁盘为只读属性
 
 此种情况是由于 Windows 开启了快速启动, 这时在 Linux 里面使用 ntfs-3g 挂载这个NTFS 分区时就只能以只读方式挂载了, 不然可能会影响 Windows 的快速启动.

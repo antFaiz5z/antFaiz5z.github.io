@@ -10,7 +10,6 @@ tags:
 toc: true
 ---
 
-
 ![](http://i.v2ex.co/5bb7J7NT.png)
 
 Windows与Linux环境下方法大同小异，这里以Windows为例。
@@ -19,13 +18,14 @@ Windows与Linux环境下方法大同小异，这里以Windows为例。
 
 <!--more-->
 
-
 更新
+
 -----
 
  目前项目存在依赖问题有
 
 ```bash
+#2017.7
 npm WARN deprecated swig@1.4.2: This package is no longer maintained
 npm WARN deprecated jade@1.11.0: Jade has been renamed to pug, please install the latest version of pug instead of jade
 npm WARN deprecated transformers@2.1.0: Deprecated, use jstransformer

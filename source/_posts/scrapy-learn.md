@@ -12,8 +12,6 @@ tags:
     - PyCharm
 ---
 
-<!--more-->
-
 ### 安装
 
 ~~[Curl的安装和使用](http://blog.csdn.net/lifan5/article/details/7350154)~~
@@ -25,6 +23,8 @@ tags:
 [Anaconda使用总结](http://python.jobbole.com/86236/)
 
 [使用conda管理python环境](https://zhuanlan.zhihu.com/p/22678445)
+
+<!--more-->
 
 >conda is a tool for managing and deploying applications, environments and packages.
 

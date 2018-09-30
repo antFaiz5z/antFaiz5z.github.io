@@ -6,7 +6,6 @@ categories: iTunes
 tags: iTunes
 ---
 
-
 1. 右键点按“设备管理器”中的 Apple iPhone、Apple iPad 或 Apple iPod 条目，然后从快捷菜单中选取更新驱动程序。
 
 2. 点按“浏览计算机以查找驱动程序软件”。

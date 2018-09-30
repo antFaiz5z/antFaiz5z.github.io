@@ -12,7 +12,9 @@ tags: Python
 - numpy
 - pandas
 - matplotlib
-- scikit-learn 
+- scikit-learn
+
+<!--more-->
 
 ### 常见问题
 
