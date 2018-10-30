@@ -3,7 +3,7 @@ title: Test
 date: 2017-07-11 19:21:19
 comments: true
 categories: Test
-tags: Test
+tags: test
 ---
 
 Welcome to my personal [blog](https://antfaiz5z.github.io/) powered by hexo!

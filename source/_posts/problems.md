@@ -4,7 +4,10 @@ comments: true
 toc: false
 date: 2017-12-18 16:51:23
 categories: Linux
-tags: Linux
+tags: 
+  - always-update
+  - deepin
+  - makefile
 ---
 
 <!--more-->
@@ -23,7 +26,6 @@ $ sudo ntfsfix /dev/sdaxxx
 如果已经手动删除了 Windows 系统的话, 可以手动挂载 NTFS 分区.
 
 ntfs-3g 有 remove_hiberfile 选项, 用来处理这个问题的, 具体可以参考 man ntfs-3g 手册.
-
 
 ## makefile：变量替换
 
@@ -48,7 +50,6 @@ sudo apt-get install libperl-dev libgtk2.0-dev
 
 ## [`error while loading shared libraries: xxx.so.x`](http://www.cnblogs.com/lidabo/p/3935250.html)
 
-
 1、如果共享库文件安装到了/lib或/usr/lib目录下, 那么需执行一下ldconfig命令
 
 ldconfig命令的用途, 主要是在默认搜寻目录(/lib和/usr/lib)以及动态库配置文件	/etc/ld.so.conf内所列的目录下, 搜索出可共享的动态链接库(格式如lib*.so*), 进	而创建出动态装入程序(ld.so)所需的连接和缓存文件. 缓存文件默认为	/etc/ld.so.cache, 此文件保存已排好序的动态链接库名字列表. 
@@ -69,7 +70,6 @@ LD_LIBRARY_PATH的意思是告诉loader在哪些目录中可以找到共享库. 
 export LD_LIBRARY_PATH=/usr/local/mysql/lib:$LD_LIBRARY_PATH    
 
 一般来讲这只是一种临时的解决方案, 在没有权限或临时需要的时候使用.
-
 
 ## 动态链接库的创建与使用
 

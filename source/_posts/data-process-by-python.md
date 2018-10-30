@@ -4,7 +4,7 @@ comments: true
 toc: true
 date: 2017-08-15 14:12:07
 categories: Python
-tags: Python
+tags: python
 ---
 
 ### 常用工具

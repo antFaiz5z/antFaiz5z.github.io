@@ -3,7 +3,7 @@ title: 在Deepin系统（Debian系）下安装软件
 date: 2017-08-01 16:45:00
 comments: true
 categories: Linux
-tags: Linux
+tags: deepin
 ---
 
 从Deepin Store中直接安装软件，有时会导致普通用户启动软件存在权限不足的问题，所以干脆使用命令行自行安装。
@@ -26,6 +26,4 @@ sudo mv <下载目录>/WebStorm-xxx/ /usr/share/[<重命名目录名>]
 sudo ln -s /usr/share/<上文目录名>/bin/webstorm.sh /usr/local/bin/<自定义链接名>
 ```
 
-
 之后，可以通过自定义的链接名命令来启动应用程序
-

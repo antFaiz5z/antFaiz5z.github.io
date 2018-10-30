@@ -4,9 +4,7 @@ comments: true
 toc: true
 date: 2018-07-09 16:16:46
 categories: Linux
-tags: 
-    - Linux
-    - C/C++
+tags: cmake
 ---
 
 ### [官方wiki](https://gitlab.kitware.com/cmake/community/wikis/home)

@@ -4,7 +4,7 @@ comments: true
 toc: false
 date: 2017-08-28 15:21:25
 categories: Linux
-tags: Linux
+tags: 
 ---
 
 ## [Linux命令大全](http://man.linuxde.net/)

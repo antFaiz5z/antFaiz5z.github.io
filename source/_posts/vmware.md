@@ -3,7 +3,7 @@ title: 安装或更新vmware tools时的小问题
 comments: true
 date: 2015-11-27 23:18:29
 categories: vmware
-tags: vmware
+tags: vmware tools
 ---
 
 最近安装`vmware tools`时遇到了些小问题,根本原因就是安装的是`ubuntu14.04`,挂载`cdrom`的点在`dev/s01 on /media/xxx(用户名)`,而不是要按照官方文档所说的去手动挂载在`/mnt/cdrom`.

@@ -4,7 +4,10 @@ comments: true
 toc: true
 date: 2018-10-25 11:36:40
 categories: C/C++
-tags: C/C++
+tags: 
+    - networking
+    - io
+    - multi-thread
 ---
 
 ## IO模型

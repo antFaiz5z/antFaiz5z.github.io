@@ -4,7 +4,7 @@ comments: true
 toc: true
 date: 2018-07-12 11:19:23
 categories: C/C++
-tags: C/C++
+tags: template
 ---
 
 Template!!!

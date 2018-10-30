@@ -4,7 +4,7 @@ comments: true
 toc: true
 date: 2018-02-02 11:47:20
 categories: C/C++
-tags:  C/C++
+tags: always-update
 ---
 
 ## constexpr

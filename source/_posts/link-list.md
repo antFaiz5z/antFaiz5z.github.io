@@ -4,7 +4,7 @@ comments: true
 toc: false
 date: 2018-07-09 16:04:53
 categories: Others
-tags: Others
+tags: always-update
 ---
 
 ### [消息队列函数(msgget、msgctl、msgsnd、msgrcv)及其范例](https://blog.csdn.net/guoping16/article/details/6584024)

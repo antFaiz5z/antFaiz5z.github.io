@@ -4,7 +4,9 @@ comments: true
 toc: true
 date: 2017-08-28 11:47:32
 categories: vmware
-tags: vmware
+tags: 
+    - vmware
+    - deepin
 ---
 
 ### 问题描述

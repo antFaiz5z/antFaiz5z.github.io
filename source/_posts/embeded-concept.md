@@ -8,7 +8,7 @@ tags:
     - cred
     - systemd
     - QEMU
-    - Yocto
+    - yocto
     - AGL
 ---
 

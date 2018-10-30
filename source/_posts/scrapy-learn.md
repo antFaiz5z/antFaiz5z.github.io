@@ -4,12 +4,12 @@ comments: true
 date: 2017-08-03 10:02:27
 categories: Scrapy
 tags: 
-    - Scrapy
+    - scrapy
     - curl
     - pip
-    - Anacoda
+    - anacoda
     - virtualenv
-    - PyCharm
+    - pycharm
 ---
 
 ### 安装

@@ -4,7 +4,7 @@ comments: true
 toc: false
 date: 2018-09-19 08:47:18
 categories: C/C++
-tags: C/C++
+tags: multi-thread
 ---
 
 C++11 新标准中引入了五个头文件来支持多线程编程，它们分别是 `<atomic>`, `<thread>`, `<mutex>`, `<condition_variable>` 和 `<future>`。

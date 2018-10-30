@@ -5,8 +5,8 @@ toc: true
 date: 2017-08-09 11:44:24
 categories: Python
 tags: 
-    - Python
-    - PyCharm
+    - python
+    - pycharm
 ---
 
 Python的编码真的是好烦啊。
