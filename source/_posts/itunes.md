@@ -3,7 +3,7 @@ title: 关于iTunes更新后无法显示已连接iOS设备的问题
 date: 2017-08-02 23:54:46
 comments: true
 categories: iTunes
-tags: iTunes
+tags: itunes
 ---
 
 1. 右键点按“设备管理器”中的 Apple iPhone、Apple iPad 或 Apple iPod 条目，然后从快捷菜单中选取更新驱动程序。

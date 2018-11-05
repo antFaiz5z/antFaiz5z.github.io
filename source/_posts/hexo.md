@@ -4,9 +4,9 @@ date: 2017-07-12 10:21:19
 comments: true
 categories: Node
 tags: 
-    - Hexo
-    - Node
-    - Git
+    - hexo
+    - node
+    - git
 toc: true
 ---
 
