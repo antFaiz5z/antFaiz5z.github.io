@@ -24,7 +24,7 @@ $ git status
 # 查看当前分支修改状态
 $ git log
 # log命令可以显示所有提交过的版本信息
-git log - -pretty=oneline
+$ git log - -pretty=oneline
 # 将只会显示提交的commit id号和对应的注释。
 $ git reflog
 # 如果在回退以后又想再次回到之前的版本，git reflog 可以查看所有分支的所有操作记录（包括commit和reset的操作），包括已经被删除的commit记录，git log则不能察看已经删除了的commit记录
