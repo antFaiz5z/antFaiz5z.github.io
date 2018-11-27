@@ -1,0 +1,760 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description" content="这是一个乐于分享的不完全的技术博客，会有不定期的技术分享以及人生体验分享，还有小清新妹子福利图"><title>Library paho.mqtt.c API | antFaiz5z's Fantastic Baby</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/normalize/6.0.0/normalize.min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/pure-min.css"><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/pure/0.6.2/grids-responsive-min.css"><link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"><link rel="alternate" type="application/atom+xml" href="/atom.xml"><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create','UA-104943569-1','auto');ga('send','pageview');
+</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Library paho.mqtt.c API</h1><a id="logo" href="/.">antFaiz5z's Fantastic Baby</a><p class="description">To be programming, or to be coding.</p></div><div id="nav-menu"><a href="/." class="current"><i class="fa fa-home"> Home</i></a><a href="/archives/"><i class="fa fa-archive"> Archive</i></a><a href="/news/"><i class="fa fa-archive"> News</i></a><a href="/girls/"><i class="fa fa-user"> Girls</i></a><a href="/about/"><i class="fa fa-user"> About</i></a><a href="/atom.xml"><i class="fa fa-rss"> RSS</i></a></div></div><div id="layout" class="pure-g"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Library paho.mqtt.c API</h1><div class="post-meta">Jul 13, 2018<span> | </span><span class="category"><a href="/categories/C-C/">C/C++</a></span><script src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> Hits</span></span></div><div class="clear"><div id="toc" class="toc-article"><div class="toc-title">Contents</div><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重要变量"><span class="toc-number">2.</span> <span class="toc-text">重要变量</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#typedef-void-MQTTClient"><span class="toc-number">2.1.</span> <span class="toc-text">typedef void* MQTTClient</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#typedef-int-MQTTClient-deliveryToken-amp-typedef-int-MQTTClient-token"><span class="toc-number">2.2.</span> <span class="toc-text">typedef int MQTTClient_deliveryToken &amp;  typedef int MQTTClient_token</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重要结构体"><span class="toc-number">3.</span> <span class="toc-text">重要结构体</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-connectOptions"><span class="toc-number">3.1.</span> <span class="toc-text">MQTTClient_connectOptions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-willOptions"><span class="toc-number">3.2.</span> <span class="toc-text">MQTTClient_willOptions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-SSLOptions"><span class="toc-number">3.3.</span> <span class="toc-text">MQTTClient_SSLOptions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-message"><span class="toc-number">3.4.</span> <span class="toc-text">MQTTClient_message</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#重要函数"><span class="toc-number">4.</span> <span class="toc-text">重要函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-create"><span class="toc-number">4.1.</span> <span class="toc-text">MQTTClient_create</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-setCallbacks"><span class="toc-number">4.2.</span> <span class="toc-text">MQTTClient_setCallbacks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-connect"><span class="toc-number">4.3.</span> <span class="toc-text">MQTTClient_connect</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-subscribe"><span class="toc-number">4.4.</span> <span class="toc-text">MQTTClient_subscribe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-subscribeMany"><span class="toc-number">4.5.</span> <span class="toc-text">MQTTClient_subscribeMany</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-publish"><span class="toc-number">4.6.</span> <span class="toc-text">MQTTClient_publish</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-publishMessage"><span class="toc-number">4.7.</span> <span class="toc-text">MQTTClient_publishMessage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MQTTClient-waitForCompletion"><span class="toc-number">4.8.</span> <span class="toc-text">MQTTClient_waitForCompletion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#代码示例"><span class="toc-number">5.</span> <span class="toc-text">代码示例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#异步发布"><span class="toc-number">5.1.</span> <span class="toc-text">异步发布</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#异步订阅"><span class="toc-number">5.2.</span> <span class="toc-text">异步订阅</span></a></li></ol></li></ol></div></div><div class="post-content"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>MQTT客户端分为同步客户端和异步客户端.　一般流程如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.创建一个客户端对象；</span><br><span class="line">  2.设置连接MQTT服务器的选项；</span><br><span class="line">  3.如果多线程（异步模式）操作被使用则设置回调函数；</span><br><span class="line">  4.订阅客户端需要接收的任意话题；</span><br><span class="line">  5.重复以下操作直到结束：</span><br><span class="line">    a.发布客户端需要的任意信息；</span><br><span class="line">    b.处理所有接收到的信息；</span><br><span class="line">  6.断开客户端连接；</span><br><span class="line">  7.释放客户端使用的所有内存。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h1 id="重要变量"><a href="#重要变量" class="headerlink" title="重要变量"></a>重要变量</h1><h2 id="typedef-void-MQTTClient"><a href="#typedef-void-MQTTClient" class="headerlink" title="typedef void* MQTTClient"></a>typedef void* MQTTClient</h2><blockquote>
+<p>A handle representing an MQTT client. A valid client handle is available following a successful call to MQTTClient_create().</p>
+</blockquote>
+<p>使用MQTTClient_create()创建新连接前需预先定义一个MQTTClient，初始为空指针。</p>
+<h2 id="typedef-int-MQTTClient-deliveryToken-amp-typedef-int-MQTTClient-token"><a href="#typedef-int-MQTTClient-deliveryToken-amp-typedef-int-MQTTClient-token" class="headerlink" title="typedef int MQTTClient_deliveryToken &amp;  typedef int MQTTClient_token"></a>typedef int MQTTClient_deliveryToken &amp; <br> typedef int MQTTClient_token</h2><blockquote>
+<p>A value representing an MQTT message. A delivery token is returned to the client application when a message is published. The token can then be used to check that the message was successfully delivered to its destination.</p>
+</blockquote>
+<p>一般用于异步客户端中，token用于记录当前客户端成功发送message所返回的token，若确认message成功发送则使deliveryToken等于当前token，此时即可安全断开客户端与服务器的连接。</p>
+<h1 id="重要结构体"><a href="#重要结构体" class="headerlink" title="重要结构体"></a>重要结构体</h1><h2 id="MQTTClient-connectOptions"><a href="#MQTTClient-connectOptions" class="headerlink" title="MQTTClient_connectOptions"></a>MQTTClient_connectOptions</h2><blockquote>
+<p>MQTTClient_connectOptions defines several settings that control the way the client connects to an MQTT server.<br>Note: Default values are not defined for members of MQTTClient_connectOptions so it is good practice to specify all settings. If the MQTTClient_connectOptions structure is defined as an automatic variable, all members are set to random values and thus must be set by the client application. If the MQTTClient_connectOptions structure is defined as a static variable, initialization (in compliant compilers) sets all values to 0 (NULL for pointers). A keepAliveInterval setting of 0 prevents correct operation of the client and so you must at least set a value for keepAliveInterval.</p>
+</blockquote>
+<p>客户端连接选项。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>变量名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>struct_id [4]</td>
+<td>必须为”MQTC”</td>
+</tr>
+<tr>
+<td>int</td>
+<td>struct_version</td>
+<td>0: 无SSL选项和serverURIs;<br>1,2,3,4,5,6略</td>
+</tr>
+<tr>
+<td>int</td>
+<td>keepAliveInterval</td>
+<td>最大通信间隔时间（秒）</td>
+</tr>
+<tr>
+<td>int</td>
+<td>cleansession</td>
+<td>布尔值，是否清除session</td>
+</tr>
+<tr>
+<td>int</td>
+<td>reliable</td>
+<td>布尔值。<br>1:上一条message发送完毕才发送下一条；<br> 0:最多允许10条message同时发送</td>
+</tr>
+<tr>
+<td>MQTTClient_willOptions *</td>
+<td>will</td>
+<td>遗嘱选项</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>username</td>
+<td>用户名（MQTTv3.1.1提供）</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>password</td>
+<td>密码（MQTTv3.1.1提供）</td>
+</tr>
+<tr>
+<td>int</td>
+<td>connectTimeout</td>
+<td>连接超时</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retryInterval</td>
+<td>重试间隔</td>
+</tr>
+<tr>
+<td>MQTTClient_SSLOptions *</td>
+<td>ssl</td>
+<td>SSL选项</td>
+</tr>
+<tr>
+<td>int</td>
+<td>serverURIcount</td>
+<td>可选的serverURIs数组入口数量，默认0</td>
+</tr>
+<tr>
+<td>char <em>const </em></td>
+<td>serverURIs</td>
+<td>可选的serverURIs数组，形如：protocol://host:port</td>
+</tr>
+<tr>
+<td>int</td>
+<td>MQTTVersion</td>
+<td>MQTT版本，默认先使用v3.1.1</td>
+</tr>
+<tr>
+<td>struct {<br>const char *   serverURI <br>int MQTTVersion <br> int   sessionPresent<br>}</td>
+<td>returned</td>
+<td>连接返回值</td>
+</tr>
+<tr>
+<td>struct {<br>int   len <br>const void *   data<br>}</td>
+<td>binarypwd</td>
+<td>二进制密码</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MQTTClient_connectOptions_initializer &#123; &#123;<span class="meta-string">'M'</span>, <span class="meta-string">'Q'</span>, <span class="meta-string">'T'</span>, <span class="meta-string">'C'</span>&#125;, 6, 60, 1, 1, NULL, NULL, NULL, 30, 20, NULL, 0, NULL, MQTTVERSION_DEFAULT, &#123;NULL, 0, 0&#125;, &#123;0, NULL&#125;, -1, 0&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="MQTTClient-willOptions"><a href="#MQTTClient-willOptions" class="headerlink" title="MQTTClient_willOptions"></a>MQTTClient_willOptions</h2><blockquote>
+<p>MQTTClient_willOptions defines the MQTT “Last Will and Testament” (LWT) settings for the client. In the event that a client unexpectedly loses its connection to the server, the server publishes the LWT message to the LWT topic on behalf of the client. This allows other clients (subscribed to the LWT topic) to be made aware that the client has disconnected. To enable the LWT function for a specific client, a valid pointer to an MQTTClient_willOptions structure is passed in the MQTTClient_connectOptions structure used in the MQTTClient_connect() call that connects the client to the server. The pointer to MQTTClient_willOptions can be set to NULL if the LWT function is not required.</p>
+</blockquote>
+<p>客户端遗嘱选项。当客户端意外丢失连接，服务器会替此客户端发送LWT主题的LWT消息，订阅了LWT主题的其他客户端可以此知道此客户端已断开连接。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>变量名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>struct_id [4]</td>
+<td>必须为”MQTW”</td>
+</tr>
+<tr>
+<td>int</td>
+<td>struct_version</td>
+<td>布尔值。0:无二进制payload选项</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>topicName</td>
+<td>LWT主题</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>message</td>
+<td>LWT消息</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retained</td>
+<td>是否保留LWT消息</td>
+</tr>
+<tr>
+<td>int</td>
+<td>qos</td>
+<td>quality of service</td>
+</tr>
+<tr>
+<td>struct {<br>int   len<br>const void *   data<br>}<br></td>
+<td>payload</td>
+<td>二进制LWT payload</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MQTTClient_willOptions_initializer &#123; &#123;<span class="meta-string">'M'</span>, <span class="meta-string">'Q'</span>, <span class="meta-string">'T'</span>, <span class="meta-string">'W'</span>&#125;, 1, NULL, NULL, 0, 0, &#123;0, NULL&#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="MQTTClient-SSLOptions"><a href="#MQTTClient-SSLOptions" class="headerlink" title="MQTTClient_SSLOptions"></a>MQTTClient_SSLOptions</h2><blockquote>
+<p>MQTTClient_sslProperties defines the settings to establish an SSL/TLS connection using the OpenSSL library. It covers the following scenarios:<br>Server authentication: The client needs the digital certificate of the server. It is included in a store containting trusted material (also known as “trust store”).<br>Mutual authentication: Both client and server are authenticated during the SSL handshake. In addition to the digital certificate of the server in a trust store, the client will need its own digital certificate and the private key used to sign its digital certificate stored in a “key store”.<br>Anonymous connection: Both client and server do not get authenticated and no credentials are needed to establish an SSL connection. Note that this scenario is not fully secure since it is subject to man-in-the-middle attacks.</p>
+</blockquote>
+<p>客户端SSL选项。支持服务器认证（需提供服务器证书）、双向认证（需提供服务器证书及客户端自身私钥生成的证书）、匿名连接。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>变量名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>struct_id [4]</td>
+<td>必须为”MQTS”</td>
+</tr>
+<tr>
+<td>int</td>
+<td>struct_version</td>
+<td>必须为0</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>trustStore</td>
+<td>PEM格式服务器证书</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>keyStore</td>
+<td>PEM格式包括客户端的公共证书链及私钥</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>privateKey</td>
+<td>PEM格式客户端私钥</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>privateKeyPassword</td>
+<td>客户端私钥密码，若加密的话</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>enabledCipherSuites</td>
+<td>密码套件列表</td>
+</tr>
+<tr>
+<td>int</td>
+<td>enableServerCertAuth</td>
+<td>布尔值。是否启用服务器证书认证</td>
+</tr>
+<tr>
+<td>int</td>
+<td>sslVersion</td>
+<td>SSL版本</td>
+</tr>
+<tr>
+<td>int</td>
+<td>verify</td>
+<td>是否执行连接后检查，包括证书是否匹配主机名</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>CApath</td>
+<td>包含PEM格式的CA证书的文件夹</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MQTTClient_SSLOptions_initializer &#123; &#123;<span class="meta-string">'M'</span>, <span class="meta-string">'Q'</span>, <span class="meta-string">'T'</span>, <span class="meta-string">'S'</span>&#125;, 2, NULL, NULL, NULL, NULL, NULL, 1, MQTT_SSL_VERSION_DEFAULT, 0, NULL &#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="MQTTClient-message"><a href="#MQTTClient-message" class="headerlink" title="MQTTClient_message"></a>MQTTClient_message</h2><blockquote>
+<p>A structure representing the payload and attributes of an MQTT message. The message topic is not part of this structure.</p>
+</blockquote>
+<p>客户端发送的消息（不含消息主题）。</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>变量名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>char</td>
+<td>struct_id [4]</td>
+<td>必须为”MQTM”</td>
+</tr>
+<tr>
+<td>int</td>
+<td>struct_version</td>
+<td>必须为0</td>
+</tr>
+<tr>
+<td>int</td>
+<td>payloadlen</td>
+<td>payload字节数</td>
+</tr>
+<tr>
+<td>void *</td>
+<td>payload</td>
+<td>payload</td>
+</tr>
+<tr>
+<td>int</td>
+<td>qos</td>
+<td>quality of service</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retained</td>
+<td>1:MQTT服务器将会保留消息副本，并传送值此主题的新订阅者，新订阅者将会知晓这是MQTT保留的旧消息;<br>0:MQTT服务器不会保留此消息，订阅者认为此为普通消息</td>
+</tr>
+<tr>
+<td>int</td>
+<td>dup</td>
+<td>布尔值。是否是重复消息</td>
+</tr>
+<tr>
+<td>int</td>
+<td>msgid</td>
+<td>message id</td>
+</tr>
+<tr>
+<td>MQTTProperties</td>
+<td>properties</td>
+<td>MQTT属性</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MQTTClient_message_initializer &#123; &#123;<span class="meta-string">'M'</span>, <span class="meta-string">'Q'</span>, <span class="meta-string">'T'</span>, <span class="meta-string">'M'</span>&#125;, 1, 0, NULL, 0, 0, 0, 0, MQTTProperties_initializer &#125;</span></span><br></pre></td></tr></table></figure>
+<h1 id="重要函数"><a href="#重要函数" class="headerlink" title="重要函数"></a>重要函数</h1><h2 id="MQTTClient-create"><a href="#MQTTClient-create" class="headerlink" title="MQTTClient_create"></a>MQTTClient_create</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_create</span><span class="params">(MQTTClient* handle, <span class="keyword">const</span> <span class="keyword">char</span>* serverURI, <span class="keyword">const</span> <span class="keyword">char</span>* clientId, <span class="keyword">int</span> persistence_type, <span class="keyword">void</span>* persistence_context)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient *</td>
+<td>handle</td>
+<td>预先定义好的空client</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>serverURI</td>
+<td>服务器地址， 形如： protocol://host:port</td>
+</tr>
+<tr>
+<td>const char *</td>
+<td>clientId</td>
+<td>client id</td>
+</tr>
+<tr>
+<td>int</td>
+<td>persistence_type</td>
+<td>1）MQTTCLIENT_PERSISTENCE_NONE： 在内存中持久化;<br> 2）MQTTCLIENT_PERSISTENCE_DEFAULT: 使用默认持久机制（基于文件系统）;<br>3）MQTTCLIENT_PERSISTENCE_USER： 使用特定应用持久实现，应用应实现MQTTClient_persistence 接口</td>
+</tr>
+<tr>
+<td>void *</td>
+<td>persistence_context</td>
+<td>对应于persistence_type:<br> 1)应为NULL;<br> 2)应为持久目录路径，若为NULL则使用工作目录;<br> 3)有效的指向MQTTClient_persistence的指针</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIETN_SUCCESS</td>
+<td>client创建成功</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>错误码</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function creates an MQTT client ready for connection to the specified server and using the specified persistent storage (see MQTTClient_persistence). See also MQTTClient_destroy().</p>
+</blockquote>
+<p>创建一个有效的client。使用参数创建一个client，并将其赋值给之前声明的client</p>
+<h2 id="MQTTClient-setCallbacks"><a href="#MQTTClient-setCallbacks" class="headerlink" title="MQTTClient_setCallbacks"></a>MQTTClient_setCallbacks</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_setCallbacks</span><span class="params">(MQTTClient handle, <span class="keyword">void</span>* context, MQTTClient_connectionLost* cl, MQTTClient_messageArrived* ma, MQTTClient_deliveryComplete* dc)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>void*</td>
+<td>context</td>
+<td>任意特定应用上下文，传递给回调函数用于访问应用上下文</td>
+</tr>
+<tr>
+<td>MQTTClient_connectionLost*</td>
+<td>cl</td>
+<td>MQTTClient_connectionLost() 回调函数</td>
+</tr>
+<tr>
+<td>MQTTClient_messageArrived*</td>
+<td>ma</td>
+<td>MQTTClient_messageArrived() 回调函数</td>
+</tr>
+<tr>
+<td>MQTTClient_deliveryComplete*</td>
+<td>dc</td>
+<td>MQTTClient_deliveryComplete() 回调函数</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>成功设置回调函数</td>
+</tr>
+<tr>
+<td>MQTTCLIENT_FAILURE</td>
+<td>发生错误</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function sets the callback functions for a specific client.If your client application doesn’t use a particular callback, set the　relevant parameter to NULL. Calling MQTTClient_setCallbacks() puts the　client into multi-threaded mode. Any necessary message acknowledgements and　status communications are handled in the background without any intervention　from the client application. See @ref async for more information.</p>
+</blockquote>
+<p>设置回调函数。</p>
+<h2 id="MQTTClient-connect"><a href="#MQTTClient-connect" class="headerlink" title="MQTTClient_connect"></a>MQTTClient_connect</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_connect</span><span class="params">(MQTTClient handle, MQTTClient_connectOptions* options)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>MQTTClient_connectOptions*</td>
+<td>options</td>
+<td>struct，连接选项</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>成功连接服务器</td>
+</tr>
+<tr>
+<td><b>1</b></td>
+<td>Connection refused: Unacceptable protocol version</td>
+</tr>
+<tr>
+<td><b>2</b></td>
+<td>Connection refused: Identifier rejected</td>
+</tr>
+<tr>
+<td><b>3</b></td>
+<td>Connection refused: Server unavailable</td>
+</tr>
+<tr>
+<td><b>4</b></td>
+<td>Connection refused: Bad user name or password</td>
+</tr>
+<tr>
+<td><b>5</b></td>
+<td>Connection refused: Not authorized</td>
+</tr>
+<tr>
+<td><b>6-255</b></td>
+<td>Reserved for future use</td>
+</tr>
+</tbody>
+</table>
+<p>（Error codes greater than 0 are returned by the MQTT protocol）</p>
+<blockquote>
+<p>This function attempts to connect a previously-created client (see MQTTClient_create()) to an MQTT server using the specified options. If you want to enable asynchronous message and status notifications, you must call MQTTClient_setCallbacks() prior to MQTTClient_connect().</p>
+</blockquote>
+<p>建立客户端与服务器的连接。</p>
+<h2 id="MQTTClient-subscribe"><a href="#MQTTClient-subscribe" class="headerlink" title="MQTTClient_subscribe"></a>MQTTClient_subscribe</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_subscribe</span><span class="params">(MQTTClient handle, <span class="keyword">const</span> <span class="keyword">char</span>* topic, <span class="keyword">int</span> qos)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>const char*</td>
+<td>topic</td>
+<td>订阅的主题，可含通配符</td>
+</tr>
+<tr>
+<td>int</td>
+<td>qos</td>
+<td>quality of service</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>订阅请求成功</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>订阅出现问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Subscribe is synchronous.  QoS list parameter is changed on return to granted QoSs.Returns return code, MQTTCLIENT_SUCCESS == success, non-zero some sort of error (TBD)<br>This function attempts to subscribe a client to a single topic, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for the subscription (see also MQTTClient_subscribeMany()).</p>
+</blockquote>
+<p>订阅某个主题。</p>
+<p>类似地，取消订阅函数如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_unsubscribe</span><span class="params">(MQTTClient handle, <span class="keyword">const</span> <span class="keyword">char</span>* topic)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="MQTTClient-subscribeMany"><a href="#MQTTClient-subscribeMany" class="headerlink" title="MQTTClient_subscribeMany"></a>MQTTClient_subscribeMany</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_subscribeMany</span><span class="params">(MQTTClient handle, <span class="keyword">int</span> count, <span class="keyword">char</span>* <span class="keyword">const</span>* topic, <span class="keyword">int</span>* qos)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>int</td>
+<td>count</td>
+<td>订阅的主题数量</td>
+</tr>
+<tr>
+<td>char<em> const</em></td>
+<td>topic</td>
+<td>一组指针，订阅的主题，可含通配符</td>
+</tr>
+<tr>
+<td>int*</td>
+<td>qos</td>
+<td>一组指针，quality of service</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>订阅请求成功</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>订阅出现问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function attempts to subscribe a client to a list of topics, which may contain wildcards (see @ref wildcard). This call also specifies the @ref qos requested for each topic (see also MQTTClient_subscribe()).</p>
+</blockquote>
+<p>同时订阅多个主题。</p>
+<p>类似地，取消订阅函数如下:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_unsubscribeMany</span><span class="params">(MQTTClient handle, <span class="keyword">int</span> count, <span class="keyword">char</span>* <span class="keyword">const</span>* topic)</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="MQTTClient-publish"><a href="#MQTTClient-publish" class="headerlink" title="MQTTClient_publish"></a>MQTTClient_publish</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_publish</span><span class="params">(MQTTClient handle, <span class="keyword">const</span> <span class="keyword">char</span>* topicName, <span class="keyword">int</span> payloadlen, <span class="keyword">void</span>* payload, <span class="keyword">int</span> qos, <span class="keyword">int</span> retained, MQTTClient_deliveryToken* dt)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>const char*</td>
+<td>topicName</td>
+<td>主题</td>
+</tr>
+<tr>
+<td>int</td>
+<td>payloadlen</td>
+<td>payload字节数</td>
+</tr>
+<tr>
+<td>void*</td>
+<td>payload</td>
+<td>payload</td>
+</tr>
+<tr>
+<td>int</td>
+<td>qos</td>
+<td>quality of service</td>
+</tr>
+<tr>
+<td>int</td>
+<td>retained</td>
+<td>服务器是否保留</td>
+</tr>
+<tr>
+<td>MQTTClient_deliveryToken*</td>
+<td>dt</td>
+<td>函数成功返回则赋值一个代表此message的token，若应用未使用delivery tokens，则应置为NULL</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>成功发布</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>发布出现问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function attempts to publish a message to a given topic (see also MQTTClient_publishMessage()). An ::MQTTClient_deliveryToken is issued when this function returns successfully. If the client application needs to test for succesful delivery of QoS1 and QoS2 messages, this can be done either asynchronously or synchronously (see @ref async, ::MQTTClient_waitForCompletion and MQTTClient_deliveryComplete()).</p>
+</blockquote>
+<p>对给定主题发布一条message。</p>
+<h2 id="MQTTClient-publishMessage"><a href="#MQTTClient-publishMessage" class="headerlink" title="MQTTClient_publishMessage"></a>MQTTClient_publishMessage</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_publishMessage</span><span class="params">(MQTTClient handle, <span class="keyword">const</span> <span class="keyword">char</span>* topicName, MQTTClient_message* msg, MQTTClient_deliveryToken* dt)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>const char*</td>
+<td>topicName</td>
+<td>主题</td>
+</tr>
+<tr>
+<td>MQTTClient_message*</td>
+<td>msg</td>
+<td>消息</td>
+</tr>
+<tr>
+<td>MQTTClient_deliveryToken*</td>
+<td>dt</td>
+<td>函数成功返回则赋值一个代表此message的token，若应用未使用delivery tokens，则应置为NULL</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>成功发布</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>发布出现问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function attempts to publish a message to a given topic (see also MQTTClient_publish()). An ::MQTTClient_deliveryToken is issued when his function returns successfully. If the client application needs to test for succesful delivery of QoS1 and QoS2 messages, this can be done either asynchronously or synchronously (see @ref async, ::MQTTClient_waitForCompletion and MQTTClient_deliveryComplete()).</p>
+</blockquote>
+<p>对给定主题发布一条message。</p>
+<h2 id="MQTTClient-waitForCompletion"><a href="#MQTTClient-waitForCompletion" class="headerlink" title="MQTTClient_waitForCompletion"></a>MQTTClient_waitForCompletion</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">MQTTClient_waitForCompletion</span><span class="params">(MQTTClient handle, MQTTClient_deliveryToken dt, <span class="keyword">unsigned</span> <span class="keyword">long</span> timeout)</span></span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>参数类型</th>
+<th>参数名</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTClient</td>
+<td>handle</td>
+<td>创建成功后有效的client</td>
+</tr>
+<tr>
+<td>MQTTClient_deliveryToken</td>
+<td>dt</td>
+<td>Delivery tokens are issued by the publishing functions MQTTClient_publish() and MQTTClient_publishMessage()</td>
+</tr>
+<tr>
+<td>unsigned long</td>
+<td>timeout</td>
+<td>最大等待时间（毫秒）</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MQTTCLIENT_SUCCESS</td>
+<td>成功发布</td>
+</tr>
+<tr>
+<td>[error code]</td>
+<td>发布出现问题</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>This function is called by the client application to synchronize execution of the main thread with completed publication of a message. When called, MQTTClient_waitForCompletion() blocks execution until the message has been successful delivered or the specified timeout has expired. See @ref async.</p>
+</blockquote>
+<p>异步客户端中用于等待message的成功发布。</p>
+<h1 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">param</span>&#123;</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *server_address;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *trust_store;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *client_id;</span><br><span class="line">    <span class="keyword">int</span> timeout;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *username;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> *password;</span><br><span class="line"></span><br><span class="line">&#125; Connect_param;</span><br></pre></td></tr></table></figure>
+<h2 id="异步发布"><a href="#异步发布" class="headerlink" title="异步发布"></a>异步发布</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">asyn_pub_with_ssl</span><span class="params">(Connect_param *param, <span class="keyword">const</span> <span class="keyword">char</span> *topic, <span class="keyword">const</span> <span class="keyword">char</span> *payload, <span class="keyword">int</span> qos)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    MQTTClient client;</span><br><span class="line">    MQTTClient_deliveryToken token;</span><br><span class="line">    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;</span><br><span class="line">    MQTTClient_message pubmsg = MQTTClient_message_initializer;</span><br><span class="line">    MQTTClient_SSLOptions ssl_opts = MQTTClient_SSLOptions_initializer;</span><br><span class="line">    ssl_opts.trustStore = param-&gt;trust_store;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rc;</span><br><span class="line"></span><br><span class="line">    MQTTClient_create(&amp;client, param-&gt;server_address, param-&gt;client_id,</span><br><span class="line">                      MQTTCLIENT_PERSISTENCE_NONE, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    conn_opts.keepAliveInterval = <span class="number">20</span>;</span><br><span class="line">    conn_opts.cleansession = <span class="number">1</span>;</span><br><span class="line">    conn_opts.ssl = &amp;ssl_opts;</span><br><span class="line"></span><br><span class="line">    MQTTClient_setCallbacks(client, <span class="literal">NULL</span>, connlost, msgarrvd, delivered);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((rc = MQTTClient_connect(client, &amp;conn_opts)) != MQTTCLIENT_SUCCESS) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to connect, return code %d\n"</span>, rc);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    pubmsg.payload = (<span class="keyword">void</span> *) payload;</span><br><span class="line">    pubmsg.payloadlen = (<span class="keyword">int</span>) <span class="built_in">strlen</span>(payload);</span><br><span class="line">    pubmsg.qos = qos;</span><br><span class="line">    pubmsg.retained = <span class="number">0</span>;</span><br><span class="line">    deliveredtoken = <span class="number">0</span>;</span><br><span class="line">    MQTTClient_publishMessage(client, topic, &amp;pubmsg, &amp;token);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Waiting for publication of %s\n"</span></span><br><span class="line">           <span class="string">"on topic %s for client with ClientID: %s\n"</span>,</span><br><span class="line">           payload, topic, param-&gt;client_id);</span><br><span class="line">    rc = MQTTClient_waitForCompletion(client, token, (<span class="keyword">unsigned</span> <span class="keyword">long</span>) param-&gt;timeout);</span><br><span class="line">    <span class="comment">//while(deliveredtoken != token);</span></span><br><span class="line">    MQTTClient_disconnect(client, <span class="number">10000</span>);</span><br><span class="line">    MQTTClient_destroy(&amp;client);</span><br><span class="line">    <span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="异步订阅"><a href="#异步订阅" class="headerlink" title="异步订阅"></a>异步订阅</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">asyn_sub_with_ssl</span><span class="params">(Connect_param *param, <span class="keyword">const</span> <span class="keyword">char</span> *topic, <span class="keyword">int</span> qos)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    MQTTClient client;</span><br><span class="line">    MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializer;</span><br><span class="line">    MQTTClient_SSLOptions ssl_opts = MQTTClient_SSLOptions_initializer;</span><br><span class="line">    ssl_opts.trustStore = param-&gt;trust_store;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> rc;</span><br><span class="line">    <span class="keyword">int</span> ch;</span><br><span class="line"></span><br><span class="line">    MQTTClient_create(&amp;client, param-&gt;server_address, param-&gt;client_id,</span><br><span class="line">                      MQTTCLIENT_PERSISTENCE_NONE, <span class="literal">NULL</span>);</span><br><span class="line">    conn_opts.keepAliveInterval = <span class="number">20</span>;</span><br><span class="line">    conn_opts.cleansession = <span class="number">1</span>;</span><br><span class="line">    conn_opts.ssl = &amp;ssl_opts;</span><br><span class="line"></span><br><span class="line">    MQTTClient_setCallbacks(client, <span class="literal">NULL</span>, connlost, msgarrvd, delivered);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> ((rc = MQTTClient_connect(client, &amp;conn_opts)) != MQTTCLIENT_SUCCESS) &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"Failed to connect, return code %d\n"</span>, rc);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Subscribing to topic %s\nfor client %s using QoS%d\n\n"</span></span><br><span class="line">           <span class="string">"Press Q&lt;Enter&gt; to quit\n\n"</span>, topic, param-&gt;client_id, qos);</span><br><span class="line">    MQTTClient_subscribe(client, topic, qos);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        ch = getchar();</span><br><span class="line">    &#125; <span class="keyword">while</span> (ch != <span class="string">'Q'</span> &amp;&amp; ch != <span class="string">'q'</span>);</span><br><span class="line"></span><br><span class="line">    MQTTClient_unsubscribe(client, topic);</span><br><span class="line">    MQTTClient_disconnect(client, <span class="number">10000</span>);</span><br><span class="line">    MQTTClient_destroy(&amp;client);</span><br><span class="line">    <span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div><script type="text/javascript" src="/js/share.js?v=0.0.0" async></script><a data-url="https://antfaiz5z.github.io/2018/07/13/paho-mqtt-c/" data-id="cjoznpess004d4tviimosjhhb" class="article-share-link">Share</a><div class="tags"><a href="/tags/mqtt/">mqtt</a></div><div class="post-nav"><a href="/2018/07/20/certificates/" class="pre">HTTPs相关</a><a href="/2018/07/12/generic-programming/" class="next">泛型编程与模板</a></div></div></div></div><div class="pure-u-1 pure-u-md-1-4"><div id="sidebar"><div class="widget"><form action="//www.baidu.com/baidu" method="get" accept-charset="utf-8" target="_blank" class="search-form"><input type="search" name="word" maxlength="20" placeholder="Search"/><input type="hidden" name="si" value="https://antfaiz5z.github.io"/><input name="tn" type="hidden" value="bds"/><input name="cl" type="hidden" value="3"/><input name="ct" type="hidden" value="2097152"/><input name="s" type="hidden" value="on"/></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> Categories</i></div><ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Node/">Node</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Others/">Others</a><span class="category-list-count">6</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Scrapy/">Scrapy</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Test/">Test</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iTunes/">iTunes</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/vmware/">vmware</a><span class="category-list-count">2</span></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> Tags</i></div><div class="tagcloud"><a href="/tags/makefile/" style="font-size: 15px;">makefile</a> <a href="/tags/cred/" style="font-size: 15px;">cred</a> <a href="/tags/QEMU/" style="font-size: 15px;">QEMU</a> <a href="/tags/yocto/" style="font-size: 15px;">yocto</a> <a href="/tags/AGL/" style="font-size: 15px;">AGL</a> <a href="/tags/cmake/" style="font-size: 15px;">cmake</a> <a href="/tags/git/" style="font-size: 15px;">git</a> <a href="/tags/hexo/" style="font-size: 15px;">hexo</a> <a href="/tags/node/" style="font-size: 15px;">node</a> <a href="/tags/template/" style="font-size: 15px;">template</a> <a href="/tags/always-update/" style="font-size: 15px;">always-update</a> <a href="/tags/mbedTLS/" style="font-size: 15px;">mbedTLS</a> <a href="/tags/multi-thread/" style="font-size: 15px;">multi-thread</a> <a href="/tags/networking/" style="font-size: 15px;">networking</a> <a href="/tags/io/" style="font-size: 15px;">io</a> <a href="/tags/vmware/" style="font-size: 15px;">vmware</a> <a href="/tags/deepin/" style="font-size: 15px;">deepin</a> <a href="/tags/systemd/" style="font-size: 15px;">systemd</a> <a href="/tags/python/" style="font-size: 15px;">python</a> <a href="/tags/pycharm/" style="font-size: 15px;">pycharm</a> <a href="/tags/scrapy/" style="font-size: 15px;">scrapy</a> <a href="/tags/curl/" style="font-size: 15px;">curl</a> <a href="/tags/pip/" style="font-size: 15px;">pip</a> <a href="/tags/anacoda/" style="font-size: 15px;">anacoda</a> <a href="/tags/virtualenv/" style="font-size: 15px;">virtualenv</a> <a href="/tags/zsh/" style="font-size: 15px;">zsh</a> <a href="/tags/test/" style="font-size: 15px;">test</a> <a href="/tags/xrandr/" style="font-size: 15px;">xrandr</a> <a href="/tags/vmware-tools/" style="font-size: 15px;">vmware tools</a> <a href="/tags/CA/" style="font-size: 15px;">CA</a> <a href="/tags/encryption/" style="font-size: 15px;">encryption</a> <a href="/tags/itunes/" style="font-size: 15px;">itunes</a> <a href="/tags/design-pattern/" style="font-size: 15px;">design pattern</a> <a href="/tags/mqtt/" style="font-size: 15px;">mqtt</a> <a href="/tags/WSL/" style="font-size: 15px;">WSL</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> Recent</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/11/27/wsl/">WSL</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/05/xrandr/">Deepin下笔记本外接显示器问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/05/design-pattern/">设计模式</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/29/interview/">preparing for job</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/25/networking-IO/">网络库、Socket、IO、多线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/19/multithreads/">多线程编程</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/05/new-machine-init/">新装系统环境配置流程个人版</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/17/git/">常用git命令</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/mbedtls/">mbedTLS (PolarSSL)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/20/certificates/">HTTPs相关</a></li></ul></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2018 <a href="/." rel="nofollow">antFaiz5z's Fantastic Baby.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a id="rocket" href="#top" class="show"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//cdn.bootcss.com/fancybox/3.0.47/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
