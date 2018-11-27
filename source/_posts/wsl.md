@@ -76,8 +76,8 @@ wslconfig /list
 
 ## 安装图形界面
 
+- [Windows linux子系统--入门到GUI](http://csuncle.com/2017/08/08/Windows-linux%E5%AD%90%E7%B3%BB%E7%BB%9F-%E5%85%A5%E9%97%A8%E5%88%B0GUI/)
 - [Win10Linux子系统（WSL）图形界面的安装](https://blog.csdn.net/novasliver/article/details/83190269)
-- [占位]()
 
 ## Clion与WSL
 
