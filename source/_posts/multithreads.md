@@ -1,5 +1,5 @@
 ---
-title: 多线程编程
+title: C++ 11 多线程编程相关类
 comments: true
 toc: false
 date: 2018-09-19 08:47:18

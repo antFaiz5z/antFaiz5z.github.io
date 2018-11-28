@@ -1,5 +1,5 @@
 ---
-title: 设计模式
+title: 设计模式原则及分类
 comments: true
 toc: false
 date: 2018-11-05 10:39:55

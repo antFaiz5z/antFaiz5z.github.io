@@ -1,5 +1,5 @@
 ---
-title: 利用Hexo搭建个人博客
+title: 利用 Hexo 搭建个人博客
 date: 2017-07-12 10:21:19
 comments: true
 categories: Node

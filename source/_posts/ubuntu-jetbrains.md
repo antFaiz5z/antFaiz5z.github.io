@@ -1,5 +1,5 @@
 ---
-title: 在Deepin系统（Debian系）下安装软件
+title: 在Deepin系统（Debian系）下安装软件的一点经验
 date: 2017-08-01 16:45:00
 comments: true
 categories: Linux

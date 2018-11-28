@@ -1,5 +1,5 @@
 ---
-title: 安装或更新vmware tools时的小问题
+title: （Expired）安装或更新 vmware tools 时的小问题
 comments: true
 date: 2015-11-27 23:18:29
 categories: vmware

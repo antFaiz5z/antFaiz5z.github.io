@@ -1,5 +1,5 @@
 ---
-title: Deepin下笔记本外接显示器问题
+title: Deepin 下笔记本外接显示器问题
 comments: true
 toc: false
 date: 2018-11-05 20:04:29

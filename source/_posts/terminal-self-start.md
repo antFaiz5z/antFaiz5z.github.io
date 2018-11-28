@@ -1,5 +1,5 @@
 ---
-title: 关于Linux终端启动时可自动执行命令的某些文件
+title: 关于 Linux 终端启动时可自动执行命令的某些文件
 date: 2017-07-20 10:26:44
 comments: true
 categories: Linux

@@ -1,5 +1,5 @@
 ---
-title: Deepin下安装vmware无法联网的问题
+title: Deepin 下安装 vmware 无法联网的问题
 comments: true
 toc: true
 date: 2017-08-28 11:47:32

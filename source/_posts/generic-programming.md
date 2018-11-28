@@ -1,5 +1,5 @@
 ---
-title: 泛型编程与模板
+title: 泛型编程与模板的几点问题
 comments: true
 toc: true
 date: 2018-07-12 11:19:23
