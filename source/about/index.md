@@ -1,7 +1,8 @@
 ---
-title: About me
+title: 关于我
 date: 2017-07-11 20:41:47
 comments: false
+donate: true
 ---
 
 <div align="center">
@@ -10,6 +11,6 @@ comments: false
 
  　　Email: **<antFaiz5z@gmail.com>**
 
- 　　Github: **<https://github.com/antFaiz5z>**
+ 　　Github: **[@antFaiz5z](https://github.com/antFaiz5z)**
 
 </div>
