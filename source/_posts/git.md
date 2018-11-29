@@ -118,7 +118,18 @@ $ git clone --recursive <git_url>
 
 #更新子模块
 $ git submodule update --remote --merge
+# 或者进入子模块目录如普通仓库一样操作
 
+#删除子模块
+$ git rm --cached [name]
+$ rm -rf [name]
+$ rm .gitmodules
+$ vim .git/config
+# 删除子模块相关内容，例如下面的内容
+[submodule "submodule"]
+        url = git@gitee.com:xxx.com/submodule.git
+        active = true
+        
 #主仓库推送
 $ git push --recurse-submodules=check
 # 主仓库推送时，确保子模块的修改已经推送，下面命令会检查子模块修改的内容是否推送，如果没有，主仓库推送也会失败
