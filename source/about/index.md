@@ -1,6 +1,7 @@
 ---
 title: About me
 date: 2017-07-11 20:41:47
+comments: false
 ---
 
 <div align="center">
