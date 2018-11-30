@@ -4,4 +4,5 @@
 
 [submodule "themes/maupassant"]
 	path = themes/maupassant
-	url = git@github.com:antFaiz5z/maupassant-hexo.git
+	url = https://github.com/antFaiz5z/maupassant-hexo.git
+	
