@@ -1,5 +1,5 @@
 [submodule "themes/icalm"]
-	path = themes/icarus
+	path = themes/icalm
 	url = https://github.com/antFaiz5z/hexo-theme-icalm.git
 
 [submodule "themes/icarus"]
