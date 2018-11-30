@@ -2,7 +2,7 @@
 title: Test
 date: 2017-07-11 19:21:19
 comments: true
-categories: Test
+categories: Others
 tags: test
 ---
 

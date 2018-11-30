@@ -4,7 +4,9 @@ comments: true
 toc: true
 date: 2018-11-30 12:22:36
 categories: CI
-tags: travis
+tags: 
+    - travis
+    - hexo
 ---
 
 > 持续集成（英语：Continuous integration，缩写 CI）是一种软件工程流程，是将所有软件工程师对于软件的工作副本持续集成到共享主线（mainline）的一种举措。
@@ -83,6 +85,15 @@ deploy:
 - script：执行脚本，清除缓存，生成静态文件并放在 public 文件夹下；
 
 - deploy：执行部署。
+
+> 其他文档可能提到了利用 hexo-deployer-git 进行部署，但是由于 Travis CI 本身支持直接部署到 GitHub Pages 的工具，因此无需另行安装 hexo-deployer-git 了；<br>
+其他文档也可能提到在 .travis.yml 中加入如下内容，来缓存 node_modules 下的内容，从而加快编译速度。但是经过我的尝试，node_modules 经常会由于没有及时更新，在添加其他组件之后出现「博客生成静态文件步骤」失败的情况，因此建议不进行缓存处理。
+
+```yml
+cache:
+  directories:
+    - node_modules
+```
 
 ### 在 Travis CI 中配置变量
 

@@ -1,6 +1,10 @@
+[submodule "themes/icalm"]
+	path = themes/icarus
+	url = https://github.com/antFaiz5z/hexo-theme-icalm.git
+
 [submodule "themes/icarus"]
 	path = themes/icarus
-	url = https://github.com/ppoffice/hexo-theme-icarus.git
+	url = https://github.com/antFaiz5z/hexo-theme-icarus.git
 
 [submodule "themes/maupassant"]
 	path = themes/maupassant

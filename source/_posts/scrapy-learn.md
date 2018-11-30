@@ -2,7 +2,7 @@
 title: Scrapy 的安装及使用
 comments: true
 date: 2017-08-03 10:02:27
-categories: Scrapy
+categories: Others
 tags: 
     - scrapy
     - curl

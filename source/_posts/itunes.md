@@ -2,7 +2,7 @@
 title: 关于 iTunes 更新后无法显示已连接 iOS 设备的问题
 date: 2017-08-02 23:54:46
 comments: true
-categories: iTunes
+categories: Others
 tags: itunes
 ---
 
