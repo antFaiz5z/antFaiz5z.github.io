@@ -1,3 +1,7 @@
 [submodule "themes/icarus"]
 	path = themes/icarus
 	url = https://github.com/ppoffice/hexo-theme-icarus.git
+
+[submodule "themes/maupassant"]
+	path = themes/maupassant
+	url = git@github.com:antFaiz5z/maupassant-hexo.git
