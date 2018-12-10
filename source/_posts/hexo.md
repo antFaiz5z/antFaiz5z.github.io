@@ -12,7 +12,7 @@ toc: true
 
 ![](http://i.v2ex.co/5bb7J7NT.png)
 
-Windows与Linux环境下方法大同小异，这里以Windows为例。
+Windows与Linux环境下方法大同小异。
 
 推荐使用Jetbrains的WebStorm。
 
@@ -43,84 +43,15 @@ npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@
 
 ### Node.js
 
-[Node](https://nodejs.org)直接官网下载安装，无需配置环境变量。Node现已自带npm。
-
-换源：
-
-1. 临时使用
-    
-    ``` bash
-    $ npm --registry https://registry.npm.taobao.org install express
-    ```
-
-2. 持久使用
-
-    ``` bash
-    $ npm config set registry https://registry.npm.taobao.org
-    ```
-
-    配置后可通过下面方式来验证是否成功 
-
-    ``` bash
-    $ npm config get registry
-    ```
-
-3. 通过cnpm使用
-
-    ``` bash
-    $ npm install -g cnpm --registry=https://registry.npm.taobao.org
-    ```
-
-    以下的npm命令都可用cnpm代替。
+对于Windows，[Node](https://nodejs.org)直接官网下载安装，无需配置环境变量。Node现已自带npm。
 
 ### Git与Github
+
 [Git](https://git-scm.com/)可官网下载安装，不过下载速度不太稳定，似乎也无需配置环境变量。Windows下可能会有权限的问题（大部分出错的源头都在这），实在不行就用Git bash，但是安装时也不推荐选择“Git bash only”。
 
-由于我们的博客是放在[Github](https://github.com/) pages上，最后的博客地址为< username\>.github.io,同时也是仓库名，因此需要在本地生成ssh密钥与Github账号进行连接。为了防止自己以后又东翻西找，下面是会用到的命令：
+由于我们的博客是放在[Github](https://github.com/) pages上，最后的博客地址为< username\>.github.io,同时也是仓库名，因此需要在本地生成ssh密钥与Github账号进行连接。
 
-1. 打开Git Bash查看电脑上是否已经存在SSH密钥：
-
-    ``` bash
-    $ cd ~/.ssh
-    ```
-
-    若显示“No such file or directoy”,则需要创建新的ssh key
-
-2. 创建新的ssh key:
-
-    ``` bash
-    $ ssh-keygen -t rsa -C "<youremail>"
-    ```
-
-    执行这条命令会提示文件保存路径，可以直接Enter，默认保存在当前用户目录。然后提示输入passphrase，可以直接Enter，即无密码.
- 
-3. 复制ssh key到Github
-
-    用编辑器打开.ssh目录下的id_rsa.pub文件，复制里面的全部内容，add ssh key
-
-4. 测试ssh连接Github：
-
-    ``` bash
-    $ ssh -T git@github.com
-    ```
-
-    期间会提示输入密码，若无则无
-
-5. 设置自己的git信息：
-
-    ``` bash   
-    $ git config --global user.name "username" 
-    （此处username可修改也不是用于登录github的登录名）
-    $ git config --global user.email "<youremail>"
-    ```
-
-    设置自己的git信息即完成安装和设置，可以输入
-
-    ``` bash
-    $ git config --list
-    ```
-
-    查看自己的git信息
+> node与git配置参考另一篇：[新机器配置流程](https://antfaiz5z.github.io/2018/09/05/new-machine-init/)
 
 ## 正文
 
