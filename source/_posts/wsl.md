@@ -40,6 +40,16 @@ CygWin 与 MinGW 的最大区别在于：使用 CygWin 可以在 windows 下调�
 
 如今可在 windows 10 应用商店直接下载安装多个版本的 linux .
 
+#### 初次安装配置
+
+1、设置 -> 开发者选项 -> 开发人员模式
+
+2、控制面板 -> 程序 -> 启用或关闭Windows功能  -> 适用于Linux的Windows子系统
+
+3、Microsoft Store 下载安装任意版本Linux
+
+4、PowerShell（管理员）（Win + X） ->  `Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux` -> 重启
+
 #### 使用 wslconfig 命令进行管理
 
 1. 设置默认运行的 linux 系统
