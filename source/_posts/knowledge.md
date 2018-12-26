@@ -7,6 +7,8 @@ categories: C/C++
 tags: always-update
 ---
 
+## 二叉查找树（BST）节点排序考虑中序遍历，二叉树序列化及反序列化考虑先序遍历
+
 ## constexpr
 
 ## enum 与 enum class
@@ -82,3 +84,13 @@ shared_ptr 本身不是 100%线程安全的。它的引用计数本身是安全�
     如    const int*p ;    int const *p;    这二者写法等价
 
         const int& r;
+
+## int p 、int *p、int *&p
+
+int *p是定义一个指针
+
+int *&p是定义一个指针的引用
+
+指针当参数时，只能改名指针指向的内容，不能改变指针本身你。
+
+指针的引用当参数是，既可以改变指针指向的内容，又可以修改指针本身。
