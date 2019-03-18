@@ -20,7 +20,7 @@ tags:
 
 非阻塞式 I/O 、信号驱动 I/O 和异步 I/O 在第一阶段不会阻塞。
 
-![五大 I/O 模型比较](http://osxg0gzju.bkt.clouddn.com/%E4%BA%94%E5%A4%A7%20IO%20%E6%A8%A1%E5%9E%8B%E6%AF%94%E8%BE%83.png)
+![五大 I/O 模型比较](../images/io_models.png)
 
 ## 多路复用IO
 
