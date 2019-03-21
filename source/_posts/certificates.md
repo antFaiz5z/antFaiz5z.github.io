@@ -71,7 +71,7 @@ https就是http加SSL，SSL（security sockets layer，安全套接层）是为�
 
 HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对称密钥来保证安全性，之后使用对称密钥加密进行通信来保证效率。（下图中的 Session Key 就是对称密钥）
 
-![How HTTPs works](../images/How-HTTPS-Works.png)
+![How HTTPs works](/images/How-HTTPS-Works.png)
 
 服务器的运营人员向 CA 提出公开密钥的申请，CA 在判明提出申请者的身份之后，会对已申请的公开密钥做数字签名，然后分配这个已签名的公开密钥，并将该公开密钥放入公开密钥证书后绑定在一起。
 
@@ -79,7 +79,7 @@ HTTPS 采用混合的加密机制，使用非对称密钥加密用于传输对�
 
 通信开始时，客户端需要使用服务器的公开密钥将自己的私有密钥传输给服务器，之后再进行对称密钥加密。
 
-![Sign and verify](../images/ca.png)
+![Sign and verify](/images/ca.png)
 
 # 数字签名与签名认证 digital signature
 
