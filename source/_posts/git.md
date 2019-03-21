@@ -71,7 +71,7 @@ $ git push -f origin <branch>
 # 本地分支回滚后，版本将落后远程分支，必须使用强制推送覆盖远程分支，否则无法推送到远程分支
 ```
 
-![reset and checkout](../images/reset_and_checkout.png)
+![reset and checkout](/images/reset_and_checkout.png)
 
 ## 分支管理
 

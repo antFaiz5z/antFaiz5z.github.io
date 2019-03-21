@@ -7,7 +7,7 @@ donate: true
 
 <div align="center">
 
-![antFaiz5z](http://piyeiv7nv.bkt.clouddn.com/avatar.png?imageView2/2/w/200/h/200/q/100|imageslim )
+![antFaiz5z](/images/avatar.png )
 
  　　Email: **<antFaiz5z@gmail.com>**
 
