@@ -60,6 +60,7 @@ $ git checkout -- <file>
 # 一种是<file>已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。
 
 #本地分支提交回退
+$ git reset HEAD~
 $ git reset HEAD <file>
 # git reset命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用HEAD时，表示最新的版本.
 $ git reset [--hard] <commit_id>

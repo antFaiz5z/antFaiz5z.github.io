@@ -1,5 +1,5 @@
 ---
-title: 新装系统环境配置流程个人版
+title: 新装系统环境配置流程
 comments: true
 toc: true
 date: 2018-09-05 19:27:04
