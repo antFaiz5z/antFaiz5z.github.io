@@ -20,6 +20,7 @@ install:
   - cnpm install
 
 script:
+  - rm -rf node_modules/
   - hexo clean
   - hexo generate
 
