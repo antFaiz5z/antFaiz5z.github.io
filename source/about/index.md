@@ -9,8 +9,10 @@ donate: true
 
 ![antFaiz5z](/images/avatar.png )
 
- 　　Email: **<antFaiz5z@gmail.com>**
+Email: **<antFaiz5z@gmail.com>**
 
- 　　Github: **[@antFaiz5z](https://github.com/antFaiz5z)**
+Github: **[@antFaiz5z](https://github.com/antFaiz5z)**
+
+Blog Repo: **[antfaiz5z.github.io](https://github.com/antFaiz5z/antfaiz5z.github.io)**
 
 </div>
