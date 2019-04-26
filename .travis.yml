@@ -17,7 +17,7 @@ before_install:
   - cnpm install hexo-cli -g
 
 install:
-  - npm install
+  - cnpm install
 
 script:
   - hexo clean
