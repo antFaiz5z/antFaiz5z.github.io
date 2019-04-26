@@ -13,14 +13,13 @@ branches:
 
 before_install: 
   - export TZ='Asia/Shanghai'
-  - npm install -g cnpm --registry=https://registry.npm.taobao.org
-  - cnpm install hexo-cli -g
+  #- npm install -g cnpm --registry=https://registry.npm.taobao.org
+  #- cnpm install hexo-cli -g
 
 install:
-  - cnpm install
+  - npm install
 
 script:
-  - rm -rf node_modules/
   - hexo clean
   - hexo generate
 
