@@ -52,6 +52,8 @@ iterator_traits 负责萃取迭代器的特性, __type_traits 负责萃取型别
 
 ## container
 
+### vector
+
 ![SGI STL 的各种容器 (以内缩方式表示基层与衍生层关系)](/images/container.png)
 
 这里所谓的衍生并非派生 (inheritance) 关系, 而是内含 (containment) 关系. 例如
@@ -72,4 +74,6 @@ vector 的迭代器是普通指针, 也就是 Random Access Iterator.
 在 push_back() 中因备用空间不够而调用的 insert_aux() 即是采用上述流程, 然而在 push_back() 中实际上插入点 position 已经等于 finish, 所以流程中后半部分的将 position 到 finish 部分进行拷贝是否必要有待商榷, 书中提到了译者侯捷对此也抱有疑问.
 
 在 insert() 中便区分有三种情况: (finish - position) > n、(finish - position) <= n、备用空间不够， 其中 n 为插入个数. 第三种情况即是采用上述流程, 稍微不同的是中间是插入 n 个 x 而不是简单的 ++finish. 第一种情况直接将插入点后的元素向后拷贝 copy_backward(), 第二中情况先在 finish 之后填充 x 再 copy_backward() 再在 finish 之前覆盖 x.
+
+### list
 
