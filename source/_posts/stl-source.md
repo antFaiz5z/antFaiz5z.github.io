@@ -52,8 +52,6 @@ iterator_traits 负责萃取迭代器的特性, __type_traits 负责萃取型别
 
 ## container
 
-### vector
-
 ![SGI STL 的各种容器 (以内缩方式表示基层与衍生层关系)](/images/container.png)
 
 这里所谓的衍生并非派生 (inheritance) 关系, 而是内含 (containment) 关系. 例如
@@ -62,6 +60,8 @@ priority_queue 内含一个 heap,
 stack 和 queue 内含一个 deque,
 set/map/multiset/multimap 都内含一个 RB-tree,
 hash_<set/map/multiset/multimap> 都内含一个 hashtable.
+
+### vector
 
 vector 默认使用 alloc 作为空间配置器.
 vector 的迭代器是普通指针, 也就是 Random Access Iterator.
@@ -77,3 +77,13 @@ vector 的迭代器是普通指针, 也就是 Random Access Iterator.
 
 ### list
 
+list 默认使用 alloc 作为空间配置器，并据此定义了一个 list_node_allocator.
+list 不仅是一个双向链表, 还是一个环状双向链表, 所以它只需要一个指针便可以完整表现整个链表. 所以 list 提供的是 Bidirectional Iterator.
+
+list 进行 insert() 和 spice() 操作都不会使迭代器失效 (而 vector 的插入操作可能会使内存重新配置而导致所有迭代器失效), 甚至 erase() 操作也只会使指向被删除元素的迭代器失效其他不受影响.
+
+list 初始化时即有一个空白节点, begin() 初始时指向此, end() 始终指向于此.
+
+(`p138`) next = first // 修正区段范围 ？？
+
+list 不能使用 STL 算法 sort(), 必须使用自己的 sort() 成员函数 (使用了快排`p142`), 因为前者只接受 RandomAccessIterator.
