@@ -2,7 +2,8 @@ language: node_js
 
 sudo: required
 
-node_js: stable
+node_js: 
+  - 10.14.1
 
 install:
   - npm install 
