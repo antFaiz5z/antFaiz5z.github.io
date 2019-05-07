@@ -185,16 +185,41 @@ slist 和 list 的主要区别在于前者的迭代器属于 Forward Iterator, �
 
 基于效率考虑, slist 特别提供了 insert_after() 和 erase_after(), 并不提供 push_back(), 只提供 push_front().
 
-??? end() 指向空, 不是 list 一般的空节点.
+??? end() 指向空, 不是如 list 一般的空节点.
 
 ### associative containers
 
 #### RB-tree
 
-#### set
+为了更大的弹性, SGI 将 RB-tree 迭代器实现为两层 (双层节点结构与双层迭代器结构设计), 这种设计理念和 slist 类似.
 
-#### map
+RB-tree 迭代器属于 Bidrectional Iterator, 其提领操作和成员访问操作与 list 十分相似.
 
-#### multiset
+(`p216`) ??? node->parent->parent = node
+实现上的技巧: header->parent == root; root->parent == header; header->left == leftmost; header->right == rightmost;
+??? RB-tree 的 begin() == leftmost; end() == header;
+RB-tree 初始化时产生一个 header 节点空间, 令其为红色, header 左右子节点为自己.
 
-#### multimap
+RB-tree 一开始即要求用户必须明确设定所谓的 KeyOfValue 仿函数, 从实值 (value) 取出键值 (key).
+
+(`p224`) !!! insert_unique()
+             __rb_tree_rebalance()
+
+#### [multi]<set/map>
+
+set<T>::iterator 被定义为底层 RB-tree 的 const_iterator, 杜绝写入操作, 也就是说, set 的 iterator 是一种 constant iterator, 相对于 mutable iterator 来说.
+map 的键值不可改变, 实值可以改变, 因此 map 的 iterator 既不是 constant iterator 也不是 mutable iterator.
+
+几乎所有的 set、map 操作行为都只是转调 RB-tree 的操作行为而已.
+
+set、map 一定使用 RB-tree 的 insert_unique(), multiset、multimap 才使用 RB-tree 的 insert_equal().
+
+`template <... class Compare = less<key> ...>`: 默认采用递增排序.
+
+面对关联容器, 应该使用其所提供的 find 函数来搜寻元素, 会比使用 STL 的算法 find() 更有效率, 因为后者只是循序搜寻.
+
+#### hashtable
+
+bst 具有对数平均时间的表现, 而 hashtable 具有常数平均时间的表现, 且这种表现是以统计为基础, 不需仰赖输入元素的随机性.
+
+#### hash_[multi]<set/map>
