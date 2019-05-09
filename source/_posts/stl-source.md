@@ -189,6 +189,8 @@ slist 和 list 的主要区别在于前者的迭代器属于 Forward Iterator, �
 
 ### associative containers
 
+RB-tree 有自动排序功能, 而 hashtable 没有. 意味着 [multi]<\set/map> 有自动排序功能, 而 hash_[multi]<\set/map> 没有. 如果表格足够大, 后者可出现排序假象.
+
 #### RB-tree
 
 为了更大的弹性, SGI 将 RB-tree 迭代器实现为两层 (双层节点结构与双层迭代器结构设计), 这种设计理念和 slist 类似.
@@ -207,7 +209,7 @@ RB-tree 一开始即要求用户必须明确设定所谓的 KeyOfValue 仿函数
 
 #### [multi]<set/map>
 
-set<T>::iterator 被定义为底层 RB-tree 的 const_iterator, 杜绝写入操作, 也就是说, set 的 iterator 是一种 constant iterator, 相对于 mutable iterator 来说.
+set\<T>::iterator 被定义为底层 RB-tree 的 const_iterator, 杜绝写入操作, 也就是说, set 的 iterator 是一种 constant iterator, 相对于 mutable iterator 来说.
 map 的键值不可改变, 实值可以改变, 因此 map 的 iterator 既不是 constant iterator 也不是 mutable iterator.
 
 几乎所有的 set、map 操作行为都只是转调 RB-tree 的操作行为而已.
@@ -222,4 +224,45 @@ set、map 一定使用 RB-tree 的 insert_unique(), multiset、multimap 才使�
 
 bst 具有对数平均时间的表现, 而 hashtable 具有常数平均时间的表现, 且这种表现是以统计为基础, 不需仰赖输入元素的随机性.
 
+包括有: 线性探测 (linear probing)、二次探测 (quadratic probing)、开链 (separate chaining)
+前二者负载系数永远在 0~1 之间, 而开链策略可以大于 1.
+SGI STL 的 hashtable 便是采用 开链.
+
+元素的删除必须采用惰性删除, 也就是只标记删除记号, 实际删除操作则待表格重新整理 (rehashing) 时再进行, 这是因为hashtable 中每个元素不仅表述自己, 也关系到其他元素的排列.
+二次探测主要用来解决主集团 (primary clustering) 的问题, 但却可能造成次集团 (secondary clustering) 的问题 (两个元素经 hash function 计算出来的位置若相同, 则插入时所探测的位置也相同, 造成某种浪费), 当然消除次集团的办法也有, 例如复式散列 (double hashing). 如果我们假设表格大小为`质数`, 而且永远保持负载系数在 0.5 以下, 那么就可以确定每插入一个新元素所需要的探测次数不多于 2.
+
+在 SGI STL 中采用开链策略的 hashtable 中, buckets 以 vector 完成, bucket 所维护的链表, 并不采用 STL 的 list 或 slist, 而是自行维护 struct __hashtable_node.
+迭代器为 Forward Iterator, operator++ 操作为 尝试访问当前节点的 next, 非空即是结果, 否则即是链表的尾端, 就跳至下一个 bucket.
+虽然开链法不要求表格大小必须为质数, 但 SGI STL 仍然以质数来设计表格大小, 并且先将 28 个质数 (逐渐呈现约两倍的关系, 53、97、193、389...) 计算好, 以备随时访问.
+插入行为可 insert_unique() (对应于非 multi) 与 insert_equal() (对应于 multi).
+"表格重建与否"的判断原则为: 拿元素个数 (包括新增元素) 和 bucket vector 的大小比较, 如果前者大于后者就重建表格. 重建时, 先建立一个新 bucket vector, 将每个节点重新计算应该落在哪个 bucket 上后转移到新 bucket vector 上,最后与旧 bucket vector 进行 swap().
+
+hashtable.size() 变化, 而不一定等于 hashtable.bucket_count(), 后者发生重建时变化.
+
+SGI hashtable 无法处理 string (char* 却可以)、double、float 这些型别 (insert() 时才出错), 欲处理这些型别, 用户必须自行为它们定义 hash function.
+
 #### hash_[multi]<set/map>
+
+hash_[multi]<set/map> 默认表格大小为 100 (根据 STL 的设计, 采用质数 193).
+
+## algorithms
+
+`#include <numeric>` `#include <algorithm>`
+
+质变算法, 诸如拷贝 (copy)、互换(swap)、替换(replace)、填写(fill)、删除(remove)、排列组合(permutation)、分割(partition)、随机重排(random shuffing)、排序(sort).
+如果将此类算法运用于一个常数区间上, 编译器将会报错.
+非质变算法, 诸如查找 (find)、匹配 (search)、计数 (count)、巡访 (for_each)、比较 (equal, mismatch)、寻找极值 (max, min).
+
+所有泛型算法的前两个参数都是一对迭代器 [first, last), 必要条件是能够经由 increment 操作符的反复运用从 first 到达 last, 而编译器本身无法强求这一点, 如果不成立将会导致不可预期的结果.
+
+将无效或者说不匹配的迭代器传给某个算法, 虽然是一种错误, 但却不能保证在编译期就能够被捕捉, 因为所谓"迭代器类型"并不是真正的型别, 它们只是一种型别参数 (type parameters).
+
+## functors / function objects
+
+`#include <functional>`
+
+虽然函数指针可以达到"将整组操作当做算法的参数", 但其不能满足 STL 对抽象性的要求, 且无法和 STL 其他组件 (如 adapter) 搭配, 产生更灵活的变化.
+
+仿函数按操作数 (operand) 个数分为 一元和二元, 按功能分为 算术运算 (Arithmetic)、关系运算 (Rational)、逻辑运算 (Logical).
+
+## adapters
