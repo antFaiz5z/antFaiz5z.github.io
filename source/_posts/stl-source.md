@@ -189,7 +189,7 @@ slist 和 list 的主要区别在于前者的迭代器属于 Forward Iterator, �
 
 ### associative containers
 
-RB-tree 有自动排序功能, 而 hashtable 没有. 意味着 [multi]<\set/map> 有自动排序功能, 而 hash_[multi]<\set/map> 没有. 如果表格足够大, 后者可出现排序假象.
+RB-tree 有自动排序功能, 而 hashtable 没有. 意味着 [multi]<set/map> 有自动排序功能, 而 hash_[multi]<set/map> 没有. 如果表格足够大, 后者可出现排序假象.
 
 #### RB-tree
 
@@ -263,6 +263,17 @@ hash_[multi]<set/map> 默认表格大小为 100 (根据 STL 的设计, 采用质
 
 虽然函数指针可以达到"将整组操作当做算法的参数", 但其不能满足 STL 对抽象性的要求, 且无法和 STL 其他组件 (如 adapter) 搭配, 产生更灵活的变化.
 
-仿函数按操作数 (operand) 个数分为 一元和二元, 按功能分为 算术运算 (Arithmetic)、关系运算 (Rational)、逻辑运算 (Logical).
+仿函数按操作数 (operand) 个数分为 一元和二元 (STL 不支持三元仿函数), 按功能分为 算术运算 (Arithmetic)、关系运算 (Rational)、逻辑运算 (Logical).
+
+证同 (identity)、选择 (select)、投射 (project) 仿函数并不在 C++标准规格之内, 但它们常常存在于各个实现品中作为内部使用
+证同: 直接返回参数. 在 ...set 中用来指定 RB-tree 所需的 KeyOfValue op, 因为 set 的键值即其实值.
+选择: 接收 pair, 直接返回 first 或 last. 在 ...map 中用来指定 RB-tree 所需的 KeyOfValue op, 因为 map 的键值即 pair 的 first.
+投射: 接收两个参数, 直接返回第一参数或第二参数.
 
 ## adapters
+
+container adapters: 包括 queue 和 stack 即是修饰 deque 的接口而成.
+iterator adapters: 包括 insert iterator、reverse iterator、iostream iterator.
+functor/funciton adapters: 配接操作包括 绑定 (bind)、否定 (negate)、组合 (compose).
+
+所有期望获得配接能力的组件, 本身必须是可配接的 (adaptable). 换句话说, 一元仿函数必须继承自 unary_function, 二元仿函数必须继承自 binary_function, 成员函数必须以 mem_fun 处理过, 一般函数必须以 ptr_fun 处理过. 一个未经 ptr_fun 处理过的一般函数, 虽然也可以函数指针的形式传给 STL 算法使用, 却无法拥有任何配接能力.
