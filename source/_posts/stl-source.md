@@ -277,3 +277,24 @@ iterator adapters: 包括 insert iterator、reverse iterator、iostream iterator
 functor/funciton adapters: 配接操作包括 绑定 (bind)、否定 (negate)、组合 (compose).
 
 所有期望获得配接能力的组件, 本身必须是可配接的 (adaptable). 换句话说, 一元仿函数必须继承自 unary_function, 二元仿函数必须继承自 binary_function, 成员函数必须以 mem_fun 处理过, 一般函数必须以 ptr_fun 处理过. 一个未经 ptr_fun 处理过的一般函数, 虽然也可以函数指针的形式传给 STL 算法使用, 却无法拥有任何配接能力.
+
+insert iterator 有三种: back_insert_iterator、front_insert_iterator、insert_iterator, 其 iterator_category 都为 output_iterator_tag;
+reverse_iterator<iterator> 的 5 种相应型别都与其对应的正向迭代器相同;
+istream_iterator 的 iterator_category 为 input_iterator_tag;
+ostream_iterator 的 iterator_category 为 output_iterator_tag.
+
+container adapter 内藏了一个 container member;
+insert iterator   内藏了一个 pointer to container (并因而取得其 iterator);
+reverse iterator  内藏了一个 iterator number;
+stream iterator   内藏了一个 pointer to stream;
+function adapter  内藏了一个 member object, 其型别等同于它所要配接的对象 (这个对象当然是一个 adaptable functor).
+
+源码中经常出现的 pred 一次, 是 predicate 的缩写, 意指会返回真假值 (bool)  的表达式.
+
+## conclusion
+
+容器以 class template 完成;
+算法以 function templates 完成;
+仿函数是一种将 operator() 重载的 class template;
+迭代器是一种将 operator++ 和 operator* 等指针习惯常行为重载的 class template;
+配接器中的 container adapter 和 iterator adapter 都是一种 class template, 而 function adapter.
