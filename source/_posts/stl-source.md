@@ -283,6 +283,8 @@ reverse_iterator<iterator> 的 5 种相应型别都与其对应的正向迭代�
 istream_iterator 的 iterator_category 为 input_iterator_tag;
 ostream_iterator 的 iterator_category 为 output_iterator_tag.
 
+![reverse iterator](/images/riterator.png)
+
 container adapter 内藏了一个 container member;
 insert iterator   内藏了一个 pointer to container (并因而取得其 iterator);
 reverse iterator  内藏了一个 iterator number;
