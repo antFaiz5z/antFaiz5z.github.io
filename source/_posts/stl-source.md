@@ -44,11 +44,11 @@ traits 编程技法大量运用于 STL 实现品中. 它利用"内嵌型别"的�
 
 iterator_traits 负责萃取迭代器的特性, __type_traits 负责萃取型别 (type) 的特性. 此处关注的型别特性是指, 这个型别是否具有 default cto？ 是否具有 non-trivial copy ctor？ 是否具有 non-trivial assignment operator? 是否具有 non-trivial dtor? 等. 如果答案是否定的, 在对这个型别进行构造、析构、拷贝、赋值操作时, 就可以采用内存直接处理操作如 malloc()、memcpy 等, 获得最高效率.
 
-- __type_traits\<T>::has_trivial_constructor
-- __type_traits\<T>::has_trivial_copy_constructor
-- __type_traits\<T>::has_trivial_assignment_operator
-- __type_traits\<T>::has_trivial_destructor
-- __type_traits\<T>::is_POD_type
+- __type_traits<T\>::has_trivial_constructor
+- __type_traits<T\>::has_trivial_copy_constructor
+- __type_traits<T\>::has_trivial_assignment_operator
+- __type_traits<T\>::has_trivial_destructor
+- __type_traits<T\>::is_POD_type
 
 上述式子的返回值不是只是简单的 bool 值, 而是空的结构体: struct `__true_type` 和 struct `__false_type`, 因为如此编译器可以做类型推导. 一般具现体 (general instantiation), 内含对所有型别都必定有效的保守值. 上述各个 has_trivial_xxx 及 is_POD_type 型别都被定义为 `__false_type`, 就是对所有型别都必定有效的保守值. 而对于 C++ 基本型别 (char、int、unsigned int 等) 在 <type_traits.h> 中提供特化版本, 上述每一个成员的值都是 `__true_type`, 表示这些型别可以采用最快速方式 (例如 memcpy) 来进行拷贝或赋值操作.
 
