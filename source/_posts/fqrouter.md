@@ -27,4 +27,8 @@ one for all.
 
 ### openwrt、LEDE
 
+### DNS、花生壳
+
+### NAS、内网穿透
+
 ## 参考
