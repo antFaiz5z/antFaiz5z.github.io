@@ -5,9 +5,28 @@ m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 ga('create','UA-104943569-1','auto');ga('send','pageview');
 </script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">数据库相关书籍阅读笔记</h1><a id="logo" href="/.">antFaiz5z's Fantastic Fertilizer</a><p class="description">Coding the World.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/girls/"><i class="fa fa-user"> 女孩</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">数据库相关书籍阅读笔记</h1><div class="post-meta">Jun 17, 2019<span> | </span><span class="category"><a href="/categories/Others/">Others</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 1.3k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-hourglass-half"></i><span class="post-count"> 4</span><span class="post-meta-item-text"> 分钟</span></span></span></div><a class="disqus-comment-count" href="/2019/06/17/sql/#vcomment"><span class="valine-comment-count" data-xid="/2019/06/17/sql/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#事务（transaction）"><span class="toc-number">1.</span> <span class="toc-text">事务（transaction）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ACID"><span class="toc-number">1.1.</span> <span class="toc-text">ACID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#并发导致的问题及相应隔离级别"><span class="toc-number">1.2.</span> <span class="toc-text">并发导致的问题及相应隔离级别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#并发控制"><span class="toc-number">2.</span> <span class="toc-text">并发控制</span></a></li></ol></div></div><div class="post-content"><p>《数据库系统概念》、《高性能 MySQL》、《深入理解 MySQL》、《MySQL 技术内幕: InnoDB 存储引擎》等.</p>
 <a id="more"></a>
-<h2 id="事务（transaction）"><a href="#事务（transaction）" class="headerlink" title="事务（transaction）"></a>事务（transaction）</h2><h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><p>原子性（atomicity）: 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；<br>恢复系统 保证<br>一致性（consistency）: 执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；<br>程序员 保证<br>隔离性（isolation）: 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；<br>并发控制系统 保证<br>持久性（durability）: 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。<br>恢复系统 保证</p>
-<h3 id="并发导致的问题及相应隔离级别"><a href="#并发导致的问题及相应隔离级别" class="headerlink" title="并发导致的问题及相应隔离级别"></a>并发导致的问题及相应隔离级别</h3><p>丢失修改（Lost to modify）: 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。<br>脏读（Dirty read）: 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。<br>不可重复读（Unrepeatable read）: 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。<br>幻读（Phantom read）: 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。<br>不可重复度和幻读区别：不可重复读的重点是修改，幻读的重点在于新增或者删除。</p>
-<p>未提交读（read uncommitted）: 允许读取未提交数据.<br>已提交读（read committed）: 只允许读取已提交数据.<br>可重复读（repeatable read）: 只允许读取已提交数据, 而且在一个事务两次读取一个数据项期间, 其他事务不得更新该数据.<br>可串行化（serializable）: 通常保证可串行化调度.</p>
+<h2 id="事务（transaction）"><a href="#事务（transaction）" class="headerlink" title="事务（transaction）"></a>事务（transaction）</h2><h3 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h3><ul>
+<li>原子性（atomicity）: 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；<pre><code>恢复系统 保证
+</code></pre></li>
+<li>一致性（consistency）: 执行事务前后，数据保持一致，多个事务对同一个数据读取的结果是相同的；<pre><code>程序员 保证
+</code></pre></li>
+<li>隔离性（isolation）: 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；<pre><code>并发控制系统 保证
+</code></pre></li>
+<li>持久性（durability）: 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。<pre><code>恢复系统 保证
+</code></pre></li>
+</ul>
+<h3 id="并发导致的问题及相应隔离级别"><a href="#并发导致的问题及相应隔离级别" class="headerlink" title="并发导致的问题及相应隔离级别"></a>并发导致的问题及相应隔离级别</h3><ul>
+<li>丢失修改（Lost to modify）: 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改。例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。</li>
+<li>脏读（Dirty read）: 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。</li>
+<li>不可重复读（Unrepeatable read）: 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读。</li>
+<li>幻读（Phantom read）: 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。<br>不可重复度和幻读区别：不可重复读的重点是修改，幻读的重点在于新增或者删除。</li>
+</ul>
+<ul>
+<li>未提交读（read uncommitted）: 允许读取未提交数据.</li>
+<li>已提交读（read committed）: 只允许读取已提交数据.</li>
+<li>可重复读（repeatable read）: 只允许读取已提交数据, 而且在一个事务两次读取一个数据项期间, 其他事务不得更新该数据.</li>
+<li>可串行化（serializable）: 通常保证可串行化调度.</li>
+</ul>
 <table>
 <thead>
 <tr>
@@ -35,9 +54,18 @@ ga('create','UA-104943569-1','auto');ga('send','pageview');
 </tr>
 </tbody>
 </table>
-<p>以上所有隔离级别都不允许脏写（dirty write）, 即如果一个数据项已经被另外一个尚未提交或中止的事务写入, 则不允许对该数据执行写操作.<br>“串行化”为最高隔离级别, 完全服从 ACID;<br>在 SQL 中, 除了接受系统的默认设置, 还可以显示地设置隔离性级别. 例如, “set transaction isolation serializable”.<br>这里需要注意的是：与 SQL 标准不同的地方在于InnoDB 存储引擎在 REPEATABLE-READ（可重读）事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server)是不同的。所以说 InnoDB 存储引擎的默认支持的隔离级别是 REPEATABLE-READ（可重读） 已经可以完全保证事务的隔离性要求，即达到了 SQL 标准的 SERIALIZABLE (可串行化)隔离级别。<br>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 REPEATABLE-READ（可重读）并不会有任何性能损失。<br>InnoDB 存储引擎在 分布式事务 的情况下一般会用到 SERIALIZABLE (可串行化)隔离级别。</p>
+<p>以上所有隔离级别都不允许脏写（dirty write）, 即如果一个数据项已经被另外一个尚未提交或中止的事务写入, 则不允许对该数据执行写操作.</p>
+<p>“串行化”为最高隔离级别, 完全服从 ACID;</p>
+<p>在 SQL 中, 除了接受系统的默认设置, 还可以显示地设置隔离性级别. 例如, “set transaction isolation serializable”.</p>
+<p>这里需要注意的是：与 SQL 标准不同的地方在于InnoDB 存储引擎在 REPEATABLE-READ（可重读）事务隔离级别下使用的是Next-Key Lock 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server)是不同的。所以说 InnoDB 存储引擎的默认支持的隔离级别是 REPEATABLE-READ（可重读） 已经可以完全保证事务的隔离性要求，即达到了 SQL 标准的 SERIALIZABLE (可串行化)隔离级别。</p>
+<p>因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是READ-COMMITTED(读取提交内容):，但是你要知道的是InnoDB 存储引擎默认使用 REPEATABLE-READ（可重读）并不会有任何性能损失。</p>
+<p>InnoDB 存储引擎在 分布式事务 的情况下一般会用到 SERIALIZABLE (可串行化)隔离级别。</p>
 <h2 id="并发控制"><a href="#并发控制" class="headerlink" title="并发控制"></a>并发控制</h2><p>机制: 锁、时间戳、多版本和快照隔离.</p>
-<p>两段锁: 第一个阶段只获得锁不释放锁, 第二个阶段只释放锁不获得锁.<br>共享锁: 用于事务读的数据项<br>排他锁: 用于数据写的数据项</p>
+<ul>
+<li>两段锁: 第一个阶段只获得锁不释放锁, 第二个阶段只释放锁不获得锁.</li>
+<li>共享锁: 用于事务读的数据项</li>
+<li>排他锁: 用于数据写的数据项</li>
+</ul>
 <p>这两种锁模式以及两阶段封锁协议在保证可串行化的前提下允许数据的并发读.</p>
 </div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>antFaiz5z</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2019/06/17/sql/">https://antfaiz5z.github.io/2019/06/17/sql/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>The author owns the copyright, please indicate the source reproduced.</li></ul></div><br><div class="tags"><a href="/tags/MySQL/">MySQL</a></div><div class="post-nav"><a class="next" href="/2019/05/27/fqrouter/">科学上网 与 路由器 All in One</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == true ? true : false;
 var verify = 'false' == true ? true : false;
