@@ -1,5 +1,5 @@
 ---
-title: 《Effective C++》等阅读笔记
+title: C++ 相关书籍阅读笔记
 comments: true
 toc: true
 date: 2019-04-26 14:23:29
@@ -7,7 +7,7 @@ categories: C/C++
 tags: effective
 ---
 
-C++ 书籍阅读笔记
+《Effective C++》、《Effective Modern C++》、《C++ Concurrency In Action》、《Essential C++》、《More Effective C++》等.
 
 <!--more-->
 
