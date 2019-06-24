@@ -12,3 +12,5 @@ tags: interview
 <!--more-->
 
 本文转移至 github 仓库 [Interview-Questions](https://github.com/antFaiz5z/Interview-Questions)
+
+![思维导图](/images/all.png)
