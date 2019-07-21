@@ -80,6 +80,21 @@ InnoDB 存储引擎在 分布式事务 的情况下一般会用到 SERIALIZABLE 
 
 这两种锁模式以及两阶段封锁协议在保证可串行化的前提下允许数据的并发读.
 
+## Next-Key Lock
+
+Record Lock：单个行记录上的锁
+Gap Lock：间隙锁, 锁定一个范围, 但不包含记录本身
+Next-Key Lock：Record Lock + Gap Lock, 锁定一个范围, 并锁定记录本身
+
+Nexy-Key Lock 降级为 Record Lock 仅在查询的列是唯一索引的情况下, 若是辅助索引则情况不同, 此时对聚集索引加的是 Record Lock, 对辅助索引加的是 Next-Key Lock. 需要特别注意的是, InnoDB 引擎还会对辅助索引下一个键值加上 Gap Lock.
+
+Gap Lock 的作用是为了阻止多个事务将记录插入到同一范围内, 这会导致幻影读的问题产生.
+Phantom Problem 是指在同一事务下, 连续执行两次同样的 SQL 语句可能导致不同的结果, 第二次的 SQL 语句可能会返回之前不存在的行.
+
+InnoDB 引擎在默认可重复读隔离级别下采用 Next-Key Lock加锁, 而在已提交读级别下仅采用 Record Lock.
+
+用户可通过 InnoDB 的 Next-Key Lock 机制在应用层面实现唯一性的检查.
+
 ## 索引（index）
 
 索引是存储引擎用于快速找到记录的一种数据结构. 由存储引擎实现索引.
