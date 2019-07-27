@@ -79,6 +79,10 @@ std::forward 的情况和 std::move 相类似, 但 std::forward 是一个有条�
 
 ## C++ Concurrency In Action
 
+### 线程池
+
+join_threads类的实例(来自于第8章)③用来汇聚所有线程。当然也需要析构函数：仅设置done标志⑪，并且join_threads确保所有线程在线程池销毁前全部执行完成。注意成员声明的顺序很重要：done标志和worker_queue必须在threads数组之前声明，而数据必须在joiner前声明。这就能确保成员能以正确的顺序销毁；比如，所有线程都停止运行时，队列就可以安全的销毁了。
+
 ## Essential C++
 
 ## More Effective C++
