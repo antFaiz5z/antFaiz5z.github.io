@@ -3,7 +3,7 @@
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 ga('create','UA-104943569-1','auto');ga('send','pageview');
-</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">《APUE》阅读笔记</h1><a id="logo" href="/.">antFaiz5z's Fantastic Fertilizer</a><p class="description">Coding the World.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/girls/"><i class="fa fa-user"> 女孩</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">《APUE》阅读笔记</h1><div class="post-meta">Jul 30, 2019<span> | </span><span class="category"><a href="/categories/Linux/">Linux</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 2.4k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-hourglass-half"></i><span class="post-count"> 8</span><span class="post-meta-item-text"> 分钟</span></span></span></div><a class="disqus-comment-count" href="/2019/07/30/apue/#vcomment"><span class="valine-comment-count" data-xid="/2019/07/30/apue/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第7章-进程环境"><span class="toc-number">1.</span> <span class="toc-text">第7章 进程环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第8章-进程控制"><span class="toc-number">2.</span> <span class="toc-text">第8章 进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程标识"><span class="toc-number">2.1.</span> <span class="toc-text">进程标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork"><span class="toc-number">2.2.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vfork"><span class="toc-number">2.3.</span> <span class="toc-text">vfork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exit"><span class="toc-number">2.4.</span> <span class="toc-text">exit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wait-和-waitpid"><span class="toc-number">2.5.</span> <span class="toc-text">wait 和 waitpid</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第10章-信号"><span class="toc-number">3.</span> <span class="toc-text">第10章 信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第11章-线程"><span class="toc-number">4.</span> <span class="toc-text">第11章 线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程概念"><span class="toc-number">4.1.</span> <span class="toc-text">线程概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程标示"><span class="toc-number">4.2.</span> <span class="toc-text">线程标示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程创建"><span class="toc-number">4.3.</span> <span class="toc-text">线程创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程终止"><span class="toc-number">4.4.</span> <span class="toc-text">线程终止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程同步"><span class="toc-number">4.5.</span> <span class="toc-text">线程同步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#互斥量"><span class="toc-number">4.5.1.</span> <span class="toc-text">互斥量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件变量"><span class="toc-number">4.5.2.</span> <span class="toc-text">条件变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读写锁"><span class="toc-number">4.5.3.</span> <span class="toc-text">读写锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自旋锁"><span class="toc-number">4.5.4.</span> <span class="toc-text">自旋锁</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第15章-进程间通信"><span class="toc-number">5.</span> <span class="toc-text">第15章 进程间通信</span></a></li></ol></div></div><div class="post-content"><p>《UNIX 环境高级编程(Advanced Programming in the UNIX Environment)》</p>
+</script></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">《APUE》阅读笔记</h1><a id="logo" href="/.">antFaiz5z's Fantastic Fertilizer</a><p class="description">Coding the World.</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/girls/"><i class="fa fa-user"> 女孩</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">《APUE》阅读笔记</h1><div class="post-meta">Jul 30, 2019<span> | </span><span class="category"><a href="/categories/Linux/">Linux</a></span><script src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script><span id="busuanzi_container_page_pv"> | <span id="busuanzi_value_page_pv"></span><span> 阅读</span></span><span class="post-time"><span class="post-meta-item-text"> | </span><span class="post-meta-item-icon"><i class="fa fa-keyboard-o"></i><span class="post-count"> 3.2k</span><span class="post-meta-item-text"> 字</span></span></span><span class="post-time"> | <span class="post-meta-item-icon"><i class="fa fa-hourglass-half"></i><span class="post-count"> 11</span><span class="post-meta-item-text"> 分钟</span></span></span></div><a class="disqus-comment-count" href="/2019/07/30/apue/#vcomment"><span class="valine-comment-count" data-xid="/2019/07/30/apue/"></span><span> 条评论</span></a><div class="clear"><div class="toc-article" id="toc"><div class="toc-title">文章目录</div><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#第7章-进程环境"><span class="toc-number">1.</span> <span class="toc-text">第7章 进程环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第8章-进程控制"><span class="toc-number">2.</span> <span class="toc-text">第8章 进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#进程标识"><span class="toc-number">2.1.</span> <span class="toc-text">进程标识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fork"><span class="toc-number">2.2.</span> <span class="toc-text">fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vfork"><span class="toc-number">2.3.</span> <span class="toc-text">vfork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exit"><span class="toc-number">2.4.</span> <span class="toc-text">exit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wait-和-waitpid"><span class="toc-number">2.5.</span> <span class="toc-text">wait 和 waitpid</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第10章-信号"><span class="toc-number">3.</span> <span class="toc-text">第10章 信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第11章-线程"><span class="toc-number">4.</span> <span class="toc-text">第11章 线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程概念"><span class="toc-number">4.1.</span> <span class="toc-text">线程概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程标示"><span class="toc-number">4.2.</span> <span class="toc-text">线程标示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程创建"><span class="toc-number">4.3.</span> <span class="toc-text">线程创建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程终止"><span class="toc-number">4.4.</span> <span class="toc-text">线程终止</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程同步"><span class="toc-number">4.5.</span> <span class="toc-text">线程同步</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#互斥量"><span class="toc-number">4.5.1.</span> <span class="toc-text">互斥量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件变量"><span class="toc-number">4.5.2.</span> <span class="toc-text">条件变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#读写锁"><span class="toc-number">4.5.3.</span> <span class="toc-text">读写锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#自旋锁"><span class="toc-number">4.5.4.</span> <span class="toc-text">自旋锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#屏障"><span class="toc-number">4.5.5.</span> <span class="toc-text">屏障</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#第15章-进程间通信"><span class="toc-number">5.</span> <span class="toc-text">第15章 进程间通信</span></a></li></ol></div></div><div class="post-content"><p>《UNIX 环境高级编程(Advanced Programming in the UNIX Environment)》</p>
 <a id="more"></a>
 <h2 id="第7章-进程环境"><a href="#第7章-进程环境" class="headerlink" title="第7章 进程环境"></a>第7章 进程环境</h2><h2 id="第8章-进程控制"><a href="#第8章-进程控制" class="headerlink" title="第8章 进程控制"></a>第8章 进程控制</h2><h3 id="进程标识"><a href="#进程标识" class="headerlink" title="进程标识"></a>进程标识</h3><p>ID 为 0 的进程通常是调度进程（交换进程）, 是内核的一部分, 不执行任何磁盘上的程序, 因此也被成为系统进程;<br>ID 为 1 的进程通常是 init 进程, 在自举过程结束时由内核调用, 负责在自举内核后启动一个 UNIX 系统, 负责接管所有孤儿进程, 不会终止, 是一个普通的用户进程, 但以超级用户特权运行.</p>
 <h3 id="fork"><a href="#fork" class="headerlink" title="fork"></a>fork</h3><p>子进程获得父进程的 数据空间、堆和栈的副本（拷贝地址空间）, 但不共享这些存储空间部分, 由于 fork 之后常常跟随 exec, 所以很多实现并不执行数据段、堆和栈的完全副本, 而使用 Copy-On-Write 技术.<br>父子进程共享正文段.</p>
@@ -48,10 +48,7 @@ ga('create','UA-104943569-1','auto');ga('send','pageview');
 <p>使用 pthread_cleanup_push 注册的线程清理函数 rtn 只有当线程采取以下动作时才会被调用：<br>1、调用 pthread_exit 时;<br>2、相应取消请求时;<br>3、用非零参数调用 pthread_cleanup_pop 时;</p>
 <p>而简单使用 return 返回时不会执行线程清理程序.</p>
 <p>并且线程处理函数注册在栈中, 因此执行顺序与它们注册时相反.</p>
-<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><h4 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h4><p>如果线程试图对同一个互斥量加锁两次, 那么它自身就会陷入死锁状态.</p>
-<p>如果锁的粒度太粗, 就会出现很多线程阻塞等待相同的锁, 这可能并不能改善并发性;<br>如果锁的粒度太细, 那么过多的锁开销就会使系统性能受到影响;<br>程序员需要在代码复杂性和性能之间找到正确的平衡.</p>
-<h4 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h4><h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>读写锁非常适合于对数据结构读的次数远大于写的情况. 与互斥量相比, 读写锁在使用之前必须初始化, 在释放它们底层的内存之前必须销毁.</p>
-<h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><table>
+<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><table>
 <thead>
 <tr>
 <th>同步原语</th>
@@ -63,59 +60,81 @@ ga('create','UA-104943569-1','auto');ga('send','pageview');
 <tbody>
 <tr>
 <td>获取 ID</td>
-<td>getpid()</td>
-<td>pthread_t pthread_self(void)</td>
-<td>this_thread::get_id()</td>
+<td>getpid</td>
+<td>pthread_self</td>
+<td>std::this_thread::get_id()</td>
 </tr>
 <tr>
 <td>创建</td>
-<td>fork()</td>
-<td>int pthread_create(pthread_t <em>restrict tidp, const pthread_attr_t </em>restrict attr, void <em>(</em>start_rtn)(void <em>), void </em>restrict arg)</td>
-<td></td>
+<td>fork</td>
+<td>pthread_create<br>pthread_detach<br>pthread_join<br></td>
+<td>std::thread和其成员函数</td>
 </tr>
 <tr>
 <td>终止</td>
-<td>exit()</td>
+<td>exit</td>
 <td>pthread_exit</td>
 <td></td>
 </tr>
 <tr>
 <td>非正常终止</td>
-<td>abort()</td>
+<td>abort</td>
 <td>pthread_cancel</td>
 <td></td>
 </tr>
 <tr>
 <td>终止时清理</td>
-<td>atexit()</td>
+<td>atexit</td>
 <td>pthread_cleanup_push<br>pthread_cleanup_pop</td>
 <td></td>
 </tr>
 <tr>
 <td>互斥量</td>
-<td></td>
-<td>int pthread_mutex_init<br>int pthread_mutex_destroy<br>int pthread_mutex_lock<br>int pthread_mutex_trylock<br>int pthread_mutex_unlock<br>int pthread_mutex_timedlock</td>
-<td></td>
+<td>N/A</td>
+<td>pthread_mutex_init<br>pthread_mutex_destroy<br>pthread_mutex_lock<br>pthread_mutex_trylock<br>pthread_mutex_unlock<br>pthread_mutex_timedlock</td>
+<td>std::mutex类<br>std::unique_lock&lt;&gt;模板<br>std::lock_guard&lt;&gt;模板</td>
 </tr>
 <tr>
 <td>条件变量</td>
-<td></td>
-<td></td>
-<td></td>
+<td>N/A</td>
+<td>pthread_cond_init<br>pthread_cond_destroy<br>pthread_cond_wait<br>pthread_cond_timedwait<br>pthread_cond_signal<br>pthread_cond_broadcast</td>
+<td>std::condition_variable<br>std::condition_variable_any</td>
 </tr>
 <tr>
 <td>读写锁</td>
-<td></td>
-<td></td>
+<td>N/A</td>
+<td>pthread_rwlock_init<br>pthread_rwlock_destroy<br>pthread_rwlock_rdlock<br>pthread_rwlock_wrlock<br>pthread_rwlock_tryrdlock<br>pthread_rwlock_trywrlock<br>pthread_rwlock_unlock<br>pthread_rwlock_timedrdlock<br>pthread_rwlock_timedwrlock</td>
 <td></td>
 </tr>
 <tr>
 <td>自旋锁</td>
+<td>N/A</td>
+<td>pthread_spin_init<br>pthread_spin_destroy<br>pthread_spin_lock<br>pthread_spin_trylock<br>pthread_spin_unlock<br></td>
 <td></td>
-<td></td>
+</tr>
+<tr>
+<td>屏障</td>
+<td>N/A</td>
+<td>pthread_barrier_init<br>pthread_barrier_destroy<br>pthread_barrier_wait</td>
 </tr>
 </tbody>
 </table>
+<h4 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h4><p>如果线程试图对同一个互斥量加锁两次, 那么它自身就会陷入死锁状态.</p>
+<p>如果锁的粒度太粗, 就会出现很多线程阻塞等待相同的锁, 这可能并不能改善并发性;<br>如果锁的粒度太细, 那么过多的锁开销就会使系统性能受到影响;<br>程序员需要在代码复杂性和性能之间找到正确的平衡.</p>
+<p>pthread_mutex_t 静态初始化：PTHREAD_MUTEX_INITIALIZER<br>pthread_mutex_t 动态初始化：pthread_mutex_init/pthread_mutex_destroy<br>(条件变量 pthread_cond_t、<br>读写锁 pthread_rwlock_t、<br>自旋锁 pthread_spinlock_t、<br>屏障 pthread_barrier_t 类似)</p>
+<p>如果动态分配互斥量（如通过调用 malloc 函数）, 在释放内存前需要调用 pthread_mutex_destroy.<br>（条件变量 pthread_cond_init/destroy、<br>读写锁 pthread_rwlock_init/destroy、<br>自旋锁 pthread_spin_init/destroy、<br>屏障 pthread_barrier_init/destroy 类似）</p>
+<p>pthread_mutex_trylock 不阻塞直接返回：加锁成功返回 0, 失败返回 EBUSY. 用来避免线程阻塞.<br>pthread_mutex_timedlock 指定线程愿意阻塞等待的绝对时间, 若超时未加锁成功则返回 ETIMEOUT. 用来避免线程永久阻塞.<br>（条件变量 pthread_cond_timedwait、<br>读写锁 pthread_rwlock_&lt;try/timed&gt;&lt;rdlock/wrlock&gt;、<br>自旋锁 pthread_spin_trylock 类似）</p>
+<h4 id="条件变量"><a href="#条件变量" class="headerlink" title="条件变量"></a>条件变量</h4><p>条件变量本身是由互斥量保护的, 线程在改变条件状态之前必须先锁住互斥量, 其他线程在得到互斥量之前不会察觉到这种改变.</p>
+<p>传递给 pthread_cond_wait 的互斥量对条件进行保护. 调用者把锁住的互斥量传给函数, 函数然后自动把线程放到等待条件的线程列表上, 对互斥量解锁. 这就关闭了条件检查和线程进入休眠状态等待条件改变这两个操作之间的时间通道, 于是线程不会错过条件的任何变化. pthread_cond_wait 返回时互斥量再次被锁住.</p>
+<p>pthread_cond_timedwait 传入的绝对时间参数为 timespec 结构, 可以使用 clock_gettime 获取 timespec 结构表示的当前时间, 或者使用 gettimeofday 获取 timeval 结构表示的当前时间再转换成 timespec 结构.</p>
+<p>从 pthred_cond_[timed]wait 调用成功返回时, 线程需要重新计算条件, 因为另一个线程可能已经在运行并改变了条件.</p>
+<h4 id="读写锁"><a href="#读写锁" class="headerlink" title="读写锁"></a>读写锁</h4><p>读写锁非常适合于对数据结构读的次数远大于写的情况. 与互斥量相比, 读写锁在使用之前必须初始化, 在释放它们底层的内存之前必须销毁.</p>
+<p>有的实现可能会对共享模式（读模式）下可获取的读锁的次数进行限制（避免读锁长期占用而使写锁请求得不到满足）, 所以需要检查 pthread_rwlock_rdlock 的返回值.</p>
+<h4 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h4><p>应用场景：锁的持有时间短, 而且线程不希望在重新调度上花费太多的成本.</p>
+<p>当线程等待锁变为可用时, CPU 不能做其他的事情, 这也是自旋锁只能够被持有一小段时间的原因. 事实上, 某些自旋锁的实现在试图获得互斥量的时候会自旋一小段时间, 在自旋计数达到某一阈值的时候才会休眠.</p>
+<p>pthread_spin_lock 和 pthread_spin_trylock 对自旋锁加锁, 前者在获取之前一直自旋, 后者不能自旋.</p>
+<h4 id="屏障"><a href="#屏障" class="headerlink" title="屏障"></a>屏障</h4><p>对某个线程来说, pthread_barrier_wait 的返回值为 PTHREAD_BARRIER_SERIAL_THREAD, 剩下的线程看到的返回值为 0. 这使得一个线程可以作为主线程, 它可以工作在其他所有线程已完成的工作结果上.</p>
+<p>一旦达到屏障计数值, 而且线程处于非阻塞状态, 屏障就可以重用. 但是除非连续调用  pthread_barrier_destroy 和 pthread_barrier_init 后, 否则屏障计数不会改变.</p>
 <h2 id="第15章-进程间通信"><a href="#第15章-进程间通信" class="headerlink" title="第15章 进程间通信"></a>第15章 进程间通信</h2></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者：</strong>antFaiz5z</li><li class="post-copyright-link"><strong>本文链接：</strong><a href="/2019/07/30/apue/">https://antfaiz5z.github.io/2019/07/30/apue/</a></li><li class="post-copyright-license"><strong>版权声明：</strong>The author owns the copyright, please indicate the source reproduced.</li></ul></div><br><div class="tags"><a href="/tags/apue/">apue</a></div><div class="post-nav"><a class="next" href="/2019/06/28/muduo/">《Muduo》阅读笔记</a></div><div id="vcomment"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script><script>var notify = 'true' == true ? true : false;
 var verify = 'false' == true ? true : false;
 var GUEST_INFO = ['nick','mail','link'];
