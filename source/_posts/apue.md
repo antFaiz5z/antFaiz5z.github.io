@@ -143,6 +143,19 @@ pthread_cancel 并不等待线程终止, 它仅仅提出请求, 对方线程可�
 
 ### 线程同步
 
+| 同步原语 | 进程 | 线程 posix| 线程 STL |
+|------|-----|-----|-----|
+|获取 ID|getpid|pthread_self|std::this_thread::get_id()|
+|创建|fork|pthread_create</br>pthread_detach</br>pthread_join</br>|std::thread和其成员函数|
+|终止|exit|pthread_exit||
+|非正常终止|abort|pthread_cancel||
+|终止时清理|atexit|pthread_cleanup_push</br>pthread_cleanup_pop||
+|互斥量|N/A|pthread_mutex_init</br>pthread_mutex_destroy</br>pthread_mutex_lock</br>pthread_mutex_trylock</br>pthread_mutex_unlock</br>pthread_mutex_timedlock|std::mutex类</br>std::unique_lock<>模板</br>std::lock_guard<>模板|
+|条件变量|N/A|pthread_cond_init</br>pthread_cond_destroy</br>pthread_cond_wait</br>pthread_cond_timedwait</br>pthread_cond_signal</br>pthread_cond_broadcast|std::condition_variable</br>std::condition_variable_any|
+|读写锁|N/A|pthread_rwlock_init</br>pthread_rwlock_destroy</br>pthread_rwlock_rdlock</br>pthread_rwlock_wrlock</br>pthread_rwlock_tryrdlock</br>pthread_rwlock_trywrlock</br>pthread_rwlock_unlock</br>pthread_rwlock_timedrdlock</br>pthread_rwlock_timedwrlock||
+|自旋锁|N/A|pthread_spin_init</br>pthread_spin_destroy</br>pthread_spin_lock</br>pthread_spin_trylock</br>pthread_spin_unlock</br>||
+|屏障|N/A|pthread_barrier_init</br>pthread_barrier_destroy</br>pthread_barrier_wait||
+
 #### 互斥量
 
 如果线程试图对同一个互斥量加锁两次, 那么它自身就会陷入死锁状态.
@@ -151,24 +164,53 @@ pthread_cancel 并不等待线程终止, 它仅仅提出请求, 对方线程可�
 如果锁的粒度太细, 那么过多的锁开销就会使系统性能受到影响;
 程序员需要在代码复杂性和性能之间找到正确的平衡.
 
+pthread_mutex_t 静态初始化：PTHREAD_MUTEX_INITIALIZER
+pthread_mutex_t 动态初始化：pthread_mutex_init/pthread_mutex_destroy
+(条件变量 pthread_cond_t、
+读写锁 pthread_rwlock_t、
+自旋锁 pthread_spinlock_t、
+屏障 pthread_barrier_t 类似)
+
+如果动态分配互斥量（如通过调用 malloc 函数）, 在释放内存前需要调用 pthread_mutex_destroy.
+（条件变量 pthread_cond_init/destroy、
+读写锁 pthread_rwlock_init/destroy、
+自旋锁 pthread_spin_init/destroy、
+屏障 pthread_barrier_init/destroy 类似）
+
+pthread_mutex_trylock 不阻塞直接返回：加锁成功返回 0, 失败返回 EBUSY. 用来避免线程阻塞.
+pthread_mutex_timedlock 指定线程愿意阻塞等待的绝对时间, 若超时未加锁成功则返回 ETIMEOUT. 用来避免线程永久阻塞.
+（条件变量 pthread_cond_timedwait、
+读写锁 pthread_rwlock_<try/timed><rdlock/wrlock>、
+自旋锁 pthread_spin_trylock 类似）
+
 #### 条件变量
+
+条件变量本身是由互斥量保护的, 线程在改变条件状态之前必须先锁住互斥量, 其他线程在得到互斥量之前不会察觉到这种改变.
+
+传递给 pthread_cond_wait 的互斥量对条件进行保护. 调用者把锁住的互斥量传给函数, 函数然后自动把线程放到等待条件的线程列表上, 对互斥量解锁. 这就关闭了条件检查和线程进入休眠状态等待条件改变这两个操作之间的时间通道, 于是线程不会错过条件的任何变化. pthread_cond_wait 返回时互斥量再次被锁住.
+
+pthread_cond_timedwait 传入的绝对时间参数为 timespec 结构, 可以使用 clock_gettime 获取 timespec 结构表示的当前时间, 或者使用 gettimeofday 获取 timeval 结构表示的当前时间再转换成 timespec 结构.
+
+从 pthred_cond_[timed]wait 调用成功返回时, 线程需要重新计算条件, 因为另一个线程可能已经在运行并改变了条件.
 
 #### 读写锁
 
 读写锁非常适合于对数据结构读的次数远大于写的情况. 与互斥量相比, 读写锁在使用之前必须初始化, 在释放它们底层的内存之前必须销毁.
 
+有的实现可能会对共享模式（读模式）下可获取的读锁的次数进行限制（避免读锁长期占用而使写锁请求得不到满足）, 所以需要检查 pthread_rwlock_rdlock 的返回值.
+
 #### 自旋锁
 
-| 同步原语 | 进程 | 线程 posix| 线程 STL |
-|------|-----|-----|-----|
-|获取 ID|getpid()|pthread_t pthread_self(void)|this_thread::get_id()|
-|创建|fork()|int pthread_create(pthread_t *restrict tidp, const pthread_attr_t *restrict attr, void *(*start_rtn)(void *), void *restrict arg)||
-|终止|exit()|pthread_exit||
-|非正常终止|abort()|pthread_cancel||
-|终止时清理|atexit()|pthread_cleanup_push</br>pthread_cleanup_pop||
-|互斥量||int pthread_mutex_init</br>int pthread_mutex_destroy</br>int pthread_mutex_lock</br>int pthread_mutex_trylock</br>int pthread_mutex_unlock</br>int pthread_mutex_timedlock||
-|条件变量||||
-|读写锁||||
-|自旋锁||||
+应用场景：锁的持有时间短, 而且线程不希望在重新调度上花费太多的成本.
+
+当线程等待锁变为可用时, CPU 不能做其他的事情, 这也是自旋锁只能够被持有一小段时间的原因. 事实上, 某些自旋锁的实现在试图获得互斥量的时候会自旋一小段时间, 在自旋计数达到某一阈值的时候才会休眠.
+
+pthread_spin_lock 和 pthread_spin_trylock 对自旋锁加锁, 前者在获取之前一直自旋, 后者不能自旋.
+
+#### 屏障
+
+对某个线程来说, pthread_barrier_wait 的返回值为 PTHREAD_BARRIER_SERIAL_THREAD, 剩下的线程看到的返回值为 0. 这使得一个线程可以作为主线程, 它可以工作在其他所有线程已完成的工作结果上.
+
+一旦达到屏障计数值, 而且线程处于非阻塞状态, 屏障就可以重用. 但是除非连续调用  pthread_barrier_destroy 和 pthread_barrier_init 后, 否则屏障计数不会改变.
 
 ## 第15章 进程间通信
