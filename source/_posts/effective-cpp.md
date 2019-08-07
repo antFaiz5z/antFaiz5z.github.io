@@ -3,7 +3,7 @@ title: C++ 相关书籍阅读笔记
 comments: true
 toc: true
 date: 2019-04-26 14:23:29
-categories: C/C++
+categories: Reading
 tags: effective
 ---
 

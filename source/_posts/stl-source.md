@@ -3,7 +3,7 @@ title: 《STL 源码剖析》阅读笔记
 comments: true
 toc: true
 date: 2019-04-29 17:01:15
-categories: C/C++
+categories: Reading
 tags: STL
 ---
 

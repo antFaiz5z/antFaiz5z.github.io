@@ -3,7 +3,7 @@ title: 数据库相关书籍阅读笔记
 comments: true
 toc: true
 date: 2019-06-17 09:47:02
-categories: Others
+categories: Reading
 tags: MySQL
 ---
 
