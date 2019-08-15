@@ -143,6 +143,7 @@ pthread_cancel 并不等待线程终止, 它仅仅提出请求, 对方线程可�
 
 ### 线程同步
 
+待更新
 | 同步原语 | 进程 | 线程 POSIX| 线程 STL |
 |------|-----|-----|-----|
 |获取 ID|getpid|pthread_self|std::this_thread::get_id()|
@@ -216,3 +217,72 @@ pthread_spin_lock 和 pthread_spin_trylock 对自旋锁加锁, 前者在获取�
 ## 第15章 进程间通信
 
 ## 第16章 网络 IPC：套接字
+
+### 套接字描述符
+
+套接字描述符在 UNIX 系统中被当做是一种文件描述符, 但不是所有参数为文件描述符的函数都可以接受套接字描述符.
+
+### 字节序
+
+Linux 3.2.0 - 小端
+Mac OSX 10.6.8 - 小端
+Solaris 10 - 大端
+TCP/IP 协议栈 - 大端
+
+### 建立连接
+
+`int bind(int sockfd, struct sockaddr *addr, socklen_t len);`
+
+一般只能将一个套接字端点绑定到一个给定地址上, 尽管有些协议支持多重绑定.
+
+`int connect(int sockfd, const struct sockaddr *addr, socklen_t len);`
+
+使用 UDP (无连接的套接字)同样可以调用 connect, 表示只一对一发送, 如此可以使用 send.
+
+`int listen(int sockfd, int backlog);`
+
+参数 backlog 提供了一个提示, 提示系统该进程所要入队的未完成连接请求数量（对于 TCP, 其默认值为 128）, 一旦队列满系统就会拒绝多余的连接请求.
+
+`int accept(int sockfd, struct sockaddr *restrict addr, socklen_t *restrict len);`
+
+如果没有连接请求在等待, accept 会阻塞直到一个请求到来. 如果 sockfd 处于非阻塞模式, accept 会返回 -1, 并将 errno 设置为 EAGAIN 或 EWOULDBLOCK.
+可以使用 poll 或 select 来等待一个请求的到来, 此时一个带有等待连接请求的套接字会以可读的方式出现.
+
+### 数据传输
+
+`ssize_t send(int sockfd, cosnt void *buf, size_t nbytes, int flags);`
+
+send 类似于 write, 但可以通过指定标志来改变处理传输数据的方式.
+使用 send 时套接字必须已经连接.
+即使 send 成功返回, 也并不表示连接的另一端的进程就一定接受了数据, 只能保证无误地发送到了网络驱动程序上.
+对于支持报文边界的协议, 如果尝试发送的单个报文的长度超过协议所支持的最大长度, 那么 send 会失败, 并将 errno 设为 EMSGSIZE;
+对于字节流协议, send 会阻塞直到整个数据传输完成.
+
+`ssize_t sendto(int sockfd, cosnt void *buf, size_t nbytes, int flags, const struct sockaddr *destaddr, socklen_t destlen);`
+
+与 send 相比, 区别在于 sendto 可以在无连接的套接字上指定一个目标地址.
+
+`ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);`
+
+使用 msghdr 结构来指定多重缓冲区传输数据, 类似于 writev.
+
+`ssize_t recv(int sockfd, cosnt void *buf, size_t nbytes, int flags);`
+`ssize_t recvfrom(int sockfd, cosnt void *buf, size_t nbytes, int flags, const struct sockaddr *destaddr, socklen_t destlen);`
+`ssize_t recvmsg(int sockfd, const struct msghdr *msg, int flags);`
+
+类似于 readv.
+
+### 带外数据
+
+TCP 支持带外数据, UDP 不支持.
+
+TCP 将带外数据称为紧急数据, 仅支持一个字节的紧急数据, 但是允许紧急数据在普通数据传递机制数据流之外传输.
+为了产生紧急数据, 可以在 3 个 send 函数里指定 MSG_OOB 标志.
+如果带 MSG_OOB 标志发送的数据超过一个时, 最后一个字节被视为紧急数据.
+如果在接受当前的紧急数据字节之前又有新的紧急数据到来, 那么已有的字节会被丢弃.
+
+### 非阻塞与异步 I/O
+
+通常, 当套接字输出队列没有足够空间来发送消息时, send 函数会阻塞; recv 函数没有数据可用时会阻塞等待. 而在套接字非阻塞模式下, 这些函数不会阻塞而是失败, 将 errno 设为 EAGAIN 或 EWOULDBLOCK, 一般可以使用 poll 或 select 来判断能否接受或传输数据.
+
+一些文献把经典的基于套接字的异步 I/O 机制称为 “基于信号的 I/O”, 区别于 Single UNIX Specification 中的通用异步 I/O 机制.
