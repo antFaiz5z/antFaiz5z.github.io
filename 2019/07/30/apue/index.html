@@ -10,25 +10,8 @@ ga('create','UA-104943569-1','auto');ga('send','pageview');
 <p>clone(2) 作为 fork 的推广形式, 它允许调用者控制哪些部分由父进程和子进程共享.</p>
 <p>在 fork 之后, 父子进程的执行顺序是不确定的, 这取决于内核的调度算法.</p>
 <p>write() 是不带缓冲的; 而标准 I/O 库（如 printf）是带缓冲的, 如果标准输出连到终端设备, 则它是行缓冲的, 否则（将标准输出重定向到一个文件时）它是全缓冲的, 这种情况下 fork 之前父进程 printf 的缓冲数据 fork 后将会被拷贝到子进程中, 若 printf 则会又打印出来.<br><code>setbuf(stdout, NUll);</code>可将标准输出的缓冲设置为空, 使其实时输出.</p>
-<p>fork 使得 子进程继承了父进程的：<br>    所有打开文件描述符;</p>
-<pre><code>- 父子进程每个相同的打开描述符共享一个文件表项;（因此重定向父进程的标准输出时, 子进程的标准输出也被重定向）
-- 父子进程共享同一个文件偏移量;（因此一般 1. 父进程等待子进程完成; 2. 父子进程各自执行不同的程序段, 不干扰对方使用的文件描述符）
-实际用户 ID、实际组 ID、有效用户 ID、有效组 ID;
-附属组 ID;
-进程组 ID;
-会话 ID;
-控制终端;
-设置用户 ID 标志和设置组 ID 标志;
-当前工作目录;
-根目录;
-文件模式创建屏蔽字;
-信号屏蔽和安排;
-对任一打开文件描述符的执行关闭（close-on-exec）标志;
-环境;
-连接的共享存储段;
-存储映像;
-资源限制;
-</code></pre><p>父子进程的区别如下：<br>    fork 的返回值不同;<br>    进程 ID 不同;<br>    父进程 ID 不同;<br>    子进程的 tms_utime、tms_stime、tms_cutime 和 tms_ustime 的值设置为 0;<br>    子进程不继承父进程设置的文件锁;<br>    子进程的未处理闹钟被清除;<br>    子进程的未处理信号集设置为空集;</p>
+<p>fork 使得 子进程继承了父进程的：<br>    所有打开文件描述符;<br>    父子进程每个相同的打开描述符共享一个文件表项;（因此重定向父进程的标准输出时, 子进程的标准输出也被重定向）<br>    父子进程共享同一个文件偏移量;（因此一般 1. 父进程等待子进程完成; 2. 父子进程各自执行不同的程序段, 不干扰对方使用的文件描述符）<br>    实际用户 ID、实际组 ID、有效用户 ID、有效组 ID;<br>    附属组 ID;<br>    进程组 ID;<br>    会话 ID;<br>    控制终端;<br>    设置用户 ID 标志和设置组 ID 标志;<br>    当前工作目录;<br>    根目录;<br>    文件模式创建屏蔽字;<br>    信号屏蔽和安排;<br>    对任一打开文件描述符的执行关闭（close-on-exec）标志;<br>    环境;<br>    连接的共享存储段;<br>    存储映像;<br>    资源限制;</p>
+<p>父子进程的区别如下：<br>    fork 的返回值不同;<br>    进程 ID 不同;<br>    父进程 ID 不同;<br>    子进程的 tms_utime、tms_stime、tms_cutime 和 tms_ustime 的值设置为 0;<br>    子进程不继承父进程设置的文件锁;<br>    子进程的未处理闹钟被清除;<br>    子进程的未处理信号集设置为空集;</p>
 <h3 id="vfork"><a href="#vfork" class="headerlink" title="vfork"></a>vfork</h3><p>vfork 与 fork 的区别：<br>    1、vfork 创建的新进程的目的是 exec 一个新程序, 不过在子进程调用 exec 或 exit 之前会在父进程的空间运行;（因此并不将父进程的地址空间完全复制到子进程）<br>    2、vfork 保证子进程先运行, 在它调用 exec 或 exit 后父进程才可能被调度运行;（如果在调用这两个函数之前子进程依赖父进程的进一步动作则会导致死锁）</p>
 <h3 id="exit"><a href="#exit" class="headerlink" title="exit"></a>exit</h3><p>进程有 5 种正常终止和 3 中异常终止方式：<br>    1、main 函数中执行 return, 相当于对用 exit;<br>    2、调用 exit;（调用终止处理程序, 关闭所有标准 I/O 流等; 但不处理文件描述符、多进程以及作业控制; 由 ISO C 定义）<br>    3、调用 _exit 或 _Exit;(在 UNIX 系统中两种调用等价, 并不冲洗标准 I/O 流; 处理 UNIX 系统特定的细节; exit 调用 _exit; 由 POSIX.1 说明)<br>    4、在进程的最后一个线程在其启动例程中执行 return;（进程以终止状态 0 返回）<br>    5、进程的最后一个线程调用 pthread_exit 函数;<br>    1、调用 abort;（产生 SIGABRT 信号, 是下一种异常终止的一种特例）<br>    2、进程接收到某些信号;（信号可由进程自身（调用 abort）、其他进程或内核产生）<br>    3、最后一个线程对取消请求作出响应;</p>
 <p>不论进程如何终止, 最后都会执行内核中的同一段代码, 即关闭描述符、释放存储器.<br>子进程正常或异常终止时, 内核向其父进程发送 SIGCHLD 信号.</p>
@@ -48,7 +31,78 @@ ga('create','UA-104943569-1','auto');ga('send','pageview');
 <p>使用 pthread_cleanup_push 注册的线程清理函数 rtn 只有当线程采取以下动作时才会被调用：<br>1、调用 pthread_exit 时;<br>2、相应取消请求时;<br>3、用非零参数调用 pthread_cleanup_pop 时;</p>
 <p>而简单使用 return 返回时不会执行线程清理程序.</p>
 <p>并且线程处理函数注册在栈中, 因此执行顺序与它们注册时相反.</p>
-<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><p>待更新<br>| 同步原语 | 进程 | 线程 POSIX| 线程 STL |<br>|——|—–|—–|—–|<br>|获取 ID|getpid|pthread_self|std::this_thread::get_id()|<br>|创建|fork|pthread_create<br>pthread_detach<br>pthread_join<br>|std::thread和其成员函数|<br>|终止|exit|pthread_exit||<br>|非正常终止|abort|pthread_cancel||<br>|终止时清理|atexit|pthread_cleanup_push<br>pthread_cleanup_pop||<br>|互斥量|N/A|pthread_mutex_init<br>pthread_mutex_destroy<br>pthread_mutex_lock<br>pthread_mutex_trylock<br>pthread_mutex_unlock<br>pthread_mutex_timedlock|std::mutex类<br>std::unique_lock&lt;&gt;模板<br>std::lock_guard&lt;&gt;模板|<br>|条件变量|N/A|pthread_cond_init<br>pthread_cond_destroy<br>pthread_cond_wait<br>pthread_cond_timedwait<br>pthread_cond_signal<br>pthread_cond_broadcast|std::condition_variable<br>std::condition_variable_any|<br>|读写锁|N/A|pthread_rwlock_init<br>pthread_rwlock_destroy<br>pthread_rwlock_rdlock<br>pthread_rwlock_wrlock<br>pthread_rwlock_tryrdlock<br>pthread_rwlock_trywrlock<br>pthread_rwlock_unlock<br>pthread_rwlock_timedrdlock<br>pthread_rwlock_timedwrlock||<br>|自旋锁|N/A|pthread_spin_init<br>pthread_spin_destroy<br>pthread_spin_lock<br>pthread_spin_trylock<br>pthread_spin_unlock<br>||<br>|屏障|N/A|pthread_barrier_init<br>pthread_barrier_destroy<br>pthread_barrier_wait||</p>
+<h3 id="线程同步"><a href="#线程同步" class="headerlink" title="线程同步"></a>线程同步</h3><p>待更新</p>
+<table>
+<thead>
+<tr>
+<th>同步原语</th>
+<th>进程</th>
+<th>线程 POSIX</th>
+<th>线程 STL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>获取 ID</td>
+<td>getpid</td>
+<td>pthread_self</td>
+<td>std::this_thread::get_id()</td>
+</tr>
+<tr>
+<td>创建</td>
+<td>fork</td>
+<td>pthread_create<br>pthread_detach<br>pthread_join<br></td>
+<td>std::thread和其成员函数</td>
+</tr>
+<tr>
+<td>终止</td>
+<td>exit</td>
+<td>pthread_exit</td>
+<td></td>
+</tr>
+<tr>
+<td>非正常终止</td>
+<td>abort</td>
+<td>pthread_cancel</td>
+<td></td>
+</tr>
+<tr>
+<td>终止时清理</td>
+<td>atexit</td>
+<td>pthread_cleanup_push<br>pthread_cleanup_pop</td>
+<td></td>
+</tr>
+<tr>
+<td>互斥量</td>
+<td>N/A</td>
+<td>pthread_mutex_init<br>pthread_mutex_destroy<br>pthread_mutex_lock<br>pthread_mutex_trylock<br>pthread_mutex_unlock<br>pthread_mutex_timedlock</td>
+<td>std::mutex类<br>std::unique_lock&lt;&gt;模板<br>std::lock_guard&lt;&gt;模板</td>
+</tr>
+<tr>
+<td>条件变量</td>
+<td>N/A</td>
+<td>pthread_cond_init<br>pthread_cond_destroy<br>pthread_cond_wait<br>pthread_cond_timedwait<br>pthread_cond_signal<br>pthread_cond_broadcast</td>
+<td>std::condition_variable<br>std::condition_variable_any</td>
+</tr>
+<tr>
+<td>读写锁</td>
+<td>N/A</td>
+<td>pthread_rwlock_init<br>pthread_rwlock_destroy<br>pthread_rwlock_rdlock<br>pthread_rwlock_wrlock<br>pthread_rwlock_tryrdlock<br>pthread_rwlock_trywrlock<br>pthread_rwlock_unlock<br>pthread_rwlock_timedrdlock<br>pthread_rwlock_timedwrlock</td>
+<td></td>
+</tr>
+<tr>
+<td>自旋锁</td>
+<td>N/A</td>
+<td>pthread_spin_init<br>pthread_spin_destroy<br>pthread_spin_lock<br>pthread_spin_trylock<br>pthread_spin_unlock<br></td>
+<td></td>
+</tr>
+<tr>
+<td>屏障</td>
+<td>N/A</td>
+<td>pthread_barrier_init<br>pthread_barrier_destroy<br>pthread_barrier_wait</td>
+</tr>
+</tbody>
+</table>
 <h4 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h4><p>如果线程试图对同一个互斥量加锁两次, 那么它自身就会陷入死锁状态.</p>
 <p>如果锁的粒度太粗, 就会出现很多线程阻塞等待相同的锁, 这可能并不能改善并发性;<br>如果锁的粒度太细, 那么过多的锁开销就会使系统性能受到影响;<br>程序员需要在代码复杂性和性能之间找到正确的平衡.</p>
 <p>pthread_mutex_t 静态初始化：PTHREAD_MUTEX_INITIALIZER<br>pthread_mutex_t 动态初始化：pthread_mutex_init/pthread_mutex_destroy<br>(条件变量 pthread_cond_t、<br>读写锁 pthread_rwlock_t、<br>自旋锁 pthread_spinlock_t、<br>屏障 pthread_barrier_t 类似)</p>
