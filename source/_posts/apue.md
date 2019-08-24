@@ -229,6 +229,49 @@ pthread_spin_lock 和 pthread_spin_trylock 对自旋锁加锁, 前者在获取�
 
 信号量： 可以解决共享内存多进程竞争问题, 本质是一个计数器
 
+[system-v-ipc-vs-posix-ipc](https://stackoverflow.com/questions/4582968/system-v-ipc-vs-posix-ipc)
+
+|   |System V|     |       |POSIX|     |       |
+|----|--------|-----|-------|-----|-----|-------|
+||消息队列|信号量|共享内存|消息队列|信号量|共享内存|
+|头文件|<sys/msg.h>|<sys/sem.h>|<sys/shm.h>|<mqueue.h>|<semaphore.h>|<sys/mman.h>|
+|创建或打开IPC的函数</br>(删除IPC的函数)|msgget|semget|shmget|mq_open</br>mq_close</br>mq_unlink</br>|sem_open</br>sem_close</br>sem_unlink</br>sem_init</br>sem_destroy|shm_open</br>shm_unlink</br>|
+|控制IPC操作的函数|msgctl|semctl|shmctl|mq_getattr</br>mq_setattr||ftruncate</br>fstat|
+|IPC操作函数|msgsnd</br>msgrcv|semop|shmat</br>shmdt|mq_send</br>mq_receive</br>mq_notify|sem_wait</br>sem_trywait</br>sem_timedwait</br>sem_post</br>sem_getvalue|mmap</br>munmap|
+
+### 管道
+
+历史上是半双工的, 即数据只在一个方向上流动, 现在某些系统提供全双工管道.
+
+固定 fd[0] 为读端, fd[1] 为写端.
+
+常量 PIPE_BUF 规定了内核的管道缓冲区大小, 如果多个进程对同一管道调用 write, 而且要求写的字节数超过 PIPE_BUF, 那么各个进程所写的数据可能会相互交叉.
+
+``` c
+#include <unistd.h>
+int pipe(int fd[2]);
+```
+
+### FIFO
+
+FIFO 是一种文件类型, 使用 open 打开时, 可以指定非阻塞标志（O_NONBLOCK）.
+
+应用程序可以使用 mknod 和 mknodat 函数创建 FIFO（mknod 现已添加在 POSIX.1 的 XSI 扩展中）.
+
+``` c
+#include <sys/stat.h>
+int mkfifo(const char *path,  mode_t mode);
+int mkfifoat(int fd, const char *path, mode_t mode);
+```
+
+### POSIX 信号量
+
+POSIX 信号量接口解决了 XSI 信号量接口的几个缺陷：
+1、更高性能
+2、接口使用更简单：没有信号量集
+3、在删除时表现更完美：XSI 信号量被删除时使用这个信号量标识符的操作会失败, 并将 errno 置为 EIDRM; 而使用 POSIX 信号量时, 操作能继续正常工作到该信号量的最后一次引用被释放.
+
+POSIX 信号量包括 命名的和未命名的.
 
 ## 第16章 网络 IPC：套接字
 
