@@ -15,6 +15,5 @@ Github: **[@antFaiz5z](https://github.com/antFaiz5z)**
 
 Blog Repo: **[antfaiz5z.github.io](https://github.com/antFaiz5z/antfaiz5z.github.io)**
 
-BB机：**[beta](https://antfaiz5z.github.io/bb)**
 
 </div>
