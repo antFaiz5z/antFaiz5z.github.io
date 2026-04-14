@@ -33,31 +33,27 @@ tags:
 
 ### Android 权限分类
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      Android 权限模型                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│  普通权限 (Normal)          危险权限 (Dangerous)                     │
-│  ───────────────          ──────────────────                       │
-│  • 网络                    • 位置 (精确/模糊)                        │
-│  • 振动                    • 相机                                    │
-│  • 蓝牙                    • 麦克风                                  │
-│  • WiFi                    • 存储 (媒体/文件)                        │
-│                           • 通讯录                                  │
-│  无需授权                  • 日历                                    │
-│  系统自动授予              • 身体传感器                               │
-│                           • 短信                                     │
-│                           • 电话                                     │
-│                                                                     │
-│  特殊权限 (Special)                                                │
-│  ─────────────────                                                  │
-│  • SYSTEM_ALERT_WINDOW                                               │
-│  • WRITE_SETTINGS                                                   │
-│  • REQUEST_IGNORE_BATTERY_OPTIMIZATIONS                             │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+subgraph Normal["普通权限 (Normal)"]
+N1["网络"]
+N2["振动"]
+N3["蓝牙"]
+N4["WiFi"]
+N5["无需授权，系统自动授予"]
+end
+subgraph Dangerous["危险权限 (Dangerous)"]
+D1["位置（精确 / 模糊）"]
+D2["相机"]
+D3["麦克风"]
+D4["存储（媒体 / 文件）"]
+D5["通讯录 / 日历 / 身体传感器 / 短信 / 电话"]
+end
+subgraph Special["特殊权限 (Special)"]
+S1["SYSTEM_ALERT_WINDOW"]
+S2["WRITE_SETTINGS"]
+S3["REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"]
+end
+{% endmermaid %}
 
 ---
 

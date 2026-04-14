@@ -33,27 +33,12 @@ tags:
 
 ### 五步法则
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     自定义 View 五步法则                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    1. 定义属性 (attrs.xml)                                           │
-│           │                                                           │
-│           ▼                                                           │
-│    2. 继承 View，创建类                                               │
-│           │                                                           │
-│           ▼                                                           │
-│    3. 重写 onMeasure                                                 │
-│           │                                                           │
-│           ▼                                                           │
-│    4. 重写 onDraw                                                    │
-│           │                                                           │
-│           ▼                                                           │
-│    5. 处理交互事件                                                    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Step1["1. 定义属性（attrs.xml）"] --> Step2["2. 继承 View，创建类"]
+Step2 --> Step3["3. 重写 onMeasure"]
+Step3 --> Step4["4. 重写 onDraw"]
+Step4 --> Step5["5. 处理交互事件"]
+{% endmermaid %}
 
 ---
 
@@ -478,16 +463,13 @@ progressView.setProgressAnimated(75, 1000L)
 
 ## 总结
 
-```
-自定义 View 核心步骤:
-─────────────────────────────────────────
-1. attrs.xml 定义属性
-2. 构造函数读取属性
-3. onMeasure 计算尺寸
-4. onDraw 绘制内容
-5. onTouchEvent 处理交互
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+CustomCore["自定义 View 核心步骤"] --> C1["attrs.xml 定义属性"]
+CustomCore --> C2["构造函数读取属性"]
+CustomCore --> C3["onMeasure 计算尺寸"]
+CustomCore --> C4["onDraw 绘制内容"]
+CustomCore --> C5["onTouchEvent 处理交互"]
+{% endmermaid %}
 
 ---
 

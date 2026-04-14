@@ -33,33 +33,14 @@ tags:
 
 ### 四大核心组件
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     RecyclerView 架构                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    ┌─────────────────────────────────────────────────────────┐     │
-│    │  RecyclerView                                            │     │
-│    │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │     │
-│    │  │  Adapter    │  │  LayoutMgr  │  │  Recycler   │     │     │
-│    │  │  数据绑定   │  │  布局管理   │  │  回收池     │     │     │
-│    │  └─────────────┘  └─────────────┘  └─────────────┘     │     │
-│    │         │                │                │              │     │
-│    │         └────────────────┼────────────────┘              │     │
-│    │                          ▼                               │     │
-│    │              ┌─────────────────────┐                     │     │
-│    │              │    ViewHolder      │                     │     │
-│    │              │  (itemView + bind) │                     │     │
-│    │              └─────────────────────┘                     │     │
-│    └─────────────────────────────────────────────────────────┘     │
-│                                                                      │
-│    Adapter:    数据 → ViewHolder                                    │
-│    LayoutManager: 测量 + 布局 + 滚动                                │
-│    Recycler:   缓存 + 回收 ViewHolder                              │
-│    ViewHolder: ItemView 的包装                                      │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+RecyclerView["RecyclerView"] --> Adapter["Adapter<br/>数据绑定"]
+RecyclerView --> LayoutManager["LayoutManager<br/>测量 + 布局 + 滚动"]
+RecyclerView --> Recycler["Recycler<br/>缓存 + 回收"]
+Adapter --> ViewHolder["ViewHolder<br/>itemView + bind"]
+LayoutManager --> ViewHolder
+Recycler --> ViewHolder
+{% endmermaid %}
 
 ### 创建 RecyclerView
 
@@ -92,39 +73,13 @@ recyclerView.itemAnimator = DefaultItemAnimator()
 
 ### RecyclerView 缓存层级
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     RecyclerView 缓存层级                             │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   第1层: Attached 状态                                              │
-│   ┌─────────────────────────────────────────────────────────────┐  │
-│   │  mAttachedScrap (ArrayList)                                 │  │
-│   │  屏幕内可见的 ViewHolder，不真正移除                         │  │
-│   │  用于 data binding 和 position 复用                        │  │
-│   └─────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-│   第2层: mCacheViews (ArrayList) 默认 2 个                         │
-│   ┌─────────────────────────────────────────────────────────────┐  │
-│   │  移出屏幕的 ViewHolder，保存 ViewType                        │  │
-│   │  快速复用，不重新 bind                                      │  │
-│   └─────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-│   第3层: RecyclerViewPool                                          │
-│   ┌─────────────────────────────────────────────────────────────┐  │
-│   │  多个 RecyclerView 共享的缓存池                             │  │
-│   │  按 ViewType 分类存储                                       │  │
-│   └─────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-│   第4层: Adapter 创建                                              │
-│   ┌─────────────────────────────────────────────────────────────┐  │
-│   │  所有缓存都无效，创建新的 ViewHolder                          │  │
-│   └─────────────────────────────────────────────────────────────┘  │
-│                                                                      │
-│   命中顺序: Attached → Cache → Pool → create                      │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Attached["第 1 层: mAttachedScrap<br/>屏幕内可见的 ViewHolder<br/>用于 data binding 和 position 复用"]
+Cache["第 2 层: mCacheViews<br/>默认 2 个<br/>快速复用，不重新 bind"]
+Pool["第 3 层: RecyclerViewPool<br/>多个 RecyclerView 共享<br/>按 ViewType 分类"]
+Create["第 4 层: Adapter 创建新的 ViewHolder"]
+Attached --> Cache --> Pool --> Create
+{% endmermaid %}
 
 ### Recycler 核心方法
 
@@ -408,15 +363,12 @@ class SimpleDividerDecoration : ItemDecoration() {
 
 ## 总结
 
-```
-RecyclerView 核心:
-─────────────────────────────────────────
-1. Recycler: 缓存机制，决定复用效率
-2. Adapter: 数据绑定，DiffUtil 差量更新
-3. LayoutManager: 布局 + 滚动
-4. 优化: 预取、固定大小、DiffUtil
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+Core["RecyclerView 核心"] --> R1["Recycler: 缓存机制，决定复用效率"]
+Core --> R2["Adapter: 数据绑定，DiffUtil 差量更新"]
+Core --> R3["LayoutManager: 布局 + 滚动"]
+Core --> R4["优化: 预取、固定大小、DiffUtil"]
+{% endmermaid %}
 
 ---
 

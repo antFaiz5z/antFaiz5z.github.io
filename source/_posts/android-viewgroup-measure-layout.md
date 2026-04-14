@@ -32,21 +32,15 @@ tags:
 
 ### ViewGroup vs View
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        ViewGroup 职责                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    ViewGroup 额外负责:                                               │
-│    1. 测量所有子 View (measureChildren)                              │
-│    2. 确定子 View 位置 (onLayout)                                    │
-│    3. 分发触摸事件 (dispatchDraw)                                    │
-│                                                                      │
-│    继承关系:                                                         │
-│    View → ViewGroup → LinearLayout / RelativeLayout / FrameLayout   │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+View["View"] --> ViewGroup["ViewGroup"]
+ViewGroup --> Linear["LinearLayout"]
+ViewGroup --> Relative["RelativeLayout"]
+ViewGroup --> Frame["FrameLayout"]
+ViewGroup --> Duty1["测量所有子 View（measureChildren）"]
+ViewGroup --> Duty2["确定子 View 位置（onLayout）"]
+ViewGroup --> Duty3["分发触摸事件（dispatchDraw）"]
+{% endmermaid %}
 
 ### measureChildren 流程
 
@@ -146,27 +140,17 @@ public static int getChildMeasureSpec(int spec, int padding, int childDimension)
 
 ### 计算规则表
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                   MeasureSpec 计算规则表                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  父 MeasureSpec    │  子 LayoutParams  │  子 MeasureSpec           │
-│  ────────────────  │  ────────────────  │  ──────────────          │
-│  EXACTLY           │  具体数值(100dp)   │  EXACTLY + 100dp          │
-│  EXACTLY           │  match_parent     │  EXACTLY + 父size         │
-│  EXACTLY           │  wrap_content     │  AT_MOST + 父size         │
-│  ────────────────  │  ────────────────  │  ──────────────          │
-│  AT_MOST           │  具体数值(100dp)   │  EXACTLY + 100dp          │
-│  AT_MOST           │  match_parent     │  AT_MOST + 父size         │
-│  AT_MOST           │  wrap_content     │  AT_MOST + 父size         │
-│  ────────────────  │  ────────────────  │  ──────────────          │
-│  UNSPECIFIED       │  具体数值(100dp)   │  EXACTLY + 100dp         │
-│  UNSPECIFIED       │  match_parent     │  UNSPECIFIED + 0         │
-│  UNSPECIFIED       │  wrap_content     │  UNSPECIFIED + 0          │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+ParentExact["父 MeasureSpec = EXACTLY"] --> E1["具体数值 → EXACTLY + 100dp"]
+ParentExact --> E2["match_parent → EXACTLY + 父 size"]
+ParentExact --> E3["wrap_content → AT_MOST + 父 size"]
+ParentAtMost["父 MeasureSpec = AT_MOST"] --> A1["具体数值 → EXACTLY + 100dp"]
+ParentAtMost --> A2["match_parent → AT_MOST + 父 size"]
+ParentAtMost --> A3["wrap_content → AT_MOST + 父 size"]
+ParentUn["父 MeasureSpec = UNSPECIFIED"] --> U1["具体数值 → EXACTLY + 100dp"]
+ParentUn --> U2["match_parent → UNSPECIFIED + 0"]
+ParentUn --> U3["wrap_content → UNSPECIFIED + 0"]
+{% endmermaid %}
 
 ---
 
@@ -507,15 +491,12 @@ class FlowLayout @JvmOverloads constructor(
 
 ## 总结
 
-```
-ViewGroup 测量布局核心:
-─────────────────────────────────────────
-1. measureChildren: 测量所有子 View
-2. getChildMeasureSpec: 计算子 View 的 MeasureSpec
-3. onLayout: 根据测量结果确定子 View 位置
-4. resolveSize: 应用 AT_MOST/EXACTLY 规则
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+VGCore["ViewGroup 测量布局核心"] --> G1["measureChildren：测量所有子 View"]
+VGCore --> G2["getChildMeasureSpec：计算子 View 的 MeasureSpec"]
+VGCore --> G3["onLayout：根据测量结果确定子 View 位置"]
+VGCore --> G4["resolveSize：应用 AT_MOST / EXACTLY 规则"]
+{% endmermaid %}
 
 ---
 

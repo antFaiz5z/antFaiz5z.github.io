@@ -218,21 +218,17 @@ AndroidView(
 
 ### 问题：Compose 生命周期与 View 不一致
 
-```
-时间线：
-┌─────────────────────────────────────────────────────────────┐
-│ Activity/Fragment                                            │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   onCreate  ──▶  onStart  ──▶  onResume  ──▶  onPause     │
-│       │             │             │              │          │
-│       ▼             ▼             ▼              ▼          │
-│   Compose Created  Started       Resumed        Paused     │
-│                                                             │
-│   ❌ 问题：Composition 可能在 onDestroy 后继续执行          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Lifecycle["Activity / Fragment 生命周期"] --> OnCreate["onCreate"]
+OnCreate --> OnStart["onStart"]
+OnStart --> OnResume["onResume"]
+OnResume --> OnPause["onPause"]
+OnCreate --> ComposeCreated["Compose Created"]
+OnStart --> ComposeStarted["Started"]
+OnResume --> ComposeResumed["Resumed"]
+OnPause --> ComposePaused["Paused"]
+ComposePaused --> Risk["问题：Composition 可能在 onDestroy 后继续执行"]
+{% endmermaid %}
 
 ### 解决：使用 rememberUpdatedState
 

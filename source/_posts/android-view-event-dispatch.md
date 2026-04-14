@@ -33,27 +33,14 @@ tags:
 
 ### 三大方法
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                       View 事件分发三大方法                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    dispatchTouchEvent(MotionEvent)                                   │
-│           │                                                          │
-│           ├─▶ onInterceptTouchEvent()  ← 仅 ViewGroup              │
-│           │        │                                                │
-│           │        ▼                                                │
-│           │     true: 拦截，交给自己的 onTouchEvent                │
-│           │     false: 不拦截，传递给子 View                        │
-│           │                                                         │
-│           └─▶ onTouchEvent(MotionEvent)                             │
-│                    │                                                 │
-│                    ▼                                                 │
-│                 true: 消费事件                                       │
-│                 false: 向上传递给父 View 的 onTouchEvent            │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TD %}
+Dispatch["dispatchTouchEvent(MotionEvent)"] --> Intercept["onInterceptTouchEvent()<br/>仅 ViewGroup"]
+Intercept -->|true| SelfTouch["自己的 onTouchEvent"]
+Intercept -->|false| Child["传递给子 View"]
+Dispatch --> Touch["onTouchEvent(MotionEvent)"]
+Touch -->|true| Consume["消费事件"]
+Touch -->|false| Bubble["向上传递给父 View 的 onTouchEvent"]
+{% endmermaid %}
 
 ### 事件类型
 
@@ -89,40 +76,16 @@ public boolean dispatchTouchEvent(MotionEvent ev) {
 
 ### 完整流程图
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                 dispatchTouchEvent 完整流程                            │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    DOWN 事件                                                          │
-│        │                                                             │
-│        ▼                                                             │
-│    dispatchTouchEvent(DOWN)                                          │
-│        │                                                             │
-│        ├─▶ onInterceptTouchEvent(DOWN)                              │
-│        │        │                                                    │
-│        │        ├─▶ true ──▶ onTouchEvent(DOWN)                    │
-│        │        │                              │                    │
-│        │        │                              ▼                    │
-│        │        │                         自己处理                    │
-│        │        │                         后续事件也给自己            │
-│        │        │                                                    │
-│        │        └─▶ false ──▶ dispatchChildTouchEvent(DOWN)        │
-│        │                                    │                        │
-│        │                                    ▼                        │
-│        │                              子View 处理                     │
-│        │                                    │                        │
-│        │                              如果子View 不处理               │
-│        │                                    │                        │
-│        │                                    ▼                        │
-│        │                              onTouchEvent(DOWN)             │
-│        │                                                             │
-│        ▼                                                             │
-│    如果 DOWN 被处理: 后续 MOVE/UP 继续给自己                         │
-│    如果 DOWN 没处理: 后续事件不再传递                                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TD %}
+Down["DOWN 事件"] --> DispatchDown["dispatchTouchEvent(DOWN)"]
+DispatchDown --> InterceptDown["onInterceptTouchEvent(DOWN)"]
+InterceptDown -->|true| SelfDown["onTouchEvent(DOWN)<br/>自己处理"]
+SelfDown --> FutureSelf["后续 MOVE / UP 继续给自己"]
+InterceptDown -->|false| ChildDown["dispatchChildTouchEvent(DOWN)"]
+ChildDown --> ChildHandle["子 View 处理"]
+ChildHandle -->|不处理| ParentTouch["onTouchEvent(DOWN)"]
+DispatchDown --> Result["如果 DOWN 没处理<br/>后续事件不再传递"]
+{% endmermaid %}
 
 ---
 
@@ -456,31 +419,16 @@ class ZoomableImageView : ImageView {
 
 ## 事件分发流程总结
 
-```
-完整流程:
-
-┌─────────────────────────────────────────────────────────────────────┐
-│  Activity                                                            │
-│    │                                                                  │
-│    ▼ dispatchTouchEvent                                              │
-│  ┌─────────────────────────────────────────────────────────────────┐│
-│  │ ViewGroup                                                        ││
-│  │   │                                                              ││
-│  │   ▼ dispatchTouchEvent                                          ││
-│  │   ├─▶ onInterceptTouchEvent(DOWN) ──▶ false ──▶ 子 View        ││
-│  │   │                                          │                  ││
-│  │   │                                          ▼                  ││
-│  │   │                                    dispatchTouchEvent      ││
-│  │   │                                    onTouchEvent           ││
-│  │   │                                          │                  ││
-│  │   │                                    return false ──▶ 父     ││
-│  │   │                                                              ││
-│  │   │                                      return true ──▶ 结束   ││
-│  │   │                                                              ││
-│  │   ▼ onTouchEvent(DOWN) ──▶ false ──▶ Activity.onTouchEvent    ││
-│  └─────────────────────────────────────────────────────────────────┘│
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TD %}
+Activity["Activity.dispatchTouchEvent"] --> Group["ViewGroup.dispatchTouchEvent"]
+Group --> Intercept2["onInterceptTouchEvent(DOWN)"]
+Intercept2 -->|false| ChildView["子 View.dispatchTouchEvent"]
+ChildView --> ChildTouch["子 View.onTouchEvent"]
+ChildTouch -->|false| ParentFallback["父 View.onTouchEvent"]
+ChildTouch -->|true| End1["事件结束"]
+Group --> SelfFallback["ViewGroup.onTouchEvent(DOWN)"]
+SelfFallback -->|false| ActivityTouch["Activity.onTouchEvent"]
+{% endmermaid %}
 
 ---
 

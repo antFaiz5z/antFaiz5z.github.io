@@ -34,23 +34,15 @@ tags:
 
 ### 什么是内存泄漏
 
-```
-正常内存使用:
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│    创建对象 ──▶ 使用 ──▶ 不再需要 ──▶ GC 回收                         │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-
-内存泄漏:
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                      │
-│    创建对象 ──▶ 使用 ──▶ 不再需要 ──▶ ❌ 无法回收                     │
-│                                                                      │
-│    原因: 仍被引用                                                   │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+subgraph Normal["正常内存使用"]
+N1["创建对象"] --> N2["使用"] --> N3["不再需要"] --> N4["GC 回收"]
+end
+subgraph Leak["内存泄漏"]
+L1["创建对象"] --> L2["使用"] --> L3["不再需要"] --> L4["无法回收"]
+L4 --> L5["原因：仍被引用"]
+end
+{% endmermaid %}
 
 ### 内存泄漏的影响
 
@@ -89,54 +81,23 @@ dependencies {
 
 ### LeakCanary 工作原理
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                       LeakCanary 工作流程                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   1. Activity/Fragment 生命周期结束                                  │
-│         │                                                           │
-│         ▼                                                           │
-│   2. 监听对象是否被回收                                              │
-│         │                                                           │
-│         ▼                                                           │
-│   3. 5秒后检查引用是否仍然存在                                      │
-│         │                                                           │
-│         ├─▶ 可回收: 正常，忽略                                      │
-│         │                                                           │
-│         └─▶ 仍存在: Dump Heap，分析引用链                          │
-│                         │                                           │
-│                         ▼                                           │
-│                    生成泄漏报告，显示引用链                          │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TD %}
+LifeEnd["Activity / Fragment 生命周期结束"] --> Watch["监听对象是否被回收"]
+Watch --> Check["5 秒后检查引用是否仍然存在"]
+Check -->|可回收| NormalLeak["正常，忽略"]
+Check -->|仍存在| Dump["Dump Heap，分析引用链"]
+Dump --> Report["生成泄漏报告，显示引用链"]
+{% endmermaid %}
 
 ### 典型泄漏报告解读
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    LeakCanary 报告示例                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    ┌─────────────────────────────────────────────────────────┐     │
-│    │ GC ROOT: MainThread (id=1)                               │     │
-│    │                                                          │     │
-│    │  ↓                                                       │     │
-│    │  this$0 (MainActivity)  ──── 外部类的 this             │     │
-│    │  ↓                                                       │     │
-│    │  mHandler (Handler)                                       │     │
-│    │  ↓                                                       │     │
-│    │  mCallback (Runnable)                                    │     │
-│    │  ↓                                                       │     │
-│    │  this$0 (anonymous class)  ←── 匿名内部类持有外部引用   │     │
-│    │                                                          │     │
-│    └─────────────────────────────────────────────────────────┘     │
-│                                                                      │
-│    问题: Handler 延迟消息持有 Activity 引用                         │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Root["GC ROOT: MainThread (id=1)"] --> Activity["this$0 (MainActivity)<br/>外部类 this"]
+Activity --> HandlerLeak["mHandler (Handler)"]
+HandlerLeak --> Callback["mCallback (Runnable)"]
+Callback --> Inner["this$0 (anonymous class)<br/>匿名内部类持有外部引用"]
+Inner --> Issue["问题：Handler 延迟消息持有 Activity 引用"]
+{% endmermaid %}
 
 ---
 
@@ -464,16 +425,14 @@ fun GoodExample() {
 
 ## 总结
 
-```
-内存泄漏检查清单:
-─────────────────────────────────────────
-✓ 静态变量使用 WeakReference
-✓ Handler 在 onDestroy 移除消息
-✓ 内部类使用静态 + WeakReference
-✓ 资源使用 use {} 自动关闭
-✓ 监听器在 onDestroy 移除
-✓ 使用 LeakCanary 检测
-```
+{% mermaid flowchart TB %}
+LeakChecklist["内存泄漏检查清单"] --> L1["静态变量使用 WeakReference"]
+LeakChecklist --> L2["Handler 在 onDestroy 移除消息"]
+LeakChecklist --> L3["内部类使用静态 + WeakReference"]
+LeakChecklist --> L4["资源使用 use {} 自动关闭"]
+LeakChecklist --> L5["监听器在 onDestroy 移除"]
+LeakChecklist --> L6["使用 LeakCanary 检测"]
+{% endmermaid %}
 
 ---
 

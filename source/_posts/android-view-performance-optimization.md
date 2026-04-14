@@ -33,23 +33,13 @@ tags:
 
 ### 60fps 原则
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         16ms 法则                                    │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    60fps = 每帧 16ms                                               │
-│                                                                      │
-│    16ms 内必须完成:                                                 │
-│    1. UI 测量 (measure)                                            │
-│    2. UI 布局 (layout)                                             │
-│    3. UI 绘制 (draw)                                               │
-│    4. GPU 渲染                                                      │
-│                                                                      │
-│    超过 16ms = 卡顿                                                 │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+FPS["60fps = 每帧 16ms"] --> Measure["1. UI 测量（measure）"]
+Measure --> Layout["2. UI 布局（layout）"]
+Layout --> Draw["3. UI 绘制（draw）"]
+Draw --> GPU["4. GPU 渲染"]
+GPU --> Jank["超过 16ms = 卡顿"]
+{% endmermaid %}
 
 ### 卡顿原因
 
@@ -111,17 +101,14 @@ ViewDebug.startHotSwapListener(object : ViewDebug.HotSwapListener {
 
 ### Hierarchy Viewer 检测
 
-```
-优化前层级:
-LinearLayout
-  └── LinearLayout
-      └── FrameLayout
-          └── TextView
-
-优化后层级:
-LinearLayout (直接子 View)
-  └── TextView
-```
+{% mermaid flowchart LR %}
+subgraph Before["优化前层级"]
+B1["LinearLayout"] --> B2["LinearLayout"] --> B3["FrameLayout"] --> B4["TextView"]
+end
+subgraph After["优化后层级"]
+A1["LinearLayout（直接子 View）"] --> A2["TextView"]
+end
+{% endmermaid %}
 
 ### 使用 ConstraintLayout 扁平化
 
@@ -311,35 +298,12 @@ EOF
 
 ## 性能优化 checklist
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    View 性能优化 checklist                           │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  布局优化                                                            │
-│  ✓ 使用 ConstraintLayout 扁平化布局                                  │
-│  ✓ 移除不必要的背景                                                  │
-│  ✓ 使用 include + merge                                            │
-│  ✓ 移除 View 的 padding (如不需要)                                   │
-│                                                                      │
-│  绘制优化                                                            │
-│  ✓ 避免在 onDraw 中创建对象                                          │
-│  ✓ 使用硬件加速                                                      │
-│  ✓ 减少 clipPath 使用                                               │
-│  ✓ 使用 Canvas.save()/restore()                                     │
-│                                                                      │
-│  内存优化                                                            │
-│  ✓ 避免内存抖动                                                      │
-│  ✓ 减少对象创建                                                      │
-│  ✓ 使用对象池                                                        │
-│                                                                      │
-│  工具                                                                │
-│  ✓ 使用 Hierarchy Viewer 检查布局层级                                │
-│  ✓ 使用 Layout Inspector 检查过度绘制                                │
-│  ✓ 使用 Systrace/Perfetto 分析性能                                   │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Checklist["View 性能优化 checklist"] --> LayoutOpt["布局优化<br/>ConstraintLayout / 移除背景 / include + merge / 精简 padding"]
+Checklist --> DrawOpt["绘制优化<br/>避免 onDraw 创建对象 / 硬件加速 / 减少 clipPath / save/restore"]
+Checklist --> MemoryOpt["内存优化<br/>避免内存抖动 / 减少对象创建 / 使用对象池"]
+Checklist --> Tools["工具<br/>Hierarchy Viewer / Layout Inspector / Systrace / Perfetto"]
+{% endmermaid %}
 
 ---
 
@@ -356,16 +320,13 @@ EOF
 
 ## 总结
 
-```
-View 性能优化核心:
-─────────────────────────────────────────
-1. 减少布局层级
-2. 避免过度绘制
-3. 避免 onDraw 创建对象
-4. 使用硬件加速
-5. 使用调试工具检测
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+PerfCore["View 性能优化核心"] --> P1["减少布局层级"]
+PerfCore --> P2["避免过度绘制"]
+PerfCore --> P3["避免 onDraw 创建对象"]
+PerfCore --> P4["使用硬件加速"]
+PerfCore --> P5["使用调试工具检测"]
+{% endmermaid %}
 
 ---
 

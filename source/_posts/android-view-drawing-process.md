@@ -33,24 +33,11 @@ tags:
 
 ### 三大核心方法
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        View 绘制三大方法                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    measure(int, int)    ──▶  确定 View 的宽高                          │
-│           │                                                       │
-│           ▼                                                       │
-│    layout(int, int,     ──▶  确定 View 的位置                        │
-│          int, int)                                                │
-│           │                                                       │
-│           ▼                                                       │
-│    draw(Canvas)        ──▶  绘制 View 内容                          │
-│                                                                      │
-│    调用顺序: measure → layout → draw                                │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Measure["measure(int, int)<br/>确定 View 的宽高"] --> Layout["layout(int, int, int, int)<br/>确定 View 的位置"]
+Layout --> Draw["draw(Canvas)<br/>绘制 View 内容"]
+Draw --> Order["调用顺序：measure → layout → draw"]
+{% endmermaid %}
 
 ### 何时触发绘制
 
@@ -341,40 +328,16 @@ class CircleView @JvmOverloads constructor(
 
 ## 5. 整体流程图
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      View 绘制完整流程                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    requestLayout()                                                   │
-│          │                                                           │
-│          ▼                                                           │
-│    performTraversals() ──▶ 开始遍历                                   │
-│          │                                                           │
-│          ├─────────────────┐                                          │
-│          ▼                 ▼                                          │
-│    measure()          ┌──────────────────────────────────────┐      │
-│    │                  │  1. onMeasure()                      │      │
-│    │                  │  2. setMeasuredDimension()           │      │
-│    │                  │  3. 如果是 ViewGroup，测量所有子View  │      │
-│    ▼                  └──────────────────────────────────────┘      │
-│    layout()           ┌──────────────────────────────────────┐      │
-│    │                  │  1. setFrame() 设置位置               │      │
-│    │                  │  2. onLayout()                        │      │
-│    │                  │  3. 如果是ViewGroup，布局所有子View   │      │
-│    ▼                  └──────────────────────────────────────┘      │
-│    draw()            ┌──────────────────────────────────────┐      │
-│                       │  1. drawBackground() 背景           │      │
-│                       │  2. onDraw() 绘制内容                │      │
-│                       │  3. dispatchDraw() 分发绘制子View    │      │
-│                       │  4. onDrawForeground() 前景         │      │
-│                       └──────────────────────────────────────┘      │
-│          │                                                           │
-│          ▼                                                           │
-│    绘制完成                                                          │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+Request["requestLayout()"] --> Traversal["performTraversals()"]
+Traversal --> Measure["measure()"]
+Measure --> MDetail["onMeasure() / setMeasuredDimension() / ViewGroup 测量子 View"]
+MDetail --> LayoutStage["layout()"]
+LayoutStage --> LDetail["setFrame() / onLayout() / ViewGroup 布局子 View"]
+LDetail --> DrawStage["draw()"]
+DrawStage --> DDetail["drawBackground() / onDraw() / dispatchDraw() / onDrawForeground()"]
+DDetail --> Finish["绘制完成"]
+{% endmermaid %}
 
 ---
 
@@ -390,21 +353,18 @@ class CircleView @JvmOverloads constructor(
 
 ### Q2: View 测量模式如何决定？
 
-```
-parentMeasureSpec 由父容器的 MeasureSpec + 子 View 的 LayoutParams 决定:
-
-┌────────────────────────────────────────────┐
-│  父 MeasureSpec    │ 子 LayoutParams │ 结果 │
-├────────────────────┼─────────────────┼──────┤
-│ EXACTLY            │ match_parent   │EXACTLY│
-│ EXACTLY            │ wrap_content   │AT_MOST│
-│ EXACTLY            │ 200dp          │EXACTLY│
-│ AT_MOST            │ match_parent   │AT_MOST│
-│ AT_MOST            │ wrap_content   │AT_MOST│
-│ AT_MOST            │ 200dp          │EXACTLY│
-│ UNSPECIFIED        │ 任意           │UNSPEC │
-└────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+ParentSpec["父 MeasureSpec + 子 View LayoutParams"] --> ExactParent["EXACTLY"]
+ExactParent --> E1["match_parent → EXACTLY"]
+ExactParent --> E2["wrap_content → AT_MOST"]
+ExactParent --> E3["200dp → EXACTLY"]
+ParentSpec --> AtMostParent["AT_MOST"]
+AtMostParent --> A1["match_parent → AT_MOST"]
+AtMostParent --> A2["wrap_content → AT_MOST"]
+AtMostParent --> A3["200dp → EXACTLY"]
+ParentSpec --> UnspecifiedParent["UNSPECIFIED"]
+UnspecifiedParent --> U1["任意 → UNSPEC"]
+{% endmermaid %}
 
 ### Q3: 为什么 wrap_content 不生效？
 
@@ -429,14 +389,11 @@ override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
 
 ## 总结
 
-```
-View 绘制核心:
-─────────────────────────────────────────
-1. Measure:    measure() → onMeasure() → setMeasuredDimension()
-2. Layout:     layout()  → onLayout()   → setFrame()
-3. Draw:       draw()    → onDraw()     → dispatchDraw()
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+DrawCore["View 绘制核心"] --> D1["Measure: measure() → onMeasure() → setMeasuredDimension()"]
+DrawCore --> D2["Layout: layout() → onLayout() → setFrame()"]
+DrawCore --> D3["Draw: draw() → onDraw() → dispatchDraw()"]
+{% endmermaid %}
 
 ---
 

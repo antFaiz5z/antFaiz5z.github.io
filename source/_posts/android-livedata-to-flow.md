@@ -67,28 +67,24 @@ class MyViewModel : ViewModel() {
 
 ### StateFlow vs SharedFlow
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                         Flow 类型对比                                │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│   StateFlow                    SharedFlow                          │
-│   ─────────                    ──────────                          │
-│   • 有初始值                    • 无初始值                           │
-│   • 始终有当前值                • 只有订阅者时才会发射               │
-│   • 适合 UI 状态                • 适合事件/一次性消息                 │
-│   • replay = 1                  • replay 可配置                      │
-│                                                                     │
-│   示例:                         示例:                                │
-│   val uiState = StateFlow(...)  val events = SharedFlow(...)       │
-│                                                                     │
-│   ┌────────────────┐          ┌────────────────┐                   │
-│   │  UI State      │          │  One-time      │                   │
-│   │  始终保持最新  │          │  Events        │                   │
-│   └────────────────┘          └────────────────┘                   │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+subgraph S["StateFlow"]
+S1["有初始值"]
+S2["始终有当前值"]
+S3["适合 UI 状态"]
+S4["replay = 1"]
+S5["示例: val uiState = StateFlow(...)"]
+S6["UI State<br/>始终保持最新"]
+end
+subgraph H["SharedFlow"]
+H1["无初始值"]
+H2["只有订阅者时才会发射"]
+H3["适合事件 / 一次性消息"]
+H4["replay 可配置"]
+H5["示例: val events = SharedFlow(...)"]
+H6["One-time Events"]
+end
+{% endmermaid %}
 
 ### 创建 Flow
 
@@ -462,15 +458,22 @@ class ProfileViewModel(
 
 ## 总结
 
-```
-LiveData 缺点                    Flow 优势
-────────────                    ──────────
-线程切换不透明              协程控制，线程安全
-无取消机制                  协程自动取消
-无背压支持                  背压策略可选
-错误处理困难                try-catch 天然支持
-非 Kotlin 一等公民          与 Kotlin 生态完美集成
-```
+{% mermaid flowchart LR %}
+subgraph LiveData["LiveData 缺点"]
+LD1["线程切换不透明"]
+LD2["无取消机制"]
+LD3["无背压支持"]
+LD4["错误处理困难"]
+LD5["非 Kotlin 一等公民"]
+end
+subgraph Flow["Flow 优势"]
+F1["协程控制，线程安全"]
+F2["协程自动取消"]
+F3["背压策略可选"]
+F4["try-catch 天然支持"]
+F5["与 Kotlin 生态完美集成"]
+end
+{% endmermaid %}
 
 ---
 

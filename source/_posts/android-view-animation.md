@@ -31,29 +31,23 @@ tags:
 
 ## 1. 动画类型概述
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        Android 动画体系                               │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    View Animation (旧)                                              │
-│    ├── Tween Animation                                              │
-│    │   ├── ScaleAnimation                                           │
-│    │   ├── RotateAnimation                                          │
-│    │   ├── TranslateAnimation                                       │
-│    │   └── AlphaAnimation                                           │
-│    └── Frame Animation                                              │
-│                                                                      │
-│    Property Animation (新)                                          │
-│    ├── ValueAnimator                                                │
-│    ├── ObjectAnimator                                                │
-│    └── AnimatorSet                                                  │
-│                                                                      │
-│    Drawable Animation                                               │
-│    └── AnimationDrawable                                           │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+subgraph Old["View Animation（旧）"]
+Tween["Tween Animation"] --> Scale["ScaleAnimation"]
+Tween --> Rotate["RotateAnimation"]
+Tween --> Translate["TranslateAnimation"]
+Tween --> Alpha["AlphaAnimation"]
+Old --> Frame["Frame Animation"]
+end
+subgraph New["Property Animation（新）"]
+New --> Value["ValueAnimator"]
+New --> Object["ObjectAnimator"]
+New --> Set["AnimatorSet"]
+end
+subgraph Drawable["Drawable Animation"]
+Drawable --> AnimationDrawable["AnimationDrawable"]
+end
+{% endmermaid %}
 
 ---
 
@@ -213,16 +207,12 @@ LinearInterpolator()
 
 ### 插值器对比
 
-```
-时间进度: 0    0.25   0.5   0.75   1.0
-─────────────────────────────────────────
-Linear:      0    0.25   0.5   0.75   1.0
-Accelerate:  0    0.06   0.25  0.56   1.0
-Bounce:      0    0.25   0.5   0.75   1.0
-             (中间弹跳)
-Overshoot:   0    0.25   0.5   0.75   1.25
-             (超过终点再回弹)
-```
+{% mermaid flowchart TB %}
+Interpolator["插值器对比"] --> Linear["Linear：匀速推进"]
+Interpolator --> Accelerate["Accelerate：前慢后快"]
+Interpolator --> Bounce["Bounce：中途弹跳"]
+Interpolator --> Overshoot["Overshoot：超过终点再回弹"]
+{% endmermaid %}
 
 ### 自定义插值器
 
@@ -396,15 +386,12 @@ animator.addUpdateListener { animation ->
 
 ## 总结
 
-```
-Android 动画核心:
-─────────────────────────────────────────
-1. View Animation: 简单但有限制
-2. Property Animation: 改变实际属性，推荐
-3. Interpolator: 控制速率变化
-4. AnimatorSet: 组合复杂动画
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+AnimCore["Android 动画核心"] --> A1["View Animation：简单但有限制"]
+AnimCore --> A2["Property Animation：改变实际属性，推荐"]
+AnimCore --> A3["Interpolator：控制速率变化"]
+AnimCore --> A4["AnimatorSet：组合复杂动画"]
+{% endmermaid %}
 
 ---
 

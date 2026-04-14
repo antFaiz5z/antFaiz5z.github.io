@@ -104,6 +104,12 @@ codeblock:
   fold:
     enable: false
 
+mermaid:
+  enable: true
+  theme:
+    light: default
+    dark: dark
+
 favicon:
   small: /images/favicon-16x16-next.png
   medium: /images/favicon-32x32-next.png

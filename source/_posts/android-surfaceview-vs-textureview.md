@@ -32,31 +32,26 @@ tags:
 
 ### View 渲染模式
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        View 渲染模式                                  │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   普通 View (View)                                                  │
-│   ├── 渲染方式: 软件渲染 / 硬件渲染                                  │
-│   ├── 绘制: 主线程 Canvas.draw()                                    │
-│   ├── 层级: 在 View 层级中                                          │
-│   └── 16ms 限制: 必须在 16ms内完成                                  │
-│                                                                      │
-│   SurfaceView                                                       │
-│   ├── 渲染方式: GPU 合成                                            │
-│   ├── 绘制: 子线程 SurfaceCanvas                                    │
-│   ├── 层级: 独立窗口，地位 View 层级                                │
-│   └── 特点: 可以在子线程绘制                                         │
-│                                                                      │
-│   TextureView                                                        │
-│   ├── 渲染方式: 硬件加速                                            │
-│   ├── 绘制: 子线程 TextureRegistry                                  │
-│   ├── 层级: 在 View 层级中                                          │
-│   └── 特点: 支持变换(旋转/缩放)、动画                                │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+subgraph V["普通 View (View)"]
+V1["渲染方式: 软件渲染 / 硬件渲染"]
+V2["绘制: 主线程 Canvas.draw()"]
+V3["层级: 在 View 层级中"]
+V4["16ms 限制: 必须在 16ms 内完成"]
+end
+subgraph S["SurfaceView"]
+S1["渲染方式: GPU 合成"]
+S2["绘制: 子线程 SurfaceCanvas"]
+S3["层级: 独立窗口，高于 View 层级"]
+S4["特点: 可以在子线程绘制"]
+end
+subgraph T["TextureView"]
+T1["渲染方式: 硬件加速"]
+T2["绘制: 子线程 / SurfaceTexture"]
+T3["层级: 在 View 层级中"]
+T4["特点: 支持旋转、缩放、动画"]
+end
+{% endmermaid %}
 
 ---
 
@@ -64,35 +59,17 @@ tags:
 
 ### SurfaceView 原理
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      SurfaceView 原理                                 │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    SurfaceView 创建:                                                │
-│    1. 创建独立 Surface (双缓冲)                                     │
-│    2. 创建独立 Canvas                                                │
-│    3. 渲染到 Surface 的子线程中                                     │
-│                                                                      │
-│    双缓冲机制:                                                      │
-│    ┌───────────────┐    ┌───────────────┐                          │
-│    │  Back Buffer  │◀───│  绘制线程     │                          │
-│    │  (后缓冲区)    │    │  (我们的线程)  │                          │
-│    └───────┬───────┘    └───────────────┘                          │
-│            │                                                         │
-│            ▼                                                         │
-│    ┌───────────────┐    ┌───────────────┐                          │
-│    │ Front Buffer  │───▶│   显示设备    │                          │
-│    │  (前缓冲区)    │    │   (屏幕)      │                          │
-│    └───────────────┘    └───────────────┘                          │
-│                                                                      │
-│    SurfaceView 优势:                                               │
-│    - 子线程渲染，不阻塞主线程                                        │
-│    - 独立 Surface，双缓冲无闪烁                                      │
-│    - 适合视频播放、相机预览、游戏                                    │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+Create["SurfaceView 创建"] --> C1["1. 创建独立 Surface（双缓冲）"]
+Create --> C2["2. 创建独立 Canvas"]
+Create --> C3["3. 在子线程中渲染"]
+DrawThread["绘制线程"] --> Back["Back Buffer<br/>(后缓冲区)"]
+Back --> Front["Front Buffer<br/>(前缓冲区)"]
+Front --> Screen["显示设备 / 屏幕"]
+Pros["优势"] --> P1["子线程渲染，不阻塞主线程"]
+Pros --> P2["独立 Surface，双缓冲无闪烁"]
+Pros --> P3["适合视频播放、相机预览、游戏"]
+{% endmermaid %}
 
 ### SurfaceView 使用
 
@@ -193,40 +170,19 @@ class CameraPreview(context: Context) : SurfaceView(context), SurfaceHolder.Call
 
 ### TextureView 原理
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     TextureView 原理                                  │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    TextureView:                                                     │
-│    - 需要硬件加速                                                   │
-│    - 作为普通 View 参与 View 层级                                   │
-│    - 使用 SurfaceTexture 作为缓冲区                                │
-│    - 支持变换(旋转、缩放、透明度)                                   │
-│                                                                      │
-│    渲染流程:                                                        │
-│    ┌─────────────┐   ┌─────────────┐   ┌─────────────┐             │
-│    │ Surface     │──▶│ Surface    │──▶│  GPU        │             │
-│    │ Texture    │   │ (Buffer)   │   │  合成       │             │
-│    └─────────────┘   └─────────────┘   └──────┬──────┘             │
-│                                                 │                    │
-│                                                 ▼                    │
-│                                          ┌─────────────┐            │
-│                                          │  TextureView│            │
-│                                          │  (View 树)  │            │
-│                                          └─────────────┘            │
-│                                                                      │
-│    TextureView 优势:                                               │
-│    - 支持动画和变换                                                 │
-│    - 可以在主线程更新                                              │
-│    - 占用内存少                                                    │
-│                                                                      │
-│    TextureView 劣势:                                               │
-│    - 需要硬件加速                                                  │
-│    - 不支持同时多个使用                                             │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+Texture["SurfaceTexture"] --> Buffer["Surface Buffer"]
+Buffer --> GPU["GPU 合成"]
+GPU --> ViewTree["TextureView<br/>(位于 View 树中)"]
+Feature["TextureView 特性"] --> F1["需要硬件加速"]
+Feature --> F2["参与普通 View 层级"]
+Feature --> F3["支持旋转、缩放、透明度"]
+Adv["优势"] --> A1["支持动画和变换"]
+Adv --> A2["可以在主线程更新"]
+Adv --> A3["占用内存少"]
+Dis["劣势"] --> D1["需要硬件加速"]
+Dis --> D2["不支持同时多个使用"]
+{% endmermaid %}
 
 ### TextureView 使用
 
@@ -421,15 +377,12 @@ class VideoTextureView @JvmOverloads constructor(
 
 ## 总结
 
-```
-选择原则:
-─────────────────────────────────────────
-高性能/低延迟 → SurfaceView
-需要变换/动画 → TextureView
-相机/视频播放 → SurfaceView
-视频通话 → TextureView
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+Choose["选择原则"] --> C1["高性能 / 低延迟 → SurfaceView"]
+Choose --> C2["需要变换 / 动画 → TextureView"]
+Choose --> C3["相机 / 视频播放 → SurfaceView"]
+Choose --> C4["视频通话 → TextureView"]
+{% endmermaid %}
 
 ---
 

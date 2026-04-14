@@ -31,25 +31,20 @@ tags:
 
 ## 1. 两者概述
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     ViewBinding vs DataBinding                       │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    ViewBinding (2019)                                               │
-│    ├── 只生成绑定类，不修改布局文件                                    │
-│    ├── 只读，的单向绑定                                              │
-│    ├── 无需额外运行时开销                                            │
-│    └── 不支持 XML 表达式                                            │
-│                                                                      │
-│    DataBinding (2015)                                               │
-│    ├── 生成绑定类 + 修改布局文件                                      │
-│    ├── 支持双向绑定 (@={})                                          │
-│    ├── 支持 XML 表达式和事件处理                                     │
-│    └── 有运行时开销                                                  │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+subgraph VB["ViewBinding (2019)"]
+VB1["只生成绑定类，不修改布局文件"]
+VB2["只读的单向绑定"]
+VB3["无需额外运行时开销"]
+VB4["不支持 XML 表达式"]
+end
+subgraph DB["DataBinding (2015)"]
+DB1["生成绑定类 + 修改布局文件"]
+DB2["支持双向绑定 (@={})"]
+DB3["支持 XML 表达式和事件处理"]
+DB4["有运行时开销"]
+end
+{% endmermaid %}
 
 ---
 
@@ -315,27 +310,17 @@ class BindingAdapters {
 
 ### 性能差异
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                      性能对比                                         │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│    ViewBinding:                                                     │
-│    ├── 编译时生成绑定类                                             │
-│    ├── 运行时开销: 0                                                │
-│    ├── 内存: 只有 View 引用                                         │
-│    └── 编译速度: 快                                                │
-│                                                                      │
-│    DataBinding:                                                    │
-│    ├── 编译时生成绑定类 + 额外代码                                   │
-│    ├── 运行时开销: 观察者模式                                       │
-│    ├── 内存: View + Data + Observer                                │
-│    └── 编译速度: 慢 (需要处理表达式)                                │
-│                                                                      │
-│    结论: ViewBinding 性能更好                                        │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+VBPerf["ViewBinding"] --> VBP1["编译时生成绑定类"]
+VBPerf --> VBP2["运行时开销: 0"]
+VBPerf --> VBP3["内存: 只有 View 引用"]
+VBPerf --> VBP4["编译速度: 快"]
+DBPerf["DataBinding"] --> DBP1["编译时生成绑定类 + 额外代码"]
+DBPerf --> DBP2["运行时开销: 观察者模式"]
+DBPerf --> DBP3["内存: View + Data + Observer"]
+DBPerf --> DBP4["编译速度: 慢（需处理表达式）"]
+Conclusion["结论"] --> Better["ViewBinding 性能更好"]
+{% endmermaid %}
 
 ### 编译时间影响
 
@@ -353,27 +338,14 @@ class BindingAdapters {
 
 ### 决策树
 
-```
-需要双向绑定?
-      │
-      ├─▶ 是 ──▶ DataBinding
-      │
-      └─▶ 否
-            │
-            ├─▶ 需要 XML 表达式?
-            │     │
-            │     ├─▶ 是 ──▶ DataBinding
-            │     │
-            │     └─▶ 否
-            │           │
-            ├─▶ 需要事件绑定?
-            │     │
-            │     ├─▶ 是 ──▶ DataBinding
-            │     │
-            │     └─▶ 否
-            │           │
-            └─▶ ViewBinding (推荐)
-```
+{% mermaid flowchart TD %}
+Start["需要双向绑定？"] -->|是| DataBinding1["DataBinding"]
+Start -->|否| Expr["需要 XML 表达式？"]
+Expr -->|是| DataBinding2["DataBinding"]
+Expr -->|否| Event["需要事件绑定？"]
+Event -->|是| DataBinding3["DataBinding"]
+Event -->|否| ViewBinding["ViewBinding（推荐）"]
+{% endmermaid %}
 
 ### 实际建议
 
@@ -410,15 +382,12 @@ android {
 
 ## 总结
 
-```
-选择原则:
-─────────────────────────────────────────
-简单页面 → ViewBinding (性能好)
-复杂交互 → DataBinding (功能强)
-MVVM 架构 → DataBinding
-性能优先 → ViewBinding
-─────────────────────────────────────────
-```
+{% mermaid flowchart TB %}
+Choose["选择原则"] --> C1["简单页面 → ViewBinding（性能好）"]
+Choose --> C2["复杂交互 → DataBinding（功能强）"]
+Choose --> C3["MVVM 架构 → DataBinding"]
+Choose --> C4["性能优先 → ViewBinding"]
+{% endmermaid %}
 
 ---
 

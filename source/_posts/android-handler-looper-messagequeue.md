@@ -33,26 +33,12 @@ tags:
 
 ### 四大核心组件
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                        Handler 消息机制                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│    ┌─────────┐    ┌─────────────┐    ┌──────────────┐              │
-│    │ Handler │───▶│  MessageQueue │◀───│    Looper    │              │
-│    └─────────┘    └─────────────┘    └──────────────┘              │
-│         │                                        │                  │
-│         │              ┌──────────┐              │                  │
-│         └─────────────▶│ Message  │◀─────────────┘                  │
-│                        └──────────┘                                   │
-│                                                                     │
-│    Handler: 发送和处理消息                                           │
-│    Looper:  不断从 MessageQueue 取消息                              │
-│    MessageQueue: 消息队列（单链表实现）                              │
-│    Message: 消息载体                                                │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+Handler["Handler<br/>发送和处理消息"] --> Queue["MessageQueue<br/>消息队列（单链表实现）"]
+Looper["Looper<br/>不断从 MessageQueue 取消息"] --> Queue
+Handler --> Message["Message<br/>消息载体"]
+Looper --> Message
+{% endmermaid %}
 
 ### 主线程启动流程
 
@@ -144,23 +130,14 @@ public static void loop() {
 
 ### 关键点：为什么不会 ANR？
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     Looper.loop() 不会 ANR                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                     │
-│   ANR 发生条件：主线程阻塞 > 5 秒处理消息                            │
-│                                                                     │
-│   Looper.loop() 本质：                                             │
-│   1. queue.next() - 获取消息（可阻塞）                              │
-│   2. msg.target.dispatchMessage() - 处理消息（通常很快）           │
-│   3. 回到步骤 1                                                     │
-│                                                                     │
-│   关键：处理每条消息的时间很短，不会长时间阻塞                       │
-│   如果处理耗时，应该在子线程执行或使用 AsyncTask                    │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart TB %}
+ANR["ANR 条件<br/>主线程阻塞 > 5 秒"] -.对比.-> Loop
+Loop["Looper.loop()"] --> Step1["1. queue.next()<br/>获取消息（可阻塞）"]
+Step1 --> Step2["2. msg.target.dispatchMessage()<br/>处理消息（通常很快）"]
+Step2 --> Step3["3. 回到步骤 1"]
+Step3 --> Step1
+Step2 --> Note["关键：单条消息处理时间短<br/>耗时任务应放子线程"]
+{% endmermaid %}
 
 ---
 
@@ -338,15 +315,15 @@ public final class Message implements Parcelable {
 }
 ```
 
-```
-Message 链表结构：
-
-mMessages ──▶ [when:100] ──▶ [when:200] ──▶ [when:300] ──▶ null
-                     │              │              │
-                     ▼              ▼              ▼
-                   msg1           msg2           msg3
-                 (target)       (target)       (target)
-```
+{% mermaid flowchart LR %}
+Head["mMessages"] --> N1["[when:100]"]
+N1 --> N2["[when:200]"]
+N2 --> N3["[when:300]"]
+N3 --> Null["null"]
+N1 --> M1["msg1<br/>(target)"]
+N2 --> M2["msg2<br/>(target)"]
+N3 --> M3["msg3<br/>(target)"]
+{% endmermaid %}
 
 ---
 

@@ -31,57 +31,15 @@ tags:
 
 ## 1. 整体流程概览
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│                    Activity 启动完整流程                              │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│   App Process                                                      │
-│   ──────────┬─────────────────────────────────────────────          │
-│              │                                                       │
-│              ▼                                                       │
-│   ┌─────────────────┐                                              │
-│   │ startActivity() │                                              │
-│   └────────┬────────┘                                              │
-│            │                                                        │
-│            ▼                                                        │
-│   ┌─────────────────┐     System Server                          │
-│   │  IActivityTask  │ ──────────────────────▶                   │
-│   │  Manager        │     Binder 通信                           │
-│   └────────┬────────┘                              │                │
-│            │                                     ▼                │
-│            │                              ┌─────────────────┐       │
-│            │                              │     AMS         │       │
-│            │                              │ (ActivityTask) │       │
-│            │                              └────────┬────────┘       │
-│            │                                       │                │
-│            │                                       ▼                │
-│            │                              ┌─────────────────┐       │
-│            │                              │  ActivityStarter│       │
-│            │                              │  解析 Intent    │       │
-│            │                              │  决定启动模式   │       │
-│            │                              └────────┬────────┘       │
-│            │                                       │                │
-│            │                                       ▼                │
-│            │                              ┌─────────────────┐       │
-│            │                              │ Application     │       │
-│            │                              │ Thread          │       │
-│            │                              └────────┬────────┘       │
-│            │                                       │                │
-│            ▼                                       ▼                │
-│   ┌─────────────────┐                              │                │
-│   │ ActivityThread  │◀─────────────────────────────┘                │
-│   │ H 发送消息      │                                              │
-│   └────────┬────────┘                                              │
-│            │                                                        │
-│            ▼                                                        │
-│   ┌─────────────────┐                                              │
-│   │  performLaunch  │                                              │
-│   │  Activity onCreate │                                          │
-│   └─────────────────┘                                              │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
-```
+{% mermaid flowchart LR %}
+Start["startActivity()"] --> ATM["IActivityTaskManager<br/>Binder 通信"]
+ATM --> AMS["AMS / ActivityTaskManagerService"]
+AMS --> Starter["ActivityStarter<br/>解析 Intent / 决定启动模式"]
+Starter --> AppThread["ApplicationThread"]
+AppThread --> ActivityThread["ActivityThread<br/>H 发送消息"]
+ActivityThread --> Launch["performLaunchActivity"]
+Launch --> OnCreate["Activity.onCreate"]
+{% endmermaid %}
 
 ---
 
@@ -290,24 +248,13 @@ private Activity performLaunchActivity(ActivityClientRecord r, Intent customInte
 
 ### onCreate 调用链
 
-```
-performLaunchActivity
-        │
-        ▼
-Instrumentation.callActivityOnCreate(activity, bundle)
-        │
-        ▼
-Activity.performCreate(bundle)
-        │
-        ▼
-Activity.onCreate(bundle)
-        │
-        ▼
-Activity.onStart()
-        │
-        ▼
-Activity.onResume()
-```
+{% mermaid flowchart TB %}
+LaunchActivity["performLaunchActivity"] --> CallCreate["Instrumentation.callActivityOnCreate(activity, bundle)"]
+CallCreate --> PerformCreate["Activity.performCreate(bundle)"]
+PerformCreate --> OnCreate2["Activity.onCreate(bundle)"]
+OnCreate2 --> OnStart["Activity.onStart()"]
+OnStart --> OnResume["Activity.onResume()"]
+{% endmermaid %}
 
 ### Activity.attach() - 创建 Window
 
@@ -328,18 +275,12 @@ final void attach(Context context, ActivityThread thread, ...) {
 
 ### onCreate 中 setContentView 流程
 
-```
-Activity.setContentView(layoutResID)
-        │
-        ▼
-PhoneWindow.setContentView(layoutResID)
-        │
-        ├─▶ 1. 创建 DecorView
-        │
-        ├─▶ 2. 解析 layoutResID 生成 View 树
-        │
-        └─▶ 3. 将 View 放入 ContentFrameLayout
-```
+{% mermaid flowchart TB %}
+SetContent["Activity.setContentView(layoutResID)"] --> WindowContent["PhoneWindow.setContentView(layoutResID)"]
+WindowContent --> Decor["1. 创建 DecorView"]
+WindowContent --> Inflate["2. 解析 layoutResID 生成 View 树"]
+WindowContent --> Frame["3. 将 View 放入 ContentFrameLayout"]
+{% endmermaid %}
 
 ---
 
